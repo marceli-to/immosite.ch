@@ -27,4 +27,6 @@ Pick the flow and read its file:
 - Code, comments, docs and commits in English; visitor-facing text in German (Swiss spelling, no ß).
 - Git remote over SSH (`git@github.com:marceli-to/<repo>.git`): the HTTPS account on this machine can't push to marceli-to.
 - A step is done when `php artisan test`, `npm run build` and `npm run screenshots -- <urls>` are green (✓ for every width, no overflow, no JS errors). Look at the screenshots, don't just count ticks.
-- A fix or improvement that every site needs goes into the starter too (with tests and its `modules.md` entry), so the next site gets it.
+- Commit after scaffolding and after each finished step.
+- After scaffolding, the tests are the **project's** tests: when content moves (e.g. the form leaves the home page), update the tests with it.
+- A fix or improvement that every site needs goes into the starter too (with tests and its `modules.md` entry), so the next site gets it. This skill lives in the starter (`skill/immosite`, symlinked to `~/.claude/skills/immosite`); fix it there and push the starter.

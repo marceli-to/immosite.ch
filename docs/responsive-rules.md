@@ -4,7 +4,7 @@ How a **desktop-only design** becomes tablet + mobile. Derived from Adlerstrasse
 (brief PDF ↔ code) and Hüningerstrasse / Im Waldacher (current generation), 2026-10-12.
 Status: **draft, to be corrected by Marcel.** Decided 2026-10-12: burger below `md`, scale up at `xl`, scroll reveal off, map two-finger pan. Remaining ❓ are defaults until confirmed.
 
-Becomes `skill/immosite/design-to-code.md` once settled.
+Used by `skill/immosite/design-to-code.md`.
 
 ## 0. What the briefs give us
 
@@ -70,11 +70,10 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 
 ## 6. Navigation
 
-- **Burger below `md`** (decided). Check that the desktop nav fits at 768; if not, that project switches below `lg`.
-- Mobile menu: **full-screen overlay**, background `surface-alt`, opacity fade (200–300 ms), Escape closes, **page scroll locked** while open (Adler/Scala didn't), real `<button>` with `aria-expanded`.
+- **Burger breakpoint by number of nav entries** (decided): ≤ 4 → below `md`, ≤ 6 → below `lg`, more → below `xl`; override with `site.nav_breakpoint` after checking that the desktop nav fits.
+- Mobile menu: **full-screen overlay**, background `header` (same token as the header bar, so logo and close icon stay readable), opacity fade (200–300 ms), Escape closes, **page scroll locked** while open (Adler/Scala didn't), real `<button>` with `aria-expanded`.
 - Header: `sticky`, solid background. Transparent over the hero only when the design shows it (Hüningerstrasse home: background fades in after 30vh).
 - Header height is one token, `--header-height` (84 px, 96 px from `lg`), used by sticky elements and anchor offsets (`scroll-pt-(--header-height)`).
-- Burger breakpoint by number of entries: ≤ 4 → `md`, ≤ 6 → `lg`, more → `xl` (override: `site.nav_breakpoint`). With all starter modules (7 entries) the desktop nav only fits from `xl`.
 
 ## 7. Apartment table
 
