@@ -9,7 +9,7 @@
     href="{{ $href }}"
     @if ($active) aria-current="page" @endif
     @class([
-      'font-display text-h2-sm font-bold uppercase tracking-wide transition-colors hover:text-primary',
+      'font-display text-3xl leading-none font-bold uppercase tracking-wide transition-colors hover:text-primary',
       'text-primary' => $active,
       'text-ink' => ! $active,
     ])>
