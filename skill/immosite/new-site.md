@@ -2,21 +2,37 @@
 
 ## 1. Intake
 
-Collect before touching code; ask for what's missing in one go. Marcel usually pastes the filled-in
-template from the starter's `docs/new-project-prompt.md`; its fields are the list below.
+Ask Marcel; don't assume. Skip a question only when his first message already answers it.
+Done when every item below has an answer, an explicit "later" (→ `docs/open-items.md`) or "not needed".
 
-- Project name, domain, client / marketer (name, address, contact person, e-mail, phone).
-- Landing page or full site, and the modules (`modules.md` in the starter). Presets and the matching removal (removing a module also removes everything that needs it):
-  - **landing with registration**: `php artisan module:remove contact-form faq building-spec downloads` (+ `weekly-export` / `map` / `gallery` / `disclaimer` if not wanted)
-  - **landing with contact form**: `php artisan module:remove registration pages-full faq building-spec downloads`
-  - **full**: start from all modules and remove what the brief doesn't show, e.g. `php artisan module:remove registration faq commercial isometry apartments-flatfox apartments-melon` for a static Mieterspiegel. Always run with `--dry-run` first and check the list.
-- Apartment source: static (Mieterspiegel file), Flatfox URL, or Melon URL.
-- Mail recipients: weekly export (+ BCC), contact form; the sender address (`MAIL_FROM_ADDRESS`, on a domain the mail server may send for).
-- Design credits for footer and Impressum (default: stoz) and the hosting provider for the Datenschutz page.
-- Map: coordinates of the building, extra markers.
-- The design brief (PDF / Figma / screenshots) → [design-to-code.md](design-to-code.md) step 1. No brief: ask for colours and fonts, or keep the starter's.
-- Images: originals from the client; images cut from the brief only as placeholders (open item).
-- GitHub repo: public (default, like all marceli-to repos) or private.
+**Round 1, choices** (AskUserQuestion, one call, up to 4 questions):
+- Type: landing page / full site.
+- Form: sign-up (`registration`) / contact form / both.
+- Apartment source (full site): static Mieterspiegel / Flatfox / Melon / none.
+- GitHub repo: public (default, like all marceli-to repos) / private.
+
+**Round 2, modules** (AskUserQuestion, multiSelect), only what fits the type:
+- landing: weekly export, map, gallery, disclaimer.
+- full: weekly export, map, gallery, disclaimer, FAQ, Ausbau, downloads, Gewerbe (+ admin),
+  apply button, isometry, Melon lead hook.
+
+**Round 3, details** (one plain message, as a list he can answer inline):
+- Project name and domain.
+- Design brief: path to PDF / Figma link / screenshots, or none (then colours and fonts, or keep the starter's). Sister project of an existing site? → [sister-project.md](sister-project.md).
+- Images: folder with originals, or placeholders for now (images cut from the brief only as placeholders).
+- Marketer: company, address, contact person and role, e-mail, phone.
+- Mail: contact form recipients; weekly export recipients, BCC, day and time (default Monday 08:00); sender address (`MAIL_FROM_ADDRESS`, on a domain the mail server may send for).
+- Apartment source details: Mieterspiegel file / Flatfox or Melon URL.
+- Map: building coordinates (or address to look up), extra markers.
+- Isometry: AI or SVG export path.
+- Design credits (default stoz) and hosting provider for Datenschutz (default webkeeper).
+- Remind him: allow `https://<domain>.test/` on the Mapbox token if there is a map.
+
+**Module removal** from the answers (removing a module also removes everything that needs it;
+always `--dry-run` first and check the list):
+- landing with registration: `php artisan module:remove contact-form faq building-spec downloads` (+ unchosen of `weekly-export` / `map` / `gallery` / `disclaimer`)
+- landing with contact form: `php artisan module:remove registration pages-full faq building-spec downloads`
+- full: all modules minus what was chosen, e.g. `php artisan module:remove registration faq commercial isometry apartments-flatfox apartments-melon` for a static Mieterspiegel.
 
 ## 2. Scaffold
 
