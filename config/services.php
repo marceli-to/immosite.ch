@@ -41,4 +41,10 @@ return [
         'id' => env('GOOGLE_ANALYTICS_ID'),
     ],
 
+    // Cloudflare Turnstile. Leer = Formulare ohne Turnstile (nur Honeypot).
+    'turnstile' => [
+        'site_key' => env('TURNSTILE_SITE_KEY'),
+        'secret_key' => env('TURNSTILE_SECRET_KEY'),
+    ],
+
 ];

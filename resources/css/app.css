@@ -46,6 +46,8 @@
   --color-ink: #2b2b2b;           /* Fliesstext, Titel */
   --color-muted: #6b6b6b;         /* Nebentexte, Fussnoten */
   --color-line: #d6d6d2;          /* Linien, Tabellenraender */
+  --color-error: #a3243b;         /* Fehlermeldungen, Rahmen ungueltiger Felder */
+  --color-error-bg: #f6e6e9;      /* Hintergrund ungueltiger Felder */
 
   /* Schriften: Quelle (Typekit-Link) steht in config/site.php */
   --font-sans: ui-sans-serif, system-ui, sans-serif;

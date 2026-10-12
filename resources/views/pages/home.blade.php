@@ -23,4 +23,6 @@
     </x-layout.inner>
   </section>
 
+  @include('sections.registration') {{-- module:registration --}}
+
 @endsection
