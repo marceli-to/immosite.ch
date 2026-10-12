@@ -2,6 +2,8 @@
 
 @section('content')
 
+  <x-gallery.slider :images="['img/placeholder-1', 'img/placeholder-2', 'img/placeholder-3']" alt="Visualisierung des Projekts" label="Visualisierungen" priority /> {{-- module:gallery --}}
+
   <section class="bg-surface-alt">
     <x-layout.inner class="py-48 md:py-72 lg:py-96">
       <div class="prose-site max-w-text">

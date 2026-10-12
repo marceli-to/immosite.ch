@@ -17,6 +17,7 @@
         "@laravel/multiplex": "^0.4.1"
     },
     "dependencies": {
-        "mapbox-gl": "^3.32.0"
+        "mapbox-gl": "^3.32.0",
+        "swiper": "^12.2.0"
     }
 }

@@ -22,7 +22,8 @@ Regeln:
 
 Layout (`components/layout/*`), Menü, Überschriften, Buttons, Links, Icons, Seiten Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
-Favicon/OG-Platzhalter, `config/site.php`, `module:remove`.
+Favicon/OG-Platzhalter, `config/site.php`, `module:remove`, `x-media.picture` (Bild mit AVIF/WebP/Mobile-Varianten,
+Abmessungen aus der Datei).
 
 Mails: eigene Kopf-/Fusszeile und Token-Farben in `resources/views/vendor/mail/html`.
 
@@ -125,3 +126,29 @@ Packages:
 - npm: mapbox-gl
 Config/env:
 - MAPBOX_TOKEN, MAPBOX_STYLE
+
+---
+
+## gallery (optional)
+Bilder-Slider (Swiper) für Hero und Karussells: Wischen, Pfeile, Punkte, Autoplay stoppt bei
+Interaktion und bei «Bewegung reduzieren». Swiper wird nur bei Bedarf geladen. Seitenverhältnis
+4:3 / 16:9 / 2:1 (docs/responsive-rules.md §8). Bilder über `x-media.picture` (Core).
+Files:
+- resources/views/components/gallery/slider.blade.php
+- resources/js/modules/gallery.js
+- resources/css/gallery.css
+- public/img/placeholder-1.jpg
+- public/img/placeholder-1.webp
+- public/img/placeholder-2.jpg
+- public/img/placeholder-2.webp
+- public/img/placeholder-3.jpg
+- public/img/placeholder-3.webp
+- tests/Feature/GalleryTest.php
+Hooks:
+- resources/js/app.js → import './modules/gallery.js'
+- resources/css/app.css → @import './gallery.css'
+- resources/views/pages/home.blade.php → <x-gallery.slider … /> (Hero)
+Packages:
+- npm: swiper
+Config/env:
+- –

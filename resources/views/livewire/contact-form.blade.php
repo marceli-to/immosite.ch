@@ -4,7 +4,7 @@
   {{-- method="post": siehe registration-form (kein GET-Fallback mit Personendaten in der URL). --}}
   <form wire:submit="submit" method="post" class="relative flex flex-col gap-20 md:gap-24">
 
-    <x-form.contact-fields :fields="$this->fields()" />
+    <x-form.contact-fields :fields="$this->fields()" prefix="contact" />
     <x-form.error name="send" />
 
     <div>

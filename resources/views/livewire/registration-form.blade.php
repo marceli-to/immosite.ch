@@ -30,7 +30,7 @@
         </fieldset>
       @endif
 
-      <x-form.contact-fields :fields="$this->fields()" />
+      <x-form.contact-fields :fields="$this->fields()" prefix="registration" />
 
       <div>
         <x-buttons.primary type="submit" class="disabled:opacity-60" wire:loading.attr="disabled" wire:target="submit">

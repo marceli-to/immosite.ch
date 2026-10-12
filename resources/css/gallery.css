@@ -1,0 +1,13 @@
+/* Punkte unter dem Slider (module:gallery). Tap-Flaeche 24 px, sichtbar 10 px. */
+.gallery-bullet {
+  @apply relative size-10 cursor-pointer rounded-full bg-white/60 transition-colors;
+}
+
+.gallery-bullet::after {
+  content: '';
+  @apply absolute -inset-7;
+}
+
+.gallery-bullet.is-active {
+  @apply bg-white;
+}

@@ -9,3 +9,4 @@
 // });
 
 import './modules/map.js'; // module:map
+import './modules/gallery.js'; // module:gallery

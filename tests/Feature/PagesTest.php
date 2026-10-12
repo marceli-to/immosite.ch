@@ -70,4 +70,14 @@ class PagesTest extends TestCase
             ->assertSee('Google Analytics')
             ->assertSee('Adobe Fonts');
     }
+
+    public function test_ids_are_unique_on_every_page(): void
+    {
+        foreach (config('site.pages') as $page) {
+            preg_match_all('/\sid="([^"]+)"/', $this->get(route($page['route']))->getContent(), $m);
+            $duplicates = array_keys(array_filter(array_count_values($m[1]), fn ($count) => $count > 1));
+
+            $this->assertSame([], $duplicates, "Doppelte IDs auf {$page['route']}");
+        }
+    }
 }
