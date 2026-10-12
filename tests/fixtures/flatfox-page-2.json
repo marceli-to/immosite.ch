@@ -1,0 +1,9 @@
+{
+  "count": 4,
+  "next": null,
+  "results": [
+    {"pk": 12, "reference": "02-001", "ref_house": "02", "ref_object": "001", "status": "arc", "reserved": false, "object_category": "APARTMENT", "floor": -1, "number_of_rooms": "4.5", "surface_living": 108, "rent_gross": 3360},
+    {"pk": 9, "reference": "01-001", "ref_house": "01", "ref_object": "001", "status": "rem", "reserved": false, "object_category": "APARTMENT", "floor": 0, "number_of_rooms": "2.5", "surface_living": 61.4, "rent_gross": 1990},
+    {"pk": 13, "reference": "PP-01", "ref_house": "99", "ref_object": "PP1", "status": "act", "reserved": false, "object_category": "PARK", "floor": -1, "rent_gross": 150}
+  ]
+}

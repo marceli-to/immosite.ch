@@ -1,0 +1,8 @@
+{
+  "count": 4,
+  "next": "https://flatfox.test/api/v1/public-listing/?page=2",
+  "results": [
+    {"pk": 10, "reference": "01-001", "ref_house": "01", "ref_object": "001", "status": "act", "reserved": false, "object_category": "APARTMENT", "floor": 0, "number_of_rooms": "2.5", "surface_living": 61.4, "surface_balcony": 9, "rent_net": 1890, "rent_charges": 180, "rent_gross": 2070, "short_url": "/abc1/", "moving_date": "2027-04-01", "documents": [{"url": "https://flatfox.test/plan-001.pdf"}]},
+    {"pk": 11, "reference": "01-002", "ref_house": "01", "ref_object": "002", "status": "act", "reserved": true, "object_category": "APARTMENT", "floor": 1, "number_of_rooms": "3.5", "surface_living": 84, "rent_gross": 2670, "short_url": "/abc2/"}
+  ]
+}

@@ -49,6 +49,9 @@
   --color-line: #d6d6d2;          /* Lines, table borders */
   --color-error: #a3243b;         /* Error messages, borders of invalid fields */
   --color-error-bg: #f6e6e9;      /* Background of invalid fields */
+  --color-status-free: #2e9d4f;     /* apartment status dots */ /* module:apartments */
+  --color-status-reserved: #e3a008; /* module:apartments */
+  --color-status-rented: #c23a3a;   /* module:apartments */
 
   /* Fonts: source (Typekit link) lives in config/site.php */
   --font-sans: ui-sans-serif, system-ui, sans-serif;

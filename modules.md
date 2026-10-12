@@ -165,3 +165,82 @@ Hooks:
 - config/site.php → pages: `page.location`, `page.contact` (Navigation)
 Config/env:
 - –
+
+---
+
+## apartments (optional, needs: pages-full)
+Apartment listing on /wohnen: filters (status, rooms, floor, house) and table(s), columns,
+filters, grouping by house, floor labels, sort order and footnote from `config/apartments.php`.
+All sources return the same `App\Apartments\Apartment`; the driver comes from
+`APARTMENTS_DRIVER`. Mobile: table scrolls sideways, short headers. Install at least one
+driver module.
+Files:
+- app/Apartments/Apartment.php
+- app/Apartments/ApartmentRepository.php
+- app/Apartments/ApiSource.php
+- app/Apartments/Format.php
+- app/Apartments/Source.php
+- app/Apartments/Status.php
+- app/Console/Commands/FetchApartments.php
+- app/Http/Controllers/ApartmentController.php
+- config/apartments.php
+- resources/views/pages/apartments.blade.php
+- resources/views/components/apartments
+- resources/js/modules/apartment-filter.js
+- tests/Feature/ApartmentsTest.php
+- tests/Support/FakeApartmentSource.php
+Hooks:
+- routes/web.php → use ApartmentController; Route::get('/wohnen', …)
+- config/site.php → pages: `page.apartments` (navigation)
+- resources/js/app.js → import './modules/apartment-filter.js'
+- resources/css/app.css → --color-status-free / -reserved / -rented
+Config/env:
+- APARTMENTS_DRIVER
+
+---
+
+## apartments-static (optional, needs: apartments)
+Apartments maintained by hand in `config/apartments-static.php`, in Mieterspiegel order.
+Files:
+- app/Apartments/Sources/StaticSource.php
+- config/apartments-static.php
+- tests/Feature/StaticSourceTest.php
+Hooks:
+- config/apartments.php → drivers: 'static'
+Config/env:
+- APARTMENTS_DRIVER=static
+
+---
+
+## apartments-flatfox (optional, needs: apartments)
+Flatfox public listing API: follows `next` pages, newer duplicate (higher pk) wins, pre/act/dis
+= published (reserved flag), arc/rem = rented, Flatfox apply link per listing. Fetched every
+15 minutes by `apartments:fetch` into storage/app/apartments.json; a failed or empty fetch
+keeps the last data.
+Files:
+- app/Apartments/Sources/FlatfoxSource.php
+- config/flatfox.php
+- tests/Feature/FlatfoxSourceTest.php
+- tests/fixtures/flatfox-page-1.json
+- tests/fixtures/flatfox-page-2.json
+Hooks:
+- config/apartments.php → drivers: 'flatfox'
+- routes/console.php → Schedule::command('apartments:fetch') (shared with apartments-melon)
+Config/env:
+- APARTMENTS_DRIVER=flatfox, FLATFOX_API_URL
+
+---
+
+## apartments-melon (optional, needs: apartments)
+Melon / emonitor v2 feed (flat array). `MELON_MOCK=true` serves database/data/melon-mock.json.
+Same fetch/cache behaviour as Flatfox.
+Files:
+- app/Apartments/Sources/MelonSource.php
+- config/melon.php
+- database/data/melon-mock.json
+- tests/Feature/MelonSourceTest.php
+Hooks:
+- config/apartments.php → drivers: 'melon'
+- routes/console.php → Schedule::command('apartments:fetch') (shared with apartments-flatfox)
+Config/env:
+- APARTMENTS_DRIVER=melon, MELON_API_URL, MELON_MOCK

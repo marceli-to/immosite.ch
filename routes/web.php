@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ApartmentController; // module:apartments
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.home')->name('page.home');
 Route::view('/lage', 'pages.location')->name('page.location'); // module:pages-full
 Route::view('/kontakt', 'pages.contact')->name('page.contact'); // module:pages-full
+Route::get('/wohnen', ApartmentController::class)->name('page.apartments'); // module:apartments
 
 Route::view('/disclaimer', 'pages.disclaimer')->name('page.disclaimer'); // module:disclaimer
 Route::view('/danke', 'pages.thanks')->name('page.thanks'); // module:contact-form
