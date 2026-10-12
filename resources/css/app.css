@@ -56,6 +56,9 @@
   --color-ink: #2b2b2b;           /* Body text, titles */
   --color-muted: #6b6b6b;         /* Secondary text, footnotes */
   --color-line: #d6d6d2;          /* Lines, table borders */
+  --color-field: #d6d6d2;         /* Form field borders (separate from line on purpose) */
+  --color-header: #f2f2f0;        /* Header bar and mobile menu background */
+  --color-on-header: #2b2b2b;     /* Text and icons on the header */
   --color-error: #a3243b;         /* Error messages, borders of invalid fields */
   --color-error-bg: #f6e6e9;      /* Background of invalid fields */
   --color-status-free: #2e9d4f;     /* apartment status dots */ /* module:apartments */

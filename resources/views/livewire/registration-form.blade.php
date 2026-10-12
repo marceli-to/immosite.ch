@@ -1,11 +1,13 @@
 <div>
   @if ($submitted)
     <div role="status" aria-live="polite">
-      <x-headings.h2>Vielen Dank für Ihre Anmeldung</x-headings.h2>
-      <p>Wir haben Ihre Angaben erhalten und informieren Sie, sobald die Vermietung startet.</p>
+      <x-headings.h2>{{ config('registration.success_heading') }}</x-headings.h2>
+      <p>{{ config('registration.success_text') }}</p>
     </div>
   @else
-    <x-headings.h2>Anmeldung</x-headings.h2>
+    @if ($heading = config('registration.heading'))
+      <x-headings.h2>{{ $heading }}</x-headings.h2>
+    @endif
 
     {{-- method="post" as a safeguard: if Livewire's JS fails, a form without
          method would submit via GET and put the personal data in the URL

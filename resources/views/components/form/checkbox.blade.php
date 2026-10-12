@@ -18,7 +18,7 @@
       type="checkbox"
       {{ $attributes->class([
         'col-start-1 row-start-1 appearance-none rounded-none border forced-colors:appearance-auto',
-        'border-line bg-surface' => ! $error,
+        'border-field bg-surface' => ! $error,
         'border-error bg-error-bg' => $error,
       ]) }}>
     <svg viewBox="0 0 14 14" fill="none" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 size-7/8 self-center justify-self-center stroke-primary">

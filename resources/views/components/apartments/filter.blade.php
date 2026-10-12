@@ -8,8 +8,8 @@
       <label for="filter-{{ $key }}" class="mb-8 block text-xs font-bold lg:text-sm">{{ $filter['label'] }}</label>
       <div class="relative">
         <select id="filter-{{ $key }}" data-apartment-filter="{{ $key }}"
-          class="block w-full cursor-pointer appearance-none bg-surface py-12 pr-44 pl-16 text-sm ring-1 ring-line outline-none focus-visible:ring-2 focus-visible:ring-primary data-active:ring-2 data-active:ring-primary">
-          <option value="">Alle</option>
+          class="block w-full cursor-pointer appearance-none bg-surface py-12 pr-44 pl-16 text-sm ring-1 ring-field outline-none focus-visible:ring-2 focus-visible:ring-primary data-active:ring-2 data-active:ring-primary">
+          <option value="">{{ config('apartments.filter_labels.all', 'Alle') }}</option>
           @foreach ($filter['options'] as $value => $label)
             <option value="{{ $value }}">{{ $label }}</option>
           @endforeach
@@ -21,6 +21,6 @@
 
   <button type="button" data-apartment-filter-reset
     class="cursor-pointer py-12 text-left text-sm text-primary underline-offset-4 transition-colors hover:text-ink hover:underline">
-    Filter zurücksetzen
+    {{ config('apartments.filter_labels.reset', 'Filter zurücksetzen') }}
   </button>
 </div>

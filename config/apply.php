@@ -18,6 +18,10 @@ return [
 
     'label' => 'Bewerben',
 
+    // Which statuses get the button. Others show nothing in this column
+    // (the status column next to it still says reserviert / vermietet).
+    'statuses' => ['free', 'reserved'],
+
     // Fields of our application form, like config/contact.php.
     'fields' => [
         'street' => 'required',

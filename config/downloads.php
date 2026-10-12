@@ -13,13 +13,17 @@
 
 return [
 
-    'building-spec' => [
-        ['Kurzbaubeschrieb', 'downloads/kurzbaubeschrieb.pdf'],
-    ],
+    // Button style: 'secondary' (outline) or 'primary' (filled).
+    'button' => 'secondary',
 
-    'apartments' => [
-        ['Facts & Figures', 'downloads/facts-figures.pdf'],
-        ['Umgebungsplan', 'downloads/umgebungsplan.pdf'],
+    'groups' => [
+        'building-spec' => [
+            ['Kurzbaubeschrieb', 'downloads/kurzbaubeschrieb.pdf'],
+        ],
+        'apartments' => [
+            ['Facts & Figures', 'downloads/facts-figures.pdf'],
+            ['Umgebungsplan', 'downloads/umgebungsplan.pdf'],
+        ],
     ],
 
 ];

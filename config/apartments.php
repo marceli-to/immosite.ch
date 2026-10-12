@@ -74,6 +74,15 @@ return [
     // Filters above the table, in order. Available: status, rooms, floor, house.
     'filters' => ['status', 'rooms', 'floor'],
 
+    'filter_labels' => [
+        'status' => 'Verfügbarkeit',
+        'rooms' => 'Zimmer',
+        'floor' => 'Etage',
+        'house' => 'Haus',
+        'all' => 'Alle',
+        'reset' => 'Filter zurücksetzen',
+    ],
+
     // Rented apartments show no rent (agencies don't publish it).
     'hide_prices_when_rented' => true,
 

@@ -7,7 +7,7 @@
   $href = $external ? $apartment->applyUrl : ($mode === 'link' ? null : route('page.apply', ['wohnung' => $apartment->ref]));
 @endphp
 
-@if ($apartment->isAvailable() && $href)
+@if (in_array($apartment->status->value, config('apply.statuses', ['free', 'reserved']), true) && $href)
   <a href="{{ $href }}" @if ($external) target="_blank" rel="noopener" @endif
     aria-label="{{ config('apply.label') }}: Wohnung {{ $apartment->ref }}"
     class="inline-flex items-center rounded-[3px] bg-primary px-10 pt-6 pb-7 text-xs leading-none font-bold whitespace-nowrap text-on-primary transition-colors hover:bg-ink lg:text-sm">

@@ -11,7 +11,7 @@
     @class([
       'font-display text-xl leading-none font-bold uppercase tracking-wide transition-colors hover:text-primary',
       'text-primary' => $active,
-      'text-ink' => ! $active,
+      'text-on-header' => ! $active,
     ])>
     {{ $title }}
   </a>

@@ -68,28 +68,28 @@ class ApartmentRepository
         foreach (config('apartments.filters') as $filter) {
             $filters[$filter] = match ($filter) {
                 'status' => [
-                    'label' => 'Verfügbarkeit',
+                    'label' => config('apartments.filter_labels.status', 'Verfügbarkeit'),
                     'options' => collect(Status::cases())
                         ->filter(fn (Status $s) => $apartments->contains(fn (Apartment $a) => $a->status === $s))
                         ->mapWithKeys(fn (Status $s) => [$s->value => $s->label()])
                         ->all(),
                 ],
                 'rooms' => [
-                    'label' => 'Zimmer',
+                    'label' => config('apartments.filter_labels.rooms', 'Zimmer'),
                     'options' => $apartments->filter(fn (Apartment $a) => $a->rooms !== null)
                         ->sortBy('rooms')
                         ->mapWithKeys(fn (Apartment $a) => [$a->roomsLabel() => $a->roomsLabel().' Zimmer'])
                         ->all(),
                 ],
                 'floor' => [
-                    'label' => 'Etage',
+                    'label' => config('apartments.filter_labels.floor', 'Etage'),
                     'options' => $apartments->pluck('floor')->filter()->unique()
                         ->sortBy(fn ($floor) => $floorOrder[$floor] ?? PHP_INT_MAX)
                         ->mapWithKeys(fn ($floor) => [$floor => $this->floorLabel($floor)])
                         ->all(),
                 ],
                 'house' => [
-                    'label' => 'Haus',
+                    'label' => config('apartments.filter_labels.house', 'Haus'),
                     'options' => $apartments->pluck('house')->filter()->unique()->sort(SORT_NATURAL)
                         ->mapWithKeys(fn ($house) => [$house => $this->houseLabel($house)])
                         ->all(),

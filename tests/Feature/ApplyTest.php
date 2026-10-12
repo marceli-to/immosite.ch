@@ -79,4 +79,13 @@ class ApplyTest extends TestCase
             ->assertOk()
             ->assertSee('<meta name="robots" content="noindex">', false);
     }
+
+    public function test_statuses_limit_the_button(): void
+    {
+        config(['apply.statuses' => ['free'], 'apply.mode' => 'form']);
+
+        $this->get(route('page.apartments'))
+            ->assertSee(route('page.apply', ['wohnung' => 'A.01']), false)
+            ->assertDontSee(route('page.apply', ['wohnung' => 'A.02']), false);
+    }
 }

@@ -143,4 +143,13 @@ class ApartmentsTest extends TestCase
 
         $this->assertSame(['X.1'], array_map(fn ($a) => $a->ref, $source->all()));
     }
+
+    public function test_filter_labels_come_from_config(): void
+    {
+        config(['apartments.filter_labels.rooms' => 'Zi.', 'apartments.filter_labels.all' => 'Sämtliche']);
+
+        $this->get(route('page.apartments'))
+            ->assertSee('>Zi.</label>', false)
+            ->assertSee('<option value="">Sämtliche</option>', false);
+    }
 }

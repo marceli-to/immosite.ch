@@ -1,5 +1,7 @@
 <div>
-  <x-headings.h2>Kontakt</x-headings.h2>
+  @if ($heading = config('contact.heading'))
+    <x-headings.h2>{{ $heading }}</x-headings.h2>
+  @endif
 
   {{-- method="post": see registration-form (no GET fallback with personal data in the URL). --}}
   <form wire:submit="submit" method="post" class="relative flex flex-col gap-20 md:gap-24">

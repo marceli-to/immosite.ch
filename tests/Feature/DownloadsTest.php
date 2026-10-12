@@ -13,7 +13,7 @@ class DownloadsTest extends TestCase
         $file = 'downloads/test-'.uniqid().'.pdf';
         File::put(public_path($file), '%PDF');
 
-        config(['downloads.test' => [['Vorhanden', $file], ['Fehlt', 'downloads/missing.pdf']]]);
+        config(['downloads.groups.test' => [['Vorhanden', $file], ['Fehlt', 'downloads/missing.pdf']]]);
 
         try {
             $html = Blade::render('<x-downloads.buttons group="test" />');
@@ -29,5 +29,12 @@ class DownloadsTest extends TestCase
     public function test_empty_group_renders_nothing(): void
     {
         $this->assertSame('', trim(Blade::render('<x-downloads.buttons group="nope" />')));
+    }
+
+    public function test_button_style_comes_from_config(): void
+    {
+        config(['downloads.button' => 'primary', 'downloads.groups.test' => [['Plan', 'favicon.ico']]]);
+
+        $this->assertStringContainsString('bg-primary', Blade::render('<x-downloads.buttons group="test" />'));
     }
 }

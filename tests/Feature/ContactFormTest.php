@@ -131,4 +131,15 @@ class ContactFormTest extends TestCase
 
         $this->get('/sitemap.xml')->assertDontSee(route('page.thanks'));
     }
+
+    public function test_heading_can_be_hidden(): void
+    {
+        config(['contact.heading' => null]);
+
+        Livewire::test(ContactForm::class)->assertDontSee('<h2', false);
+
+        config(['contact.heading' => 'Schreiben Sie uns']);
+
+        Livewire::test(ContactForm::class)->assertSee('Schreiben Sie uns');
+    }
 }

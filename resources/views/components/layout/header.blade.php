@@ -16,7 +16,7 @@
   ][$breakpoint];
 @endphp
 
-<header class="sticky top-0 z-50 w-full bg-surface-alt">
+<header class="sticky top-0 z-50 w-full bg-header text-on-header">
   {{-- Fixed height (--header-height in app.css): sticky elements and anchor
        offsets below the header use the same value. --}}
   <x-layout.inner class="flex h-(--header-height) items-center justify-between gap-x-40">

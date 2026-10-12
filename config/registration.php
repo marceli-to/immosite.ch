@@ -34,6 +34,11 @@ return [
     // (e.g. 'page.thanks'), so the registration is trackable as its own URL.
     'redirect_route' => null,
 
+    // Heading above the form and after submitting.
+    'heading' => 'Anmeldung',
+    'success_heading' => 'Vielen Dank für Ihre Anmeldung',
+    'success_text' => 'Wir haben Ihre Angaben erhalten und informieren Sie, sobald die Vermietung startet.',
+
     'confirmation' => [
         'subject' => 'Ihre Anmeldung – '.env('APP_NAME', 'Immosite'),
     ],
