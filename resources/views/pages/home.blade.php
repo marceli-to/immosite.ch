@@ -24,5 +24,6 @@
   </section>
 
   @include('sections.registration') {{-- module:registration --}}
+  @include('sections.contact') {{-- module:contact-form --}}
 
 @endsection

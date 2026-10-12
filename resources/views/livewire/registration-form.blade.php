@@ -30,44 +30,7 @@
         </fieldset>
       @endif
 
-      <div class="grid gap-20 sm:grid-cols-2 md:gap-24">
-        <x-form.input name="first_name" label="Vorname*" wire:model.blur="first_name" autocomplete="given-name" />
-        <x-form.input name="last_name" label="Name*" wire:model.blur="last_name" autocomplete="family-name" />
-      </div>
-
-      @if ($this->field('street') || $this->field('zip_city'))
-        <div class="grid gap-20 sm:grid-cols-2 md:gap-24">
-          @if ($mode = $this->field('street'))
-            <x-form.input name="street" :label="'Strasse/Nr.'.($mode === 'required' ? '*' : '')" wire:model.blur="street" autocomplete="street-address" />
-          @endif
-          @if ($mode = $this->field('zip_city'))
-            <x-form.input name="zip_city" :label="'PLZ/Ort'.($mode === 'required' ? '*' : '')" wire:model.blur="zip_city" autocomplete="postal-code" />
-          @endif
-        </div>
-      @endif
-
-      <div class="grid gap-20 sm:grid-cols-2 md:gap-24">
-        <x-form.input name="email" label="E-Mail*" type="email" wire:model.blur="email" autocomplete="email" />
-        @if ($mode = $this->field('phone'))
-          <x-form.input name="phone" :label="'Telefon'.($mode === 'required' ? '*' : '')" type="tel" wire:model.blur="phone" autocomplete="tel" />
-        @endif
-      </div>
-
-      @if ($mode = $this->field('message'))
-        <x-form.textarea name="message" :label="'Nachricht'.($mode === 'required' ? '*' : '')" wire:model.blur="message" rows="6" />
-      @endif
-
-      <div>
-        <x-form.checkbox id="privacy" wire:model.live="privacy" multiline :error="$errors->has('privacy')">
-          Ich habe die
-          <x-links.styled :href="route('page.privacy')" target="_blank">Datenschutzerklärung</x-links.styled>
-          gelesen und akzeptiere diese.*
-        </x-form.checkbox>
-        <x-form.error name="privacy" />
-      </div>
-
-      <x-form.honeypot wire:model="website" />
-      <x-form.error name="turnstileToken" />
+      <x-form.contact-fields :fields="$this->fields()" />
 
       <div>
         <x-buttons.primary type="submit" class="disabled:opacity-60" wire:loading.attr="disabled" wire:target="submit">

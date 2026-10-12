@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'pages.home')->name('page.home');
 
 Route::view('/disclaimer', 'pages.disclaimer')->name('page.disclaimer'); // module:disclaimer
+Route::view('/danke', 'pages.thanks')->name('page.thanks'); // module:contact-form
 Route::view('/impressum', 'pages.imprint')->name('page.imprint');
 Route::view('/datenschutz', 'pages.privacy')->name('page.privacy');
 

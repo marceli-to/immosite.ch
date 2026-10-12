@@ -26,7 +26,8 @@ Favicon/OG-Platzhalter, `config/site.php`, `module:remove`.
 Mails: eigene Kopf-/Fusszeile und Token-Farben in `resources/views/vendor/mail/html`.
 
 Für Formulare (von mehreren Modulen genutzt): `components/form/*` (input, textarea, checkbox,
-error, honeypot, turnstile), `app/Support/Turnstile.php`, `pages/privacy/forms.blade.php`.
+error, honeypot, turnstile, contact-fields), `app/Livewire/Concerns/ContactFields.php` (gemeinsame Felder
+und Regeln), `app/Support/Turnstile.php`, `pages/privacy/forms.blade.php`.
 
 ---
 
@@ -77,3 +78,28 @@ Hooks:
 - routes/console.php → Schedule::command('registrations:export-weekly')
 Config/env:
 - REGISTRATIONS_EXPORT_EMAIL, REGISTRATIONS_EXPORT_BCC, REGISTRATIONS_EXPORT_DAY, REGISTRATIONS_EXPORT_TIME
+
+---
+
+## contact-form (optional)
+Kontaktformular (Livewire) ohne Datenbank: Mail an die Vermarktung (Reply-To = Absender),
+Bestätigung an den Absender, danach Danke-Seite (noindex). Scheitert die Mail an die
+Vermarktung, sieht der Absender eine Fehlermeldung. Felder in `config/contact.php`.
+Landingpage: statt oder zusätzlich zu `registration` auf der Startseite.
+Files:
+- app/Livewire/ContactForm.php
+- app/Mail/ContactInquiry.php
+- app/Mail/ContactConfirmation.php
+- config/contact.php
+- resources/views/livewire/contact-form.blade.php
+- resources/views/mail/contact-inquiry.blade.php
+- resources/views/mail/contact-confirmation.blade.php
+- resources/views/sections/contact.blade.php
+- resources/views/pages/thanks.blade.php
+- tests/Feature/ContactFormTest.php
+Hooks:
+- routes/web.php → Route::view('/danke', …)->name('page.thanks')
+- resources/views/pages/home.blade.php → @include('sections.contact')
+- resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (geteilt mit registration)
+Config/env:
+- CONTACT_RECIPIENTS, TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
