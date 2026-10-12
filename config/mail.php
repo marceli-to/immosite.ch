@@ -115,4 +115,22 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown-Mails
+    |--------------------------------------------------------------------------
+    |
+    | Eigene Kopf- und Fusszeile (Projektname, Vermarkter-Adresse) und Farben in
+    | resources/views/vendor/mail/html. Die Mail-Farben stehen im CSS-Theme, weil
+    | Mailprogramme keine CSS-Variablen aus @theme kennen.
+    |
+    */
+
+    'markdown' => [
+        'theme' => 'default',
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
+
 ];

@@ -23,6 +23,8 @@ Layout (`components/layout/*`), Menü, Überschriften, Buttons, Links, Icons, Se
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
 Favicon/OG-Platzhalter, `config/site.php`, `module:remove`.
 
+Mails: eigene Kopf-/Fusszeile und Token-Farben in `resources/views/vendor/mail/html`.
+
 Für Formulare (von mehreren Modulen genutzt): `components/form/*` (input, textarea, checkbox,
 error, honeypot, turnstile), `app/Support/Turnstile.php`, `pages/privacy/forms.blade.php`.
 
@@ -59,3 +61,19 @@ Hooks:
 - resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (geteilt mit contact-form)
 Config/env:
 - TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
+
+---
+
+## weekly-export (optional, needs: registration)
+Wöchentliche Mail mit den neuen Anmeldungen (Liste + CSV) an die Vermarktung, inkl. leerer
+Wochen. Markiert erst nach erfolgreichem Versand. Wochentag und Zeit per `.env`.
+Files:
+- app/Console/Commands/ExportWeeklyRegistrations.php
+- app/Notifications/WeeklyRegistrationsExport.php
+- config/registration-export.php
+- resources/views/mail/registrations-export.blade.php
+- tests/Feature/WeeklyExportTest.php
+Hooks:
+- routes/console.php → Schedule::command('registrations:export-weekly')
+Config/env:
+- REGISTRATIONS_EXPORT_EMAIL, REGISTRATIONS_EXPORT_BCC, REGISTRATIONS_EXPORT_DAY, REGISTRATIONS_EXPORT_TIME
