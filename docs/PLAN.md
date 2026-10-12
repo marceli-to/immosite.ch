@@ -223,11 +223,43 @@ Tip: the fastest way to fill these in is a **pair** of desktop design + my finis
 
 ## 7. Next steps
 1. ✅ Write this plan.
-2. Create `immosite.ch` in the webroot + git repo (me).
+2. ✅ Create `immosite.ch` in the webroot + git repo (me).
 3. New Claude session in that folder, with this file as the briefing:
-   1. Copy the source repos (hueningerstrasse, shift, imwaldacher, scala, adlerstrasse) in as read-only references (outside the repo or git-ignored). The 4 brief PDFs are in `docs/briefs/` (git-ignored, the repo is public). The skill reads them from there as examples; don't copy them into `skill/`.
+   1. ✅ Copy the source repos (hueningerstrasse, shift, imwaldacher, scala, adlerstrasse) in as read-only references (outside the repo or git-ignored). The 4 brief PDFs are in `docs/briefs/` (git-ignored, the repo is public). The skill reads them from there as examples; don't copy them into `skill/`.
    2. ✅ Build the core starter (landing preset) and get it running. Write `CLAUDE.md` + `modules.md` alongside.
    3. ✅ (draft, defaults confirmed 2026-10-12) Fill in the responsive rules (§6) **before the modules**: they affect every component, so build them in from the start instead of retrofitting. Derive them from 1–2 earlier projects (desktop design + live site, e.g. `A27_Adlerstrasse_Website_Beschreibung.pdf` ↔ adlerstrasse-basel.ch, `G09_Scala_Website_Beschreibung.pdf` ↔ scala-zuerich.ch), then I correct them. Apply them to the core components.
    4. ✅ Add the modules one at a time, each with its manifest entry, tests and a remove check.
    5. ✅ Write the skill (`skill/immosite/SKILL.md` + `design-to-code.md`) + symlink it.
-   6. Trial run: scaffold a test landing page and a test full site with the skill, then compare the results.
+   6. ✅ Trial run: scaffold a test landing page and a test full site with the skill, then compare the results.
+
+---
+
+## 8. Status and how to pick up (updated 2026-10-12)
+
+**Done:** starter with core + 22 modules (`modules.md`), 117 tests, skill `immosite`
+(`skill/immosite`, symlinked to `~/.claude/skills/immosite`), two trial runs (landing + Adlerstrasse
+brief, findings fixed, test sites deleted), Shift patterns added (hero + stats, split bleed,
+columns, scroll-reveal), pattern library `/muster`.
+
+**Where things are:**
+- Conventions: `CLAUDE.md`. Modules and hooks: `modules.md`. Responsive rules: `docs/responsive-rules.md`.
+- Process for new sites: `skill/immosite/` (start prompt: `docs/new-project-prompt.md`).
+- Reference repos (read-only, git-ignored): `refs/` (adlerstrasse, aurea, hueningerstrasse, imwaldacher, radial, rheinfelderstrasse, scala, sennheimerstrasse, shift). Briefs: `docs/briefs/` (git-ignored).
+- Tools: `php artisan module:remove`, `bin/check-module-removal`, `npm run screenshots`, `php artisan isometry:build`, `skill/immosite/scripts/brief.swift`.
+- Local: https://immosite.ch.test (Herd), push over SSH (`git@github.com:marceli-to/immosite.ch.git`).
+
+**Decided along the way (not obvious from the code):**
+- Developer text in English, visitor text German (Swiss, no ß).
+- Commit and push after each finished step.
+- Design 1024 px = `lg` 1:1, `--scale` 1.15 from `xl`; burger by number of nav entries; scroll reveal off by default; map: two-finger pan.
+- Machine formats (XML, CSV, JSON) in PHP, not Blade.
+- A recurring pattern goes into the starter as a component + pattern file + test.
+- Intake: Claude asks the questions (AskUserQuestion), Marcel doesn't fill in a template.
+
+**Open:**
+- Hero mobile ratio (4:3) and slider autoplay (6 s) are defaults, not confirmed (`docs/responsive-rules.md` ❓).
+- First real project with the skill; expect corrections, feed them back.
+
+**Next task:** scan `/Users/marceli.to/Jamon.digital/Webroot` for more projects (most stoz
+projects have an `INSTALL.txt` with the SSH login of their server) and collect further
+patterns for the starter. Results: `docs/webroot-scan.md` (no credentials in the repo).
