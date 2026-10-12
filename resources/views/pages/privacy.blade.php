@@ -1,0 +1,19 @@
+@extends('app')
+@section('meta_title', 'Datenschutz')
+
+@section('content')
+
+  <x-sections.text>
+    <x-headings.h1>Datenschutzerklärung</x-headings.h1>
+
+    {{-- Ein Abschnitt pro Datei, damit Module ihren Teil mit einer Zeile
+         ein- und wieder austragen koennen (module:<name>). --}}
+    @include('pages.privacy.intro')
+    @include('pages.privacy.cookies')
+    @include('pages.privacy.hosting')
+    @includeWhen(config('services.google_analytics.id'), 'pages.privacy.analytics')
+    @includeWhen(config('site.fonts.stylesheet'), 'pages.privacy.adobe-fonts')
+    @include('pages.privacy.rights')
+  </x-sections.text>
+
+@endsection
