@@ -32,5 +32,5 @@
     alt="{{ $alt }}"
     @if ($width) width="{{ $width }}" height="{{ $height }}" @endif
     @if ($priority) fetchpriority="high" @else loading="lazy" decoding="async" @endif
-    {{ $attributes->merge(['class' => 'block h-full w-full object-cover']) }}>
+    {{ $attributes->merge(['class' => 'block w-full object-cover']) }}>
 </picture>

@@ -73,6 +73,8 @@ return [
 
     'pages' => [
         ['route' => 'page.home', 'title' => 'Projekt', 'nav' => true, 'footer' => false, 'sitemap' => ['weekly', '1.0']],
+        ['route' => 'page.location', 'title' => 'Lage', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.8']], // module:pages-full
+        ['route' => 'page.contact', 'title' => 'Kontakt', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.8']], // module:pages-full
         ['route' => 'page.disclaimer', 'title' => 'Disclaimer', 'nav' => false, 'footer' => true, 'sitemap' => ['yearly', '0.3']], // module:disclaimer
         ['route' => 'page.imprint', 'title' => 'Impressum', 'nav' => false, 'footer' => true, 'sitemap' => ['yearly', '0.3']],
         ['route' => 'page.privacy', 'title' => 'Datenschutz', 'nav' => false, 'footer' => true, 'sitemap' => ['yearly', '0.3']],

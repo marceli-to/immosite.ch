@@ -22,8 +22,9 @@ Regeln:
 
 Layout (`components/layout/*`), Menü, Überschriften, Buttons, Links, Icons, Seiten Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
-Favicon/OG-Platzhalter, `config/site.php`, `module:remove`, `x-media.picture` (Bild mit AVIF/WebP/Mobile-Varianten,
-Abmessungen aus der Datei).
+Favicon/OG-Platzhalter, `config/site.php`, `module:remove`, `x-sections.text`, `x-sections.split` (Text + Bild),
+`x-media.picture` (Bild mit AVIF/WebP/Mobile-Varianten,
+Abmessungen aus der Datei), Platzhalterbilder `public/img/placeholder-{1,2,3}.{jpg,webp}`.
 
 Mails: eigene Kopf-/Fusszeile und Token-Farben in `resources/views/vendor/mail/html`.
 
@@ -137,12 +138,6 @@ Files:
 - resources/views/components/gallery/slider.blade.php
 - resources/js/modules/gallery.js
 - resources/css/gallery.css
-- public/img/placeholder-1.jpg
-- public/img/placeholder-1.webp
-- public/img/placeholder-2.jpg
-- public/img/placeholder-2.webp
-- public/img/placeholder-3.jpg
-- public/img/placeholder-3.webp
 - tests/Feature/GalleryTest.php
 Hooks:
 - resources/js/app.js → import './modules/gallery.js'
@@ -150,5 +145,23 @@ Hooks:
 - resources/views/pages/home.blade.php → <x-gallery.slider … /> (Hero)
 Packages:
 - npm: swiper
+Config/env:
+- –
+
+---
+
+## pages-full (optional, needs: contact-form)
+Macht aus der Landingpage eine Website mit Navigation: Seiten Lage (Text, Distanztabelle,
+Google-Maps-Button, Karte falls `map`) und Kontakt (Intro + Kontaktformular).
+Distanzen und Maps-Link in `config/location.php`.
+Files:
+- config/location.php
+- resources/views/pages/location.blade.php
+- resources/views/pages/contact.blade.php
+- resources/views/components/sections/distances.blade.php
+- tests/Feature/FullPagesTest.php
+Hooks:
+- routes/web.php → Route::view('/lage', …), Route::view('/kontakt', …)
+- config/site.php → pages: `page.location`, `page.contact` (Navigation)
 Config/env:
 - –

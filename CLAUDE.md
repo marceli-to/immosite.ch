@@ -37,6 +37,7 @@ bin/check-module-removal <name> [<name> …]     # in Temp-Kopie entfernen, dann
 - **Container:** `<x-layout.inner>` (`max-w-site`, Padding 20 → 30 → 48px). Fliesstext in `.prose-site` / `max-w-text`.
 - **Config pro Thema** (`config/site.php`, `config/seo.php`, später `config/estate.php`, `config/melon.php` …). Secrets und URLs nur über `.env`.
 - **Alpine nicht selbst importieren**: Livewire bringt es mit. Plugins über `livewire:init` registrieren (siehe `resources/js/app.js`).
+- **Maschinenformate (XML, CSV, JSON) in PHP erzeugen**, nicht in Blade-Views (XMLWriter, fputcsv, json_encode). Blade nur für HTML und Mails; XML in einer `.blade.php` meldet der Editor als fehlerhaftes HTML.
 - Keine Debug-Reste. Jeder API-Abruf hat Timeout und Fehlerbehandlung und behält die letzten guten Daten.
 
 ## Module

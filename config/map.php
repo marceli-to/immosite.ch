@@ -28,7 +28,4 @@ return [
         ['coordinates' => [8.541694, 47.376887], 'title' => 'Projekt'],
     ],
 
-    // Link "In Google Maps öffnen" (Lage-Abschnitt). Null = kein Link.
-    'google_maps_url' => null,
-
 ];

@@ -26,7 +26,7 @@
     <div class="swiper-wrapper">
       @foreach ($slides as $slide)
         <div class="swiper-slide h-full" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} von {{ $slides->count() }}">
-          <x-media.picture :src="$slide['src']" :alt="$slide['alt']" :priority="$priority && $loop->first" />
+          <x-media.picture :src="$slide['src']" :alt="$slide['alt']" :priority="$priority && $loop->first" class="h-full" />
         </div>
       @endforeach
     </div>
