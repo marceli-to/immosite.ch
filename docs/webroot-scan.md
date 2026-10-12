@@ -9,7 +9,7 @@ Generated from `composer.json`, `package.json`, a keyword grep of `resources/` a
 - 292 project folders; 180 with an `INSTALL.txt` (formats vary: GitHub URL, PHP path, SSH line).
 - 224 Laravel (5–13, most 9–12), 71 with Statamic, 34 Livewire, Tailwind 3 (96) / 4 (52).
 - 48 mention stoz; 63 are stoz or show real-estate signals.
-- SSH port 2121: 38 projects, 27 of them stoz (all stoz real-estate sites except a few use it). Marcel's rule of thumb holds.
+- SSH port 2121: 38 projects, 27 of them stoz; 27 of the 48 stoz projects use it. Marcel's rule of thumb ("port 2121 = stoz") mostly holds.
 
 Flags: `flatfox`, `melon`, `iso` (isometry), `apt` (apartment/rental words), `map` (Mapbox), `reveal` (scroll animation), `form`.
 
