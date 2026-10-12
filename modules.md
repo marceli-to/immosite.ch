@@ -23,7 +23,7 @@ Rules:
 Layout (`components/layout/*`), menu, headings, buttons, links, icons, pages Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
 favicon/OG placeholders, `config/site.php`, `module:remove`, `x-sections.text`, `x-sections.split` (text + image),
-`x-media.picture` (image with AVIF/WebP/mobile variants,
+`x-accordion.group` / `x-accordion.item` (Alpine collapse), `x-media.picture` (image with AVIF/WebP/mobile variants,
 dimensions read from the file), placeholder images `public/img/placeholder-{1,2,3}.{jpg,webp}`.
 
 Mails: custom header/footer and token colours in `resources/views/vendor/mail/html`.
@@ -244,3 +244,18 @@ Hooks:
 - routes/console.php → Schedule::command('apartments:fetch') (shared with apartments-flatfox)
 Config/env:
 - APARTMENTS_DRIVER=melon, MELON_API_URL, MELON_MOCK
+
+---
+
+## faq (optional)
+FAQ page /faq with an accordion (one open at a time, animated). Questions and answers in
+`config/faq.php`.
+Files:
+- config/faq.php
+- resources/views/pages/faq.blade.php
+- tests/Feature/FaqTest.php
+Hooks:
+- routes/web.php → Route::view('/faq', …)
+- config/site.php → pages: `page.faq` (navigation)
+Config/env:
+- –
