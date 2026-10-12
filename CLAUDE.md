@@ -24,8 +24,8 @@ Nach jeder Änderung müssen `php artisan test` und `npm run build` grün sein.
 - **Sprache:** UI-Texte und Code-Kommentare deutsch, Schweizer Rechtschreibung, kein ß. In Kommentaren ae/oe/ue statt Umlaute. Kommentare erklären das *Warum*.
 - **Farben sind semantische Tokens**, nie nach dem Farbton benannt: `primary`, `primary-light`, `on-primary`, `surface`, `surface-alt`, `ink`, `muted`, `line`, später `status-free`, `status-reserved`, `status-rented` … Konkrete Werte stehen nur im `@theme`-Block in `resources/css/app.css`. Falsch: `text-steel`, `bg-cocoa`.
 - **Schriften** sind ebenfalls Tokens (`--font-sans`, `--font-display`). Die Quelle (Typekit-Link) steht nur in `config/site.php` → `fonts.stylesheet`.
-- **Schriftgrössen:** klassische Skala `text-xxs`, `text-xs`, `text-sm`, `text-lg`, `text-xl`, `text-2xl` … `text-8xl`, **ohne `base`**. Die Tailwind-Defaults sind gelöscht (`--text-*: initial`), die px-Werte stehen im `@theme`. Mobile zuerst: `text-4xl md:text-6xl`. Zeilenhöhen per `leading-*` in der Komponente, nicht in der Skala.
-- **Abstände:** `--spacing: 1px`, also `px-18` = 18px. Werte direkt aus dem Design übernehmen. Keine `--spacing-*`-Listen.
+- **Schriftgrössen:** klassische Skala `text-xxs`, `text-xs`, `text-sm`, `text-lg`, `text-xl`, `text-2xl` … `text-8xl`, **ohne `base`**. Die Tailwind-Defaults sind gelöscht (`--text-*: initial`), die px-Werte stehen im `@theme`. Mobile zuerst: `text-3xl md:text-5xl lg:text-6xl`. Zeilenhöhen per `leading-*` in der Komponente, nicht in der Skala.
+- **Abstände:** `--spacing` = 1px (ab `xl` × `--scale`), also `px-18` = 18px. Werte direkt aus dem Design übernehmen. Keine `--spacing-*`-Listen.
 - **Responsive:** Regeln in `docs/responsive-rules.md`. Entwurf = 1024px = `lg`, Werte dort 1:1; `md` Zwischenwerte; Mobile abgeleitet (Titel ×0.6, Abschnittsabstände ×0.5). Ab `xl` skaliert `--scale` alles um 1.15, Klassen bleiben gleich.
 - **Container:** `<x-layout.inner>` (`max-w-site`, Padding 20 → 30 → 48px). Fliesstext in `.prose-site` / `max-w-text`.
 - **Config pro Thema** (`config/site.php`, `config/seo.php`, später `config/estate.php`, `config/melon.php` …). Secrets und URLs nur über `.env`.
