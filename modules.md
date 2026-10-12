@@ -310,3 +310,17 @@ Hooks:
 - resources/views/components/apartments/table.blade.php → @case('apply')
 Config/env:
 - –
+
+---
+
+## melon-lead-hook (optional, needs: contact-form, apartments-melon)
+Sends contact and application form submissions to Melon as a lead (JSON POST, Basic Auth,
+PLZ/Ort split). Best effort: failures are logged, the visitor never sees them.
+Files:
+- app/Support/SendLeadToMelon.php
+- config/melon-lead.php
+- tests/Feature/MelonLeadHookTest.php
+Hooks:
+- app/Livewire/ContactForm.php → app(SendLeadToMelon::class)->send($data)
+Config/env:
+- MELON_HOOK_ENABLED, MELON_HOOK_URL, MELON_HOOK_USERNAME, MELON_HOOK_PASSWORD, MELON_HOOK_TIMEOUT

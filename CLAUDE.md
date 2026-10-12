@@ -46,6 +46,7 @@ Every optional feature is a module, described in `modules.md` (files, hooks, con
 
 - Every file of a module is listed in the manifest.
 - Spots in shared code are marked: `// module:<name>` or `{{-- module:<name> --}}`. `grep -rn "module:<name>"` finds all hooks.
+- If a hook needs a class import (`use …;`), mark that line too (Pint turns fully qualified names into imports).
 - A module touches shared code in as few places as possible, ideally one line.
 - After removing a module, tests and build must still pass.
 

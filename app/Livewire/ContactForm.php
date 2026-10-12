@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Concerns\ContactFields;
 use App\Mail\ContactConfirmation;
 use App\Mail\ContactInquiry;
+use App\Support\SendLeadToMelon; // module:melon-lead-hook
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -68,6 +69,8 @@ class ContactForm extends Component
         } catch (\Throwable $e) {
             report($e);
         }
+
+        app(SendLeadToMelon::class)->send($data); // module:melon-lead-hook
 
         $this->resetContactFields();
         $this->redirectRoute('page.thanks');
