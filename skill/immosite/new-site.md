@@ -2,7 +2,8 @@
 
 ## 1. Intake
 
-Collect before touching code; ask for what's missing in one go:
+Collect before touching code; ask for what's missing in one go. Marcel usually pastes the filled-in
+template from the starter's `docs/new-project-prompt.md`; its fields are the list below.
 
 - Project name, domain, client / marketer (name, address, contact person, e-mail, phone).
 - Landing page or full site, and the modules (`modules.md` in the starter). Presets and the matching removal (removing a module also removes everything that needs it):
@@ -23,7 +24,7 @@ Collect before touching code; ask for what's missing in one go:
 cd /Users/marceli.to/Jamon.digital/Webroot
 git clone /Users/marceli.to/Jamon.digital/Webroot/immosite.ch <domain>   # local starter, committed state
 cd <domain>
-rm -rf .git skill docs/PLAN.md && git init && git symbolic-ref HEAD refs/heads/main
+rm -rf .git skill docs/PLAN.md docs/new-project-prompt.md && git init && git symbolic-ref HEAD refs/heads/main
 # repo as marceli-to without switching the global gh account (--private if agreed)
 GH_TOKEN=$(gh auth token --user marceli-to) gh repo create marceli-to/<domain> --public
 git remote add origin git@github.com:marceli-to/<domain>.git

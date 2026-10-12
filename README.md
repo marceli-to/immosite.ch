@@ -2,6 +2,7 @@
 
 Starter for real-estate websites (from a landing page to a full website with apartment listings).
 New projects are created from this repo via the Claude Code skill `immosite`.
+**Start a new project:** copy the prompt in [`docs/new-project-prompt.md`](docs/new-project-prompt.md) into a new Claude session.
 
 - Conventions: [`CLAUDE.md`](CLAUDE.md)
 - Modules: [`modules.md`](modules.md)
