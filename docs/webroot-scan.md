@@ -4,11 +4,64 @@ Inventory of `/Users/marceli.to/Jamon.digital/Webroot` to find more projects and
 Generated from `composer.json`, `package.json`, a keyword grep of `resources/` and `git log`.
 **No server data in this file**: hosts, users and passwords from `INSTALL.txt` stay out of the repo.
 
+## Selection rule (Marcel, 2026-10-12)
+
+**A project is a stoz project when its `INSTALL.txt` contains an SSH line with port 2121**
+(`ssh <user>@<host> -p 2121`). Only those count; every project has an `INSTALL.txt`.
+The grouping further down was made from the keyword "stoz" in the code and is **superseded**:
+redo it from this rule (the first pass found only 180 `INSTALL.txt` files with
+`find -maxdepth 2 -iname INSTALL.txt`; check for other names/locations before trusting that).
+
+Projects on port 2121 found in the first pass (38, to verify):
+
+- adlerstrasse-basel.ch
+- ai-s.ch
+- aurea-reichenburg.ch
+- bachofner-kanal.ch
+- bambole.ch
+- creativefactory-renens.ch
+- drive-academy.ch
+- faw.ch
+- hueningerstrasse.ch
+- landing.aupark-reinach.ch
+- landing.pappelstrasse.ch
+- landing.ruem.ch
+- landing.werkwinkel.ch
+- lindenbaum.ch
+- luppmenpark.ch
+- magnolia.ch
+- nidum-sempach.ch
+- nineone.ch.landing
+- pandaundpinguin.ch
+- pappelstrasse.ch
+- pek.ch
+- pfaeffikermaess.ch
+- pietsch-haustechnik.ch
+- rebo-bm.ch
+- rebobau.ch
+- restaurant-satt.ch
+- rheinfelderstrasse-basel.ch
+- ruem.ch
+- sandtner.ch
+- scala-zuerich.ch
+- siewerdtstrasse.ch
+- stiftung-wunderland.ch
+- tiny-isch-trendy.spross.com
+- treuhand-weiss.ch
+- typo3.altorfer-ag.ch
+- viak.ch
+- werkwinkel.ch
+- zuerigaertner.ch
+
+Not on port 2121 but in the keyword list (so **not** stoz by the rule, e.g. older Vue-generation
+real-estate sites like nineone.ch, oerlikon.ch, muenchhaldenstrasse.ch, mps.ch, kornhaus-roetelstrasse.ch):
+check whether they moved hosting or are really not stoz before dropping them.
+
 ## Numbers
 
 - 292 project folders; 180 with an `INSTALL.txt` (formats vary: GitHub URL, PHP path, SSH line).
 - 224 Laravel (5–13, most 9–12), 71 with Statamic, 34 Livewire, Tailwind 3 (96) / 4 (52).
-- 48 mention stoz; 63 are stoz or show real-estate signals.
+- 48 mention stoz in the code; 63 are stoz by keyword or show real-estate signals (old grouping, see the selection rule).
 - SSH port 2121: 38 projects, 27 of them stoz; 27 of the 48 stoz projects use it. Marcel's rule of thumb ("port 2121 = stoz") mostly holds.
 
 Flags: `flatfox`, `melon`, `iso` (isometry), `apt` (apartment/rental words), `map` (Mapbox), `reveal` (scroll animation), `form`.
@@ -92,7 +145,7 @@ Flags: `flatfox`, `melon`, `iso` (isometry), `apt` (apartment/rental words), `ma
 | weberbrunner.eu.import |  | Laravel 10, Statamic 5, Livewire, TW3 |  |
 | zuerigaertner.ch | 2025-11-14 | Laravel 9, Statamic 3, Vue, TW3 | map |
 
-## Next session: deep dive
+## Next session: deep dive (only projects selected by the rule above)
 
 Read-only, never open `INSTALL.txt` / `.env`. Compare every project with `modules.md` and the
 "Brief section → Starter part" table in `skill/immosite/design-to-code.md`; report only what the starter lacks:

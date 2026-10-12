@@ -262,4 +262,4 @@ columns, scroll-reveal), pattern library `/muster`.
 
 **Next task:** webroot scan for more projects and patterns. The inventory is done
 (`docs/webroot-scan.md`: 63 stoz / real-estate projects, grouped); the deep dive per group is
-described at the end of that file and hasn't started. No credentials from `INSTALL.txt` in the repo.
+described at the end of that file and hasn't started. **Selection rule: only projects whose `INSTALL.txt` has `ssh … -p 2121` (= stoz).** No credentials from `INSTALL.txt` in the repo.
