@@ -6,8 +6,8 @@
 
 <footer>
 
-  <x-layout.inner class="py-32 md:py-48">
-    <div class="grid gap-x-40 gap-y-24 text-xs md:text-sm sm:grid-cols-2 md:grid-cols-3">
+  <x-layout.inner class="py-32 md:py-40 lg:py-48">
+    <div class="grid gap-x-40 gap-y-24 text-xs sm:grid-cols-2 lg:grid-cols-3 lg:text-sm">
 
       <div>
         <p class="font-bold">{{ $marketer['name'] }}</p>
@@ -28,7 +28,7 @@
   </x-layout.inner>
 
   <div class="bg-surface-alt">
-    <x-layout.inner class="flex flex-wrap gap-x-28 gap-y-6 py-12 text-xs md:text-sm">
+    <x-layout.inner class="flex flex-wrap gap-x-28 gap-y-6 py-12 text-xs lg:text-sm">
       @foreach ($legal as $page)
         <a href="{{ route($page['route']) }}" class="transition-colors hover:text-primary">{{ $page['title'] }}</a>
       @endforeach

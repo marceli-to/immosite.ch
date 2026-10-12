@@ -3,7 +3,7 @@
 <div
   x-cloak
   x-show="menu"
-  x-transition.opacity
+  x-transition.opacity.duration.200ms
   @keydown.escape.window="menu = false"
   class="fixed inset-0 z-60 flex h-dvh w-full items-center justify-center bg-surface-alt md:hidden">
   <nav aria-label="Hauptnavigation">

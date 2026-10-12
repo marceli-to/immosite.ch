@@ -3,10 +3,10 @@
 @endphp
 
 <header class="sticky top-0 z-50 w-full bg-surface-alt">
-  <x-layout.inner class="flex items-center justify-between gap-x-40 py-20 md:py-28">
+  <x-layout.inner class="flex items-center justify-between gap-x-40 py-20 lg:py-28">
 
     <a href="{{ route('page.home') }}" aria-label="{{ config('site.name') }} – Startseite" class="relative z-70 shrink-0">
-      <x-icons.logo class="block h-auto w-140 md:w-180" />
+      <x-icons.logo class="block h-auto w-140 lg:w-180" />
     </a>
 
     {{-- Eine Seite allein braucht keine Navigation (Landingpage). --}}

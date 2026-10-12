@@ -2,7 +2,7 @@
 
 How a **desktop-only design** becomes tablet + mobile. Derived from Adlerstrasse and Scala
 (brief PDF ↔ code) and Hüningerstrasse / Im Waldacher (current generation), 2026-10-12.
-Status: **draft, to be corrected by Marcel.** Items marked ❓ are open decisions.
+Status: **draft, to be corrected by Marcel.** Decided 2026-10-12: burger below `md`, scale up at `xl`, scroll reveal off, map two-finger pan. Remaining ❓ are defaults until confirmed.
 
 Becomes `skill/immosite/design-to-code.md` once settled.
 
@@ -21,8 +21,9 @@ Tailwind defaults, no custom screens (`xs` was defined twice and never used).
 | mobile | < 768 | one column, mobile sizes |
 | tablet | `md` 768–1023 | layout splits into columns, **in-between** sizes |
 | desktop | `lg` ≥ 1024 | design values 1:1 |
-| wide | `xl` ≥ 1280 | container stops growing ❓ scale up? |
+| wide | `xl` ≥ 1280 | everything × `--scale` (1.15): spacing, type, container |
 
+- **Wide screens:** one variable, `--scale` (1 → 1.15 from `xl`), multiplies `--spacing`, every `--text-*` and `--container-*` in `@theme`. Classes don't change; the page zooms. Like Scala's ×1.2, but in one place.
 - `sm` (640) only for small item grids (2 columns) and form rows.
 - Past projects mixed this (Hüningerstrasse: desktop nav at `md`, mobile layout until `lg`). Standard: **both switch at `md`**, unless the text column would be narrower than ~340 px; then that one section splits at `lg`.
 
@@ -69,7 +70,7 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 
 ## 6. Navigation
 
-- Burger below `md` ❓ (Adler, Hüningerstrasse: `md`; Scala: `sm`). Check that the desktop nav fits at 768; if not, burger below `lg`.
+- **Burger below `md`** (decided). Check that the desktop nav fits at 768; if not, that project switches below `lg`.
 - Mobile menu: **full-screen overlay**, background `surface-alt`, opacity fade (200–300 ms), Escape closes, **page scroll locked** while open (Adler/Scala didn't), real `<button>` with `aria-expanded`.
 - Header: `sticky`, solid background. Transparent over the hero only when the design shows it (Hüningerstrasse home: background fades in after 30vh).
 - Anchors clear the sticky header: `scroll-mt-<header height>`.
@@ -97,7 +98,7 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 
 - Full width. Height by aspect: **1:1 mobile, 16:9 tablet, design ratio at `lg`** (design ≈ 3:1). Past 16:8 on mobile was fine, 16:4 at 2xl too flat.
 - Scroll zoom off, zoom buttons on.
-- Touch ❓: `cooperativeGestures: true` (two-finger pan, Waldacher) vs. dragging off entirely (Hüningerstrasse). Proposal: cooperativeGestures.
+- Touch: **`cooperativeGestures: true`** (decided): one finger scrolls the page, two fingers move the map.
 
 ## 11. Always added (not in the design)
 
@@ -105,7 +106,7 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 - `focus-visible` outline on everything interactive.
 - `scroll-smooth` on `<html>`.
 - Accordions animate (Alpine collapse). Scala's didn't.
-- ❓ Scroll reveal (fade-in on scroll): only Hüningerstrasse had it. Default off?
+- Scroll reveal (fade-in on scroll): **off by default** (decided). Optional module when a project wants it.
 
 ## 12. Checks before showing it
 
@@ -114,3 +115,20 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 - Tap targets ≥ 44 px, body ≥ 16 px, table ≥ 12 px.
 - Mobile menu: opens, closes on Escape and link click, page doesn't scroll behind it.
 - Sticky elements don't overlap.
+
+## Applied in the core (2026-10-12)
+
+| Element | Mobile → `md` → `lg` (→ `xl` × 1.15) |
+|---|---|
+| h1 | 28 → 40 → 48 |
+| h2 | 24 → 32 → 40 |
+| h3 | 20 → 20 → 24 |
+| body, buttons | 18 → 18 → 20 |
+| footer | 14 → 14 → 16, grid 1 → 2 (`sm`) → 3 (`lg`) |
+| container padding | 20 → 30 → 48, max width 1024 |
+| text section padding | 40 → 60 → 80 |
+| paragraph margin | 20 → 24 → 24 |
+| header | `py-20 lg:py-28`, burger below `md`, anchors `scroll-pt-80 lg:scroll-pt-100` |
+
+Mobile menu: opacity fade 200 ms, closes on Escape and link click, page scroll locked while open.
+Checked at 390 / 768 / 1024 / 1440: no horizontal overflow.

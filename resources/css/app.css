@@ -16,11 +16,26 @@
 | (Schwesterprojekt) aendert nur diesen Block. Farbnamen sind deshalb Rollen,
 | nie Farbtoene: text-primary statt text-bordeaux.
 |
+| Massstab: Die Entwuerfe sind 1024px breit und gelten 1:1 ab lg. Ab xl wird
+| alles (Abstaende, Schrift, Container) mit --scale vergroessert, damit die
+| Seite auf grossen Bildschirmen nicht klein wirkt. Klassen bleiben gleich.
+|
 */
 
+:root {
+  --scale: 1;
+}
+
+@media (width >= 80rem) {
+  :root {
+    --scale: 1.15;
+  }
+}
+
 @theme {
-  /* 1 Einheit = 1px: px-18 sind 18px, Werte direkt aus dem Design uebernehmen. */
-  --spacing: 1px;
+  /* 1 Einheit = 1px (ab xl × --scale): px-18 sind 18px, Werte direkt aus dem
+     Design uebernehmen. */
+  --spacing: calc(1px * var(--scale));
 
   /* Farben */
   --color-primary: #3d5a6c;       /* Buttons, Links, aktive Navigation */
@@ -39,27 +54,27 @@
   /* Schriftgroessen: eigene Skala statt der Tailwind-Defaults, ohne base.
      Zeilenhoehen setzen body und Komponenten (leading-*), nicht die Skala. */
   --text-*: initial;
-  --text-xxs: 12px;
-  --text-xs: 14px;
-  --text-sm: 16px;
-  --text-lg: 18px;
-  --text-xl: 20px;
-  --text-2xl: 24px;
-  --text-3xl: 28px;
-  --text-4xl: 32px;
-  --text-5xl: 40px;
-  --text-6xl: 48px;
-  --text-7xl: 56px;
-  --text-8xl: 64px;
+  --text-xxs: calc(12px * var(--scale));
+  --text-xs: calc(14px * var(--scale));
+  --text-sm: calc(16px * var(--scale));
+  --text-lg: calc(18px * var(--scale));
+  --text-xl: calc(20px * var(--scale));
+  --text-2xl: calc(24px * var(--scale));
+  --text-3xl: calc(28px * var(--scale));
+  --text-4xl: calc(32px * var(--scale));
+  --text-5xl: calc(40px * var(--scale));
+  --text-6xl: calc(48px * var(--scale));
+  --text-7xl: calc(56px * var(--scale));
+  --text-8xl: calc(64px * var(--scale));
 
-  /* Layout */
-  --container-site: 1280px;
-  --container-text: 760px;
+  /* Layout: site = Designbreite inkl. Seitenraender */
+  --container-site: calc(1024px * var(--scale));
+  --container-text: calc(720px * var(--scale));
 }
 
 @layer base {
   body {
-    @apply bg-surface font-sans text-ink text-lg leading-[1.45] antialiased md:text-xl;
+    @apply bg-surface font-sans text-ink text-lg leading-[1.45] antialiased lg:text-xl;
   }
 
   strong {
@@ -69,6 +84,11 @@
   [x-cloak] {
     display: none !important;
   }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
 }
 
 /* Fliesstext in Inhaltsbereichen: Abstaende zwischen Absaetzen und Listen,
@@ -76,7 +96,7 @@
 @layer components {
   .prose-site p:not(:last-child),
   .prose-site ul:not(:last-child) {
-    @apply mb-16 md:mb-24;
+    @apply mb-20 md:mb-24;
   }
 
   .prose-site ul {
