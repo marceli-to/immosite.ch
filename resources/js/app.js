@@ -1,8 +1,8 @@
-// Alpine wird von Livewire 4 mitgeliefert und dort auch gestartet. Ein eigener
-// Alpine-Import mit Alpine.start() laeuft als zweite Instanz und bricht Livewires
-// Initialisierung ab: wire:submit bindet dann nicht mehr und Formulare fallen
-// auf einen nativen GET-Submit zurueck (Formulardaten landen in der URL).
-// Plugins deshalb ueber livewire:init an Livewires Alpine registrieren:
+// Alpine ships with Livewire 4 and is started there too. A separate Alpine
+// import with Alpine.start() runs as a second instance and breaks Livewire's
+// initialisation: wire:submit no longer binds and forms fall back to a
+// native GET submit (form data ends up in the URL).
+// So register plugins on Livewire's Alpine via livewire:init:
 //
 // document.addEventListener('livewire:init', () => {
 //   window.Alpine.plugin(collapse);

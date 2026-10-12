@@ -9,7 +9,7 @@
       <x-icons.logo class="block h-auto w-140 lg:w-180" />
     </a>
 
-    {{-- Eine Seite allein braucht keine Navigation (Landingpage). --}}
+    {{-- A single page needs no navigation (landing page). --}}
     @if ($nav->count() > 1)
       <x-menu.desktop.wrapper :items="$nav" class="hidden md:block" />
       <x-menu.mobile.button class="md:hidden" />

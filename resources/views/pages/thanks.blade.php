@@ -1,7 +1,7 @@
 @extends('app')
 @section('meta_title', 'Vielen Dank')
 
-{{-- Nur als Ziel nach dem Absenden gedacht, nicht in Suchmaschinen. --}}
+{{-- Only meant as the target after submitting, not for search engines. --}}
 @push('head')
   <meta name="robots" content="noindex">
 @endpush

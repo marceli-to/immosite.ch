@@ -117,12 +117,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Markdown-Mails
+    | Markdown mails
     |--------------------------------------------------------------------------
     |
-    | Eigene Kopf- und Fusszeile (Projektname, Vermarkter-Adresse) und Farben in
-    | resources/views/vendor/mail/html. Die Mail-Farben stehen im CSS-Theme, weil
-    | Mailprogramme keine CSS-Variablen aus @theme kennen.
+    | Custom header and footer (project name, marketer address) and colours in
+    | resources/views/vendor/mail/html. The mail colours live in the CSS theme
+    | because mail clients don't support CSS variables from @theme.
     |
     */
 

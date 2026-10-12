@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 /**
- * Kontaktformular: mailt die Anfrage an die Vermarktung und eine Bestaetigung
- * an den Absender, danach weiter auf /danke (eigene URL, als Conversion messbar,
- * ein Reload schickt nicht erneut ab).
+ * Contact form: mails the inquiry to the marketer and a confirmation
+ * to the sender, then redirects to /danke (own URL, trackable as a conversion,
+ * a reload doesn't submit again).
  */
 class ContactForm extends Component
 {
@@ -52,8 +52,8 @@ class ContactForm extends Component
 
         $data = $this->contactData();
 
-        // Ohne Datenbank ist die Mail an die Vermarktung die einzige Kopie der
-        // Anfrage. Scheitert sie, muss der Absender das erfahren.
+        // Without a database, the mail to the agency is the only copy of the
+        // inquiry. If it fails, the sender has to know.
         try {
             Mail::to(self::recipients())->send(new ContactInquiry($data));
         } catch (\Throwable $e) {

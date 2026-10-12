@@ -1,5 +1,5 @@
-/* Mail-Farben = Design-Tokens aus resources/css/app.css (Mailprogramme kennen
-   keine CSS-Variablen). Beim Reskin hier mitziehen: ink #2b2b2b, primary #3d5a6c,
+/* Mail colours = design tokens from resources/css/app.css (mail clients don't
+   support CSS variables). Update them here when reskinning: ink #2b2b2b, primary #3d5a6c,
    surface-alt #f2f2f0, line #d6d6d2. */
 
 /* Base */

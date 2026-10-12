@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Notification;
 
 class ExportWeeklyRegistrations extends Command
 {
-    protected $signature = 'registrations:export-weekly {--all : Alle Anmeldungen, nicht nur die noch nicht verschickten}';
+    protected $signature = 'registrations:export-weekly {--all : All registrations, not only those not yet sent}';
 
-    protected $description = 'Schickt die neuen Anmeldungen als Liste an die Vermarktung und markiert sie als verschickt';
+    protected $description = 'Sends the new registrations as a list to the marketer and marks them as sent';
 
     public function handle(): int
     {
         $recipients = self::addresses(config('registration-export.recipients'));
 
         if ($recipients === []) {
-            $this->error('Kein Empfänger gesetzt (REGISTRATIONS_EXPORT_EMAIL).');
+            $this->error('No recipient set (REGISTRATIONS_EXPORT_EMAIL).');
 
             return self::FAILURE;
         }
@@ -31,18 +31,18 @@ class ExportWeeklyRegistrations extends Command
 
         $registrations = $query->get();
 
-        // Auch eine leere Woche wird gemeldet: so sieht die Vermarktung, dass der
-        // Versand laeuft und nicht einfach ausgefallen ist.
+        // An empty week is reported too: that way the agency sees that the export
+        // is running and hasn't simply stopped.
         Notification::route('mail', $recipients)
             ->notify(new WeeklyRegistrationsExport($registrations, now()->subWeek(), now()));
 
-        // Erst nach erfolgreichem Versand markieren; scheitert die Mail, gehen die
-        // Anmeldungen naechste Woche erneut mit.
+        // Only mark after a successful send; if the mail fails, the registrations
+        // go out again next week.
         if ($registrations->isNotEmpty()) {
             Registration::whereKey($registrations->modelKeys())->update(['exported_at' => now()]);
         }
 
-        $this->info("{$registrations->count()} Anmeldung(en) an ".implode(', ', $recipients).' verschickt.');
+        $this->info("Sent {$registrations->count()} registration(s) to ".implode(', ', $recipients).'.');
 
         return self::SUCCESS;
     }

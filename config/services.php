@@ -35,13 +35,13 @@ return [
         ],
     ],
 
-    // Nur auf Live setzen. Leer = kein Tracking-Script und kein Abschnitt
-    // in der Datenschutzerklaerung.
+    // Set on live only. Empty = no tracking script and no section
+    // in the privacy policy.
     'google_analytics' => [
         'id' => env('GOOGLE_ANALYTICS_ID'),
     ],
 
-    // Cloudflare Turnstile. Leer = Formulare ohne Turnstile (nur Honeypot).
+    // Cloudflare Turnstile. Empty = forms without Turnstile (honeypot only).
     'turnstile' => [
         'site_key' => env('TURNSTILE_SITE_KEY'),
         'secret_key' => env('TURNSTILE_SECRET_KEY'),

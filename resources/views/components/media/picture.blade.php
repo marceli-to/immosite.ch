@@ -1,8 +1,8 @@
-{{-- Bild mit modernen Formaten und korrekten Abmessungen.
-     src: Pfad unter public/ ohne Endung, z.B. "img/hero-1" → hero-1.jpg (Pflicht),
-     hero-1.avif / .webp und hero-1-mobile.* (bis 767 px) werden genutzt, wenn vorhanden.
-     width/height kommen aus der JPG-Datei, damit die Seite beim Laden nicht springt
-     (Adler/Scala hatten Hochformat-Werte auf Querformat-Bildern). --}}
+{{-- Image with modern formats and correct dimensions.
+     src: path under public/ without extension, e.g. "img/hero-1" → hero-1.jpg (required),
+     hero-1.avif / .webp and hero-1-mobile.* (up to 767 px) are used if present.
+     width/height come from the JPG file, so the page doesn't jump while loading
+     (Adler/Scala had portrait values on landscape images). --}}
 @props([
   'src',
   'alt' => '',

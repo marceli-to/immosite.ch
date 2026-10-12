@@ -1,7 +1,7 @@
-{{-- Bilder-Slider (Hero oder Karussell), module:gallery.
-     images: Liste von Pfaden ("img/hero-1") oder ['src' => …, 'alt' => …].
-     Verhalten nach docs/responsive-rules.md §8/§9: auf allen Groessen gleich,
-     Wischen, Pfeile (≥ 44 px), Autoplay stoppt bei Interaktion. --}}
+{{-- Image slider (hero or carousel), module:gallery.
+     images: list of paths ("img/hero-1") or ['src' => …, 'alt' => …].
+     Behaviour per docs/responsive-rules.md §8/§9: the same on all sizes,
+     swipe, arrows (≥ 44 px), autoplay stops on interaction. --}}
 @props([
   'images' => [],
   'alt' => '',

@@ -1,11 +1,11 @@
 # immosite.ch
 
-Starter für Immobilien-Websites (Landingpage bis vollständige Website mit Wohnungsangebot).
-Neue Projekte entstehen aus diesem Repo über den Claude-Code-Skill `immosite`.
+Starter for real-estate websites (from a landing page to a full website with apartment listings).
+New projects are created from this repo via the Claude Code skill `immosite`.
 
-- Konventionen: [`CLAUDE.md`](CLAUDE.md)
-- Module: [`modules.md`](modules.md)
-- Plan und Hintergrund: [`docs/PLAN.md`](docs/PLAN.md)
+- Conventions: [`CLAUDE.md`](CLAUDE.md)
+- Modules: [`modules.md`](modules.md)
+- Plan and background: [`docs/PLAN.md`](docs/PLAN.md)
 
 ## Setup
 

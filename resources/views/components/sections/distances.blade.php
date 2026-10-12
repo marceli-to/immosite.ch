@@ -1,5 +1,5 @@
-{{-- Distanztabelle Ziel × Verkehrsmittel aus config/location.php.
-     Auf schmalen Bildschirmen seitlich scrollbar statt gequetscht (§7). --}}
+{{-- Distance table destination × mode of transport from config/location.php.
+     Scrolls sideways on narrow screens instead of being squeezed (§7). --}}
 @php
   $modes = config('location.modes');
   $rows = config('location.distances');

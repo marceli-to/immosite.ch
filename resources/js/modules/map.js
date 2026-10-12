@@ -1,5 +1,5 @@
-// Mapbox-Karte (module:map). Mapbox (~1.5 MB) wird nur geladen, wenn die Seite
-// eine Karte hat; die Einstellungen kommen aus config/map.php via data-map.
+// Mapbox map (module:map). Mapbox (~1.5 MB) is only loaded if the page has
+// a map; settings come from config/map.php via data-map.
 
 const LOCALE = {
   'ScrollZoomBlocker.CtrlMessage': 'Zum Zoomen Strg + Scrollen verwenden',
@@ -32,7 +32,7 @@ async function initMap(el) {
     style: config.style,
     center: config.center,
     zoom: config.zoom,
-    // Ein Finger scrollt die Seite, zwei Finger bewegen die Karte.
+    // One finger scrolls the page, two fingers move the map.
     cooperativeGestures: true,
     locale: LOCALE,
   });
@@ -40,7 +40,7 @@ async function initMap(el) {
   map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
   map.scrollZoom.disable();
 
-  // Markerfarbe = Design-Token, damit ein Reskin die Karte mitnimmt.
+  // Marker colour = design token, so a reskin also covers the map.
   const color = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#000';
 
   for (const marker of config.markers ?? []) {
@@ -55,11 +55,11 @@ async function initMap(el) {
 
   const reveal = () => el.classList.remove('opacity-0');
   map.once('load', reveal);
-  // 'load' kommt nie, wenn Style oder Kacheln scheitern: trotzdem einblenden
-  // statt eine unsichtbare Flaeche stehen zu lassen.
+  // 'load' never fires if the style or tiles fail: reveal anyway instead of
+  // leaving an invisible area.
   map.once('error', reveal);
 }
 
 document.querySelectorAll('[data-map]').forEach((el) => {
-  initMap(el).catch((error) => console.error('Karte konnte nicht geladen werden:', error));
+  initMap(el).catch((error) => console.error('Map could not be loaded:', error));
 });

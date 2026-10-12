@@ -1,6 +1,6 @@
 @props(['url'])
-{{-- Logo als PNG (Mailprogramme zeigen kein SVG): public/img/mail-logo.png,
-     etwa 440 px breit. Ohne Datei steht der Projektname als Text. --}}
+{{-- Logo as PNG (mail clients don't show SVG): public/img/mail-logo.png,
+     about 440 px wide. Without the file, the project name is shown as text. --}}
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">

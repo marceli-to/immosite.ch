@@ -145,7 +145,7 @@ The skill source lives **in the starter repo** (e.g. `skill/immosite/SKILL.md`) 
 ## 5. Conventions (for `CLAUDE.md` in the starter)
 - Routes: German slugs (`/wohnen`, `/lage`, `/kontakt`, `/impressum`, `/datenschutz`, `/danke`), route names `page.*`.
 - Views: `resources/views/pages/*.blade.php`, components under `resources/views/components/{layout,menu,headings,buttons,links,form,icons,media,gallery,sections,objects}`.
-- UI text and code comments in German (Swiss spelling, no ß), comments explain *why*.
+- Code, comments, docs and commit messages in English. Visitor-facing text (pages, form labels, validation messages, mails, legal pages) in German, Swiss spelling, no ß. Comments explain *why*.
 - **Colour tokens are semantic**, never named after the colour: `primary`, `primary-light`, `surface`, `surface-alt`, `ink`, `muted`, `status-free`, `status-reserved`, `status-rented`, … The actual colours only live in `@theme`. (Bad: `text-steel`, `text-sage`, `bg-cocoa`.)
 - Fonts are tokens too (`--font-sans`, `--font-display`), and the source (Typekit kit, Google/self-hosted) only goes in the head/config.
 - Config per topic (`config/seo.php`, `config/estate.php`, `config/melon.php`, …), secrets/URLs only through `.env`.

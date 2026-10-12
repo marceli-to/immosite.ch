@@ -45,7 +45,7 @@ class SeoTest extends TestCase
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', $response->getContent());
 
         $xml = simplexml_load_string($response->getContent());
-        $this->assertNotFalse($xml, 'Sitemap ist kein gueltiges XML');
+        $this->assertNotFalse($xml, 'Sitemap is not valid XML');
 
         $expected = collect(config('site.pages'))->filter(fn ($page) => $page['sitemap']);
         $this->assertCount($expected->count(), $xml->url);

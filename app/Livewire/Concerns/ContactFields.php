@@ -5,9 +5,9 @@ namespace App\Livewire\Concerns;
 use App\Support\Turnstile;
 
 /**
- * Gemeinsame Felder fuer Anmelde- und Kontaktformular: Name, Adresse, E-Mail,
- * Telefon, Nachricht, Datenschutz, Honeypot, Turnstile. Welche der optionalen
- * Felder es gibt, liefert das Formular ueber fieldConfig().
+ * Shared fields for the registration and contact forms: name, address, email,
+ * phone, message, privacy, honeypot, Turnstile. Which of the optional fields
+ * exist is defined by the form via fieldConfig().
  */
 trait ContactFields
 {
@@ -27,7 +27,7 @@ trait ContactFields
 
     public bool $privacy = false;
 
-    /** Honeypot, siehe x-form.honeypot. */
+    /** Honeypot, see x-form.honeypot. */
     public string $website = '';
 
     public string $turnstileToken = '';
@@ -81,7 +81,7 @@ trait ContactFields
         ];
     }
 
-    /** Prueft ein Feld, sobald es verlassen wird, nicht erst beim Absenden. */
+    /** Validates a field as soon as it is left, not only on submit. */
     public function updated(string $property): void
     {
         if (array_key_exists(explode('.', $property)[0], $this->rules())) {
@@ -89,13 +89,13 @@ trait ContactFields
         }
     }
 
-    /** Bot hat das unsichtbare Feld ausgefuellt. */
+    /** A bot filled in the invisible field. */
     protected function isBot(): bool
     {
         return filled($this->website);
     }
 
-    /** Turnstile pruefen; bei Fehler Meldung setzen und Widget zuruecksetzen. */
+    /** Checks Turnstile; on failure sets an error message and resets the widget. */
     protected function passesTurnstile(): bool
     {
         if (Turnstile::verify($this->turnstileToken)) {
@@ -108,7 +108,7 @@ trait ContactFields
         return false;
     }
 
-    /** @return array<string, string|null> Eingaben der angezeigten Felder, leere als null. */
+    /** @return array<string, string|null> Input of the displayed fields, empty ones as null. */
     protected function contactData(): array
     {
         $data = ['first_name' => $this->first_name, 'last_name' => $this->last_name, 'email' => $this->email];

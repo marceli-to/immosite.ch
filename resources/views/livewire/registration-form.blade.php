@@ -7,9 +7,9 @@
   @else
     <x-headings.h2>Anmeldung</x-headings.h2>
 
-    {{-- method="post" als Absicherung: Faellt Livewires JS aus, wuerde ein Formular
-         ohne method per GET abschicken und die Personendaten in die URL schreiben
-         (Verlauf, Server-Logs, Referrer). So schlaegt der Fallback sichtbar fehl. --}}
+    {{-- method="post" as a safeguard: if Livewire's JS fails, a form without
+         method would submit via GET and put the personal data in the URL
+         (history, server logs, referrer). This way the fallback fails visibly. --}}
     <form wire:submit="submit" method="post" class="relative flex flex-col gap-20 md:gap-24">
 
       @if ($options)

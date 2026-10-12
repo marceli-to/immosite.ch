@@ -31,7 +31,7 @@ class Registration extends Model
         return trim("{$this->first_name} {$this->last_name}");
     }
 
-    /** Beschriftungen der gewaehlten Optionen, fuer Mails und Export. */
+    /** Labels of the selected options, for mails and export. */
     public function interestLabels(): array
     {
         $labels = config('registration.interests', []);

@@ -1,4 +1,4 @@
-/* Punkte unter dem Slider (module:gallery). Tap-Flaeche 24 px, sichtbar 10 px. */
+/* Dots below the slider (module:gallery). Tap area 24 px, visible 10 px. */
 .gallery-bullet {
   @apply relative size-10 cursor-pointer rounded-full bg-white/60 transition-colors;
 }

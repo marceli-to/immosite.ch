@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-/** Anfrage aus dem Kontaktformular an die Vermarktung. "Antworten" geht an den Absender. */
+/** Inquiry from the contact form to the marketer. "Reply" goes to the sender. */
 class ContactInquiry extends Mailable
 {
     use Queueable, SerializesModels;

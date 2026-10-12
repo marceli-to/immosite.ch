@@ -1,6 +1,6 @@
-{{-- Gemeinsame Felder von Anmelde- und Kontaktformular (App\Livewire\Concerns\ContactFields).
+{{-- Shared fields of the registration and contact forms (App\Livewire\Concerns\ContactFields).
      $fields: street / zip_city / phone / message => 'required' | 'optional' | false
-     $prefix: macht die IDs eindeutig, falls zwei Formulare auf einer Seite stehen. --}}
+     $prefix: makes the IDs unique in case two forms are on one page. --}}
 @props(['fields', 'prefix'])
 
 @php

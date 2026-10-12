@@ -77,7 +77,7 @@ class PagesTest extends TestCase
             preg_match_all('/\sid="([^"]+)"/', $this->get(route($page['route']))->getContent(), $m);
             $duplicates = array_keys(array_filter(array_count_values($m[1]), fn ($count) => $count > 1));
 
-            $this->assertSame([], $duplicates, "Doppelte IDs auf {$page['route']}");
+            $this->assertSame([], $duplicates, "Duplicate IDs on {$page['route']}");
         }
     }
 }

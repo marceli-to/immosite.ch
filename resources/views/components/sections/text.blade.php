@@ -1,5 +1,5 @@
-{{-- Textabschnitt: Titel + Fliesstext in Lesebreite.
-     Abstand 80 Desktop → 60 Tablet → 40 Mobile (Faktor 0.5, §3). --}}
+{{-- Text section: title + body text at reading width.
+     Spacing 80 desktop → 60 tablet → 40 mobile (factor 0.5, §3). --}}
 @props(['bg' => 'bg-surface'])
 
 <section class="{{ $bg }}">

@@ -11,7 +11,7 @@ export default defineConfig({
         tailwindcss(),
     ],
     build: {
-        // Mapbox (module:map) ist ein eigener, nachgeladener Chunk von ~1.8 MB.
+        // Mapbox (module:map) is a separate, lazy-loaded chunk of ~1.8 MB.
         chunkSizeWarningLimit: 2000,
     },
     server: {

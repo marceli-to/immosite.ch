@@ -1,5 +1,5 @@
-{{-- Honeypot: fuer Menschen unsichtbar, Bots fuellen es aus. Nicht display:none,
-     weil manche Bots solche Felder auslassen; stattdessen ausserhalb des Bildes. --}}
+{{-- Honeypot: invisible to humans, bots fill it in. Not display:none,
+     because some bots skip such fields; positioned off-screen instead. --}}
 @props(['id' => 'website'])
 
 <div aria-hidden="true" class="absolute -left-[9999px] h-1 w-1 overflow-hidden">

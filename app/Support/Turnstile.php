@@ -5,10 +5,10 @@ namespace App\Support;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Cloudflare Turnstile (unsichtbarer Spam-Schutz) fuer alle Formulare.
+ * Cloudflare Turnstile (invisible spam protection) for all forms.
  *
- * Ohne TURNSTILE_SECRET_KEY wird nicht geprueft, damit Formulare lokal und
- * vor dem Eintreffen der Schluessel testbar bleiben.
+ * Without TURNSTILE_SECRET_KEY nothing is checked, so forms stay testable
+ * locally and before the keys arrive.
  */
 class Turnstile
 {
@@ -36,8 +36,8 @@ class Turnstile
                     'remoteip' => request()->ip(),
                 ]);
         } catch (\Throwable $e) {
-            // Cloudflare nicht erreichbar: lieber eine Anmeldung zu viel als eine
-            // echte verlieren. Der Honeypot faengt die einfachen Bots trotzdem.
+            // Cloudflare unreachable: better one registration too many than losing a
+            // real one. The honeypot still catches the simple bots.
             report($e);
 
             return true;

@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Projekt
+| Project
 |--------------------------------------------------------------------------
 |
-| Alles, was pro Projekt wechselt und keine Design-Frage ist: Name, Texte
-| fuer Meta-Tags, Vermarkter-Adresse, Schriftquelle und die Seitenliste.
-| Farben, Schriften und Groessen stehen als Tokens in resources/css/app.css.
+| Everything that changes per project and isn't a design question: name, texts
+| for meta tags, marketer address, font source and the page list.
+| Colours, fonts and sizes live as tokens in resources/css/app.css.
 |
 */
 
@@ -15,26 +15,26 @@ return [
 
     'name' => env('APP_NAME', 'Immosite'),
 
-    // Titel der Startseite und Fallback, wenn eine Seite keinen eigenen setzt.
+    // Title of the home page and fallback if a page doesn't set its own.
     'title' => 'Immosite – Wohnen an bester Lage',
 
     'description' => 'Neubauprojekt mit Mietwohnungen an bester Lage. Jetzt informieren und vormerken lassen.',
 
-    // Liegt in public/, 1200 × 630 px.
+    // Lives in public/, 1200 × 630 px.
     'og_image' => 'img/og-image.jpg',
     'og_image_alt' => 'Visualisierung des Neubauprojekts',
 
-    // Browserleiste auf Mobile. Gleicher Wert wie --color-surface-alt.
+    // Browser bar on mobile. Same value as --color-surface-alt.
     'theme_color' => '#f2f2f0',
 
-    // Stylesheet der Webfonts (Adobe Fonts / Typekit). Leer lassen, wenn die
-    // Schriften selbst gehostet werden; die Datenschutzerklaerung blendet den
-    // Abschnitt zu Adobe Fonts dann aus.
+    // Stylesheet of the web fonts (Adobe Fonts / Typekit). Leave empty if the
+    // fonts are self-hosted; the privacy policy then hides the
+    // Adobe Fonts section.
     'fonts' => [
-        'stylesheet' => null, // z.B. 'https://use.typekit.net/xxxxxxx.css'
+        'stylesheet' => null, // e.g. 'https://use.typekit.net/xxxxxxx.css'
     ],
 
-    // Vermarktung: erscheint im Footer und im Impressum.
+    // Marketing agency: shown in the footer and in the imprint.
     'marketer' => [
         'name' => 'Muster Immobilien AG',
         'street' => 'Musterstrasse 1',
@@ -50,7 +50,7 @@ return [
         'development' => ['name' => 'Marcel Stadelmann, Zürich', 'url' => 'https://marceli.to'],
     ],
 
-    // Hosting fuer die Datenschutzerklaerung.
+    // Hosting, for the privacy policy.
     'hosting' => [
         'name' => 'webkeeper GmbH, 8604 Volketswil, Schweiz',
         'privacy_url' => 'https://www.webkeeper.ch/de/unternehmen/datenschutz',
@@ -58,16 +58,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Seiten
+    | Pages
     |--------------------------------------------------------------------------
     |
-    | Eine Liste fuer Hauptnavigation, Footer-Links und /sitemap.xml. Die Route
-    | selbst steht in routes/web.php. Module tragen ihre Seiten hier mit einer
-    | Zeile ein (markiert mit // module:<name>).
+    | One list for the main navigation, footer links and /sitemap.xml. The route
+    | itself lives in routes/web.php. Modules add their pages here with one
+    | line (marked with // module:<name>).
     |
-    | nav:     erscheint in der Hauptnavigation
-    | footer:  erscheint in der Footer-Leiste (rechtliche Seiten)
-    | sitemap: [changefreq, priority] oder null fuer "nicht in der Sitemap"
+    | nav:     shown in the main navigation
+    | footer:  shown in the footer bar (legal pages)
+    | sitemap: [changefreq, priority] or null for "not in the sitemap"
     |
     */
 

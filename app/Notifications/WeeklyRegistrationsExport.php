@@ -51,7 +51,7 @@ class WeeklyRegistrationsExport extends Notification
         return $mail;
     }
 
-    /** UTF-8-CSV mit BOM und Semikolon, damit Excel (de-CH) Umlaute und Spalten richtig liest. */
+    /** UTF-8 CSV with BOM and semicolons, so Excel (de-CH) reads umlauts and columns correctly. */
     public function csv(): string
     {
         $handle = fopen('php://temp', 'r+');

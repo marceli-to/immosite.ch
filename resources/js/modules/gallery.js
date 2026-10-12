@@ -1,5 +1,5 @@
-// Bilder-Slider (module:gallery). Swiper wird nur geladen, wenn die Seite einen
-// Slider mit mehr als einem Bild hat; Einstellungen kommen per data-gallery.
+// Image slider (module:gallery). Swiper is only loaded if the page has a
+// slider with more than one image; settings come via data-gallery.
 
 async function initSliders(sliders) {
   const [{ default: Swiper }, { Navigation, Pagination, Autoplay, EffectFade, A11y, Keyboard }] = await Promise.all([
@@ -9,7 +9,7 @@ async function initSliders(sliders) {
     import('swiper/css/effect-fade'),
   ]);
 
-  // Wer Bewegung im System reduziert hat, bekommt keinen Autoplay.
+  // No autoplay for users who enabled reduced motion in their system.
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   sliders.forEach((el) => {
@@ -48,5 +48,5 @@ async function initSliders(sliders) {
 const sliders = document.querySelectorAll('[data-gallery]');
 
 if (sliders.length) {
-  initSliders(sliders).catch((error) => console.error('Slider konnte nicht geladen werden:', error));
+  initSliders(sliders).catch((error) => console.error('Slider could not be loaded:', error));
 }

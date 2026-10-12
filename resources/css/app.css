@@ -10,16 +10,16 @@
 
 /*
 |--------------------------------------------------------------------------
-| Design-Tokens
+| Design tokens
 |--------------------------------------------------------------------------
 |
-| Die einzige Stelle mit konkreten Farben, Schriften und Groessen. Ein Reskin
-| (Schwesterprojekt) aendert nur diesen Block. Farbnamen sind deshalb Rollen,
-| nie Farbtoene: text-primary statt text-bordeaux.
+| The only place with concrete colours, fonts and sizes. A reskin
+| (sister project) only changes this block. That's why colour names are roles,
+| never hues: text-primary, not text-bordeaux.
 |
-| Massstab: Die Entwuerfe sind 1024px breit und gelten 1:1 ab lg. Ab xl wird
-| alles (Abstaende, Schrift, Container) mit --scale vergroessert, damit die
-| Seite auf grossen Bildschirmen nicht klein wirkt. Klassen bleiben gleich.
+| Scale: the designs are 1024px wide and apply 1:1 from lg. From xl,
+| everything (spacing, type, containers) is enlarged by --scale, so the
+| page doesn't look small on large screens. Classes stay the same.
 |
 */
 
@@ -34,28 +34,28 @@
 }
 
 @theme {
-  /* 1 Einheit = 1px (ab xl × --scale): px-18 sind 18px, Werte direkt aus dem
-     Design uebernehmen. */
+  /* 1 unit = 1px (from xl × --scale): px-18 is 18px, take values straight
+     from the design. */
   --spacing: calc(1px * var(--scale));
 
-  /* Farben */
-  --color-primary: #3d5a6c;       /* Buttons, Links, aktive Navigation */
-  --color-primary-light: #8fa6b4; /* Hover-Flaechen, Akzente */
-  --color-on-primary: #ffffff;    /* Text auf primary */
-  --color-surface: #ffffff;       /* Seitenhintergrund */
-  --color-surface-alt: #f2f2f0;   /* Baender, Header, Footer-Leiste */
-  --color-ink: #2b2b2b;           /* Fliesstext, Titel */
-  --color-muted: #6b6b6b;         /* Nebentexte, Fussnoten */
-  --color-line: #d6d6d2;          /* Linien, Tabellenraender */
-  --color-error: #a3243b;         /* Fehlermeldungen, Rahmen ungueltiger Felder */
-  --color-error-bg: #f6e6e9;      /* Hintergrund ungueltiger Felder */
+  /* Colours */
+  --color-primary: #3d5a6c;       /* Buttons, links, active navigation */
+  --color-primary-light: #8fa6b4; /* Hover areas, accents */
+  --color-on-primary: #ffffff;    /* Text on primary */
+  --color-surface: #ffffff;       /* Page background */
+  --color-surface-alt: #f2f2f0;   /* Bands, header, footer bar */
+  --color-ink: #2b2b2b;           /* Body text, titles */
+  --color-muted: #6b6b6b;         /* Secondary text, footnotes */
+  --color-line: #d6d6d2;          /* Lines, table borders */
+  --color-error: #a3243b;         /* Error messages, borders of invalid fields */
+  --color-error-bg: #f6e6e9;      /* Background of invalid fields */
 
-  /* Schriften: Quelle (Typekit-Link) steht in config/site.php */
+  /* Fonts: source (Typekit link) lives in config/site.php */
   --font-sans: ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sans);
 
-  /* Schriftgroessen: eigene Skala statt der Tailwind-Defaults, ohne base.
-     Zeilenhoehen setzen body und Komponenten (leading-*), nicht die Skala. */
+  /* Font sizes: own scale instead of the Tailwind defaults, without base.
+     Line heights are set by body and components (leading-*), not the scale. */
   --text-*: initial;
   --text-xxs: calc(12px * var(--scale));
   --text-xs: calc(14px * var(--scale));
@@ -70,7 +70,7 @@
   --text-7xl: calc(56px * var(--scale));
   --text-8xl: calc(64px * var(--scale));
 
-  /* Layout: site = Designbreite inkl. Seitenraender */
+  /* Layout: site = design width incl. side margins */
   --container-site: calc(1024px * var(--scale));
   --container-text: calc(720px * var(--scale));
 }
@@ -94,8 +94,8 @@
   }
 }
 
-/* Fliesstext in Inhaltsbereichen: Abstaende zwischen Absaetzen und Listen,
-   ohne dass jede Seite sie einzeln setzen muss. */
+/* Body text in content areas: spacing between paragraphs and lists,
+   without every page having to set it individually. */
 @layer components {
   .prose-site p:not(:last-child),
   .prose-site ul:not(:last-child) {

@@ -17,10 +17,10 @@ class RemoveModuleTest extends TestCase
         $this->root = sys_get_temp_dir().'/immosite-module-test-'.uniqid();
 
         File::put($this->path('modules.md', true), <<<'MD'
-        # Module
+        # Modules
 
-        ## Core (immer vorhanden)
-        Nichts.
+        ## Core (always present)
+        Nothing.
 
         ---
 
@@ -104,15 +104,15 @@ class RemoveModuleTest extends TestCase
 
         $this->assertFileDoesNotExist($this->path('app/Alpha.php'));
         $this->assertDirectoryDoesNotExist($this->path('resources/views/alpha'));
-        $this->assertFileDoesNotExist($this->path('app/Beta.php'), 'beta braucht alpha und muss mit');
+        $this->assertFileDoesNotExist($this->path('app/Beta.php'), 'beta needs alpha and must be removed too');
         $this->assertFileExists($this->path('app/Gamma.php'));
 
         $routes = File::get($this->path('routes/web.php'));
         $this->assertStringNotContainsString("'/a'", $routes);
         $this->assertStringContainsString("Route::view('/g', 'g'); // module:gamma", $routes);
-        $this->assertStringContainsString("Route::view('/ag', 'ag'); // module:gamma", $routes, 'geteilte Zeile bleibt fuer gamma');
+        $this->assertStringContainsString("Route::view('/ag', 'ag'); // module:gamma", $routes, 'shared line stays for gamma');
         $this->assertStringContainsString("Route::view('/core', 'core');", $routes);
-        $this->assertStringNotContainsString("'/ax'", $routes, 'Mitbesitzer, der nicht installiert ist, haelt die Zeile nicht');
+        $this->assertStringNotContainsString("'/ax'", $routes, 'a co-owner that is not installed does not keep the line');
 
         $manifest = File::get($this->path('modules.md'));
         $this->assertStringNotContainsString('## alpha', $manifest);
@@ -160,7 +160,7 @@ class RemoveModuleTest extends TestCase
     {
         foreach (RemoveModule::parse(File::get(base_path('modules.md'))) as $name => $module) {
             foreach ($module['files'] as $file) {
-                $this->assertFileExists(base_path($file), "modules.md ({$name}) nennt eine fehlende Datei");
+                $this->assertFileExists(base_path($file), "modules.md ({$name}) lists a missing file");
             }
         }
     }

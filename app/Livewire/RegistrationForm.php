@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 /**
- * Anmeldeformular der Landingpage: speichert die Anmeldung und schickt dem
- * Absender eine Bestaetigung. Welche Felder es gibt, steht in config/registration.php.
+ * Registration form of the landing page: stores the registration and sends the
+ * sender a confirmation. Which fields exist is defined in config/registration.php.
  */
 class RegistrationForm extends Component
 {
@@ -41,7 +41,7 @@ class RegistrationForm extends Component
 
     public function submit(): void
     {
-        // Bot: Erfolg vortaeuschen, nichts speichern.
+        // Bot: fake success, store nothing.
         if ($this->isBot()) {
             $this->submitted = true;
 
@@ -59,8 +59,8 @@ class RegistrationForm extends Component
             ...$this->contactData(),
         ]);
 
-        // Die Anmeldung ist gespeichert; scheitert nur die Bestaetigung, soll der
-        // Absender keinen Fehler sehen und es nicht noch einmal versuchen.
+        // The registration is stored; if only the confirmation fails, the sender
+        // shouldn't see an error and try again.
         try {
             Mail::to($registration->email)->send(new RegistrationConfirmation);
         } catch (\Throwable $e) {

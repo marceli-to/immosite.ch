@@ -2,18 +2,18 @@
 
 /*
 |--------------------------------------------------------------------------
-| Anmeldeformular (module:registration)
+| Registration form (module:registration)
 |--------------------------------------------------------------------------
 |
-| Felder und Auswahl pro Projekt. Die Unterschiede zwischen den Projekten
-| (Nachricht ja/nein, Telefon Pflicht oder nicht) stehen hier statt im Code.
+| Fields and options per project. The differences between projects
+| (message yes/no, phone required or not) live here instead of in code.
 |
 */
 
 return [
 
-    // Auswahl "Ich interessiere mich für", Wert => Beschriftung, in Anzeigereihenfolge.
-    // Leeres Array = Auswahl wird nicht angezeigt.
+    // "Ich interessiere mich für" options, value => label, in display order.
+    // Empty array = options are not shown.
     'interests' => [
         '2.5' => '2.5-Zimmerwohnung',
         '3.5' => '3.5-Zimmerwohnung',
@@ -21,8 +21,8 @@ return [
         'gewerbe' => 'Gewerbefläche',
     ],
 
-    // Vorname, Name und E-Mail sind immer Pflicht. Die übrigen Felder:
-    // 'required', 'optional' oder false (nicht angezeigt).
+    // First name, last name and email are always required. The other fields:
+    // 'required', 'optional' or false (not shown).
     'fields' => [
         'street' => 'required',
         'zip_city' => 'required',
@@ -30,8 +30,8 @@ return [
         'message' => false,
     ],
 
-    // Nach dem Absenden: null = Bestaetigung im Formular, sonst Routenname
-    // (z.B. 'page.thanks'), damit die Anmeldung als eigene URL messbar ist.
+    // After submit: null = confirmation inside the form, otherwise a route name
+    // (e.g. 'page.thanks'), so the registration is trackable as its own URL.
     'redirect_route' => null,
 
     'confirmation' => [

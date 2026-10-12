@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Prueft, ob der Starter nach dem Entfernen von Modulen noch laeuft:
-# kopiert das Projekt in ein Temp-Verzeichnis, entfernt die Module dort mit
-# `php artisan module:remove` und laesst Tests und Build laufen.
+# Checks that the starter still works after removing modules:
+# copies the project into a temp directory, removes the modules there with
+# `php artisan module:remove` and runs tests and build.
 #
 #   bin/check-module-removal registration
 #   bin/check-module-removal registration map gallery
 set -euo pipefail
 
 if [ $# -eq 0 ]; then
-  echo "Aufruf: bin/check-module-removal <modul> [<modul> ...]" >&2
+  echo "Usage: bin/check-module-removal <module> [<module> ...]" >&2
   exit 1
 fi
 
@@ -22,8 +22,8 @@ ln -s "$ROOT/node_modules" "$TMP/node_modules"
 
 cd "$TMP"
 php artisan module:remove "$@"
-# Livewire/Blade-Caches koennen auf geloeschte Klassen zeigen.
+# Livewire/Blade caches may point to deleted classes.
 php artisan optimize:clear > /dev/null
 php artisan test
 npm run build > /dev/null
-echo "OK: ohne [$*] laufen Tests und Build."
+echo "OK: tests and build pass without [$*]."

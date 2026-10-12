@@ -1,55 +1,55 @@
-# Module
+# Modules
 
-Manifest aller optionalen Module. Der Skill `immosite` entfernt beim Aufsetzen eines Projekts
-die nicht benötigten Module anhand dieser Liste und kopiert sie später bei Bedarf aus dem
-Starter zurück. In einem Projekt beschreibt diese Datei, was dort installiert ist.
+Manifest of all optional modules. When setting up a project, the `immosite` skill removes
+the modules that aren't needed using this list, and later copies them back from the
+starter if required. Inside a project, this file describes what is installed there.
 
 ```bash
-php artisan module:remove gallery map        # entfernt Module (+ alle, die sie brauchen)
-php artisan module:remove gallery --dry-run  # nur anzeigen
+php artisan module:remove gallery map        # removes modules (+ all modules that need them)
+php artisan module:remove gallery --dry-run  # only show what would happen
 ```
 
-Regeln:
-- Jede Datei, die zu einem Modul gehört, steht unter `Files:`.
-- Hooks in geteiltem Code sind **genau eine Zeile** und mit `// module:<name>` bzw. `{{-- module:<name> --}}` markiert. Gehört eine Zeile mehreren Modulen (`module:a,b`), bleibt sie, solange eines davon installiert ist.
-- `Hooks:` beschreibt die Zeilen für Menschen; `module:remove` findet sie über die Markierung.
-- Entfernen eines Moduls entfernt auch die Module, die es brauchen (`needs:`). Hinzufügen prüft `needs:` zuerst.
-- Nach dem Entfernen müssen `php artisan test` und `npm run build` grün sein.
-- `Packages:` (`npm: name`, `composer: vendor/name`) streicht `module:remove` aus package.json / composer.json.
-- Format der Überschrift: `## <name> (optional)` oder `## <name> (optional, needs: a, b)`.
+Rules:
+- Every file that belongs to a module is listed under `Files:`.
+- Hooks in shared code are **exactly one line** and marked with `// module:<name>` or `{{-- module:<name> --}}`. If a line belongs to several modules (`module:a,b`), it stays as long as one of them is installed.
+- `Hooks:` describes the lines for humans; `module:remove` finds them via the marker.
+- Removing a module also removes the modules that need it (`needs:`). Adding checks `needs:` first.
+- After removal, `php artisan test` and `npm run build` must pass.
+- `module:remove` deletes the `Packages:` (`npm: name`, `composer: vendor/name`) from package.json / composer.json.
+- Heading format: `## <name> (optional)` or `## <name> (optional, needs: a, b)`.
 
-## Core (immer vorhanden)
+## Core (always present)
 
-Layout (`components/layout/*`), Menü, Überschriften, Buttons, Links, Icons, Seiten Home /
+Layout (`components/layout/*`), menu, headings, buttons, links, icons, pages Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
-Favicon/OG-Platzhalter, `config/site.php`, `module:remove`, `x-sections.text`, `x-sections.split` (Text + Bild),
-`x-media.picture` (Bild mit AVIF/WebP/Mobile-Varianten,
-Abmessungen aus der Datei), Platzhalterbilder `public/img/placeholder-{1,2,3}.{jpg,webp}`.
+favicon/OG placeholders, `config/site.php`, `module:remove`, `x-sections.text`, `x-sections.split` (text + image),
+`x-media.picture` (image with AVIF/WebP/mobile variants,
+dimensions read from the file), placeholder images `public/img/placeholder-{1,2,3}.{jpg,webp}`.
 
-Mails: eigene Kopf-/Fusszeile und Token-Farben in `resources/views/vendor/mail/html`.
+Mails: custom header/footer and token colours in `resources/views/vendor/mail/html`.
 
-Für Formulare (von mehreren Modulen genutzt): `components/form/*` (input, textarea, checkbox,
-error, honeypot, turnstile, contact-fields), `app/Livewire/Concerns/ContactFields.php` (gemeinsame Felder
-und Regeln), `app/Support/Turnstile.php`, `pages/privacy/forms.blade.php`.
+For forms (used by several modules): `components/form/*` (input, textarea, checkbox,
+error, honeypot, turnstile, contact-fields), `app/Livewire/Concerns/ContactFields.php` (shared fields
+and rules), `app/Support/Turnstile.php`, `pages/privacy/forms.blade.php`.
 
 ---
 
 ## disclaimer (optional)
-Disclaimer-Seite (Haftungsausschluss, Urheberrecht).
+Disclaimer page (liability disclaimer, copyright).
 Files:
 - resources/views/pages/disclaimer.blade.php
 Hooks:
 - routes/web.php → Route::view('/disclaimer', …)->name('page.disclaimer')
-- config/site.php → pages: Eintrag `page.disclaimer`
+- config/site.php → pages: entry `page.disclaimer`
 Config/env:
 - –
 
 ---
 
 ## registration (optional)
-Anmeldeformular (Livewire) auf der Startseite: Interessen-Auswahl, Kontaktdaten, Datenschutz-
-Checkbox, Honeypot + optional Turnstile, Bestätigungsmail an den Absender. Felder pro Projekt in
-`config/registration.php` (Pflicht / optional / ausgeblendet).
+Registration form (Livewire) on the home page: interest selection, contact details, privacy
+checkbox, honeypot + optional Turnstile, confirmation mail to the sender. Fields per project in
+`config/registration.php` (required / optional / hidden).
 Files:
 - app/Livewire/RegistrationForm.php
 - app/Models/Registration.php
@@ -62,15 +62,15 @@ Files:
 - tests/Feature/RegistrationFormTest.php
 Hooks:
 - resources/views/pages/home.blade.php → @include('sections.registration')
-- resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (geteilt mit contact-form)
+- resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (shared with contact-form)
 Config/env:
 - TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
 
 ---
 
 ## weekly-export (optional, needs: registration)
-Wöchentliche Mail mit den neuen Anmeldungen (Liste + CSV) an die Vermarktung, inkl. leerer
-Wochen. Markiert erst nach erfolgreichem Versand. Wochentag und Zeit per `.env`.
+Weekly mail with the new registrations (list + CSV) to the marketer, including empty
+weeks. Marks them as exported only after a successful send. Weekday and time via `.env`.
 Files:
 - app/Console/Commands/ExportWeeklyRegistrations.php
 - app/Notifications/WeeklyRegistrationsExport.php
@@ -85,10 +85,10 @@ Config/env:
 ---
 
 ## contact-form (optional)
-Kontaktformular (Livewire) ohne Datenbank: Mail an die Vermarktung (Reply-To = Absender),
-Bestätigung an den Absender, danach Danke-Seite (noindex). Scheitert die Mail an die
-Vermarktung, sieht der Absender eine Fehlermeldung. Felder in `config/contact.php`.
-Landingpage: statt oder zusätzlich zu `registration` auf der Startseite.
+Contact form (Livewire) without a database: mail to the marketer (Reply-To = sender),
+confirmation to the sender, then a thank-you page (noindex). If the mail to the agency
+fails, the sender sees an error message. Fields in `config/contact.php`.
+Landing page: instead of or in addition to `registration` on the home page.
 Files:
 - app/Livewire/ContactForm.php
 - app/Mail/ContactInquiry.php
@@ -103,15 +103,15 @@ Files:
 Hooks:
 - routes/web.php → Route::view('/danke', …)->name('page.thanks')
 - resources/views/pages/home.blade.php → @include('sections.contact')
-- resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (geteilt mit registration)
+- resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (shared with registration)
 Config/env:
 - CONTACT_RECIPIENTS, TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
 
 ---
 
 ## map (optional)
-Mapbox-Karte über die volle Breite, Marker in der Farbe `primary`, zwei Finger zum Bewegen
-auf Touch-Geräten. Mapbox wird nur auf Seiten mit Karte geladen. Lage und Marker in
+Full-width Mapbox map, markers in the `primary` colour, two-finger panning on touch
+devices. Mapbox is only loaded on pages with a map. Location and markers in
 `config/map.php`.
 Files:
 - config/map.php
@@ -131,9 +131,9 @@ Config/env:
 ---
 
 ## gallery (optional)
-Bilder-Slider (Swiper) für Hero und Karussells: Wischen, Pfeile, Punkte, Autoplay stoppt bei
-Interaktion und bei «Bewegung reduzieren». Swiper wird nur bei Bedarf geladen. Seitenverhältnis
-4:3 / 16:9 / 2:1 (docs/responsive-rules.md §8). Bilder über `x-media.picture` (Core).
+Image slider (Swiper) for hero and carousels: swipe, arrows, dots; autoplay stops on
+interaction and with "reduce motion". Swiper is only loaded when needed. Aspect ratio
+4:3 / 16:9 / 2:1 (docs/responsive-rules.md §8). Images via `x-media.picture` (core).
 Files:
 - resources/views/components/gallery/slider.blade.php
 - resources/js/modules/gallery.js
@@ -151,9 +151,9 @@ Config/env:
 ---
 
 ## pages-full (optional, needs: contact-form)
-Macht aus der Landingpage eine Website mit Navigation: Seiten Lage (Text, Distanztabelle,
-Google-Maps-Button, Karte falls `map`) und Kontakt (Intro + Kontaktformular).
-Distanzen und Maps-Link in `config/location.php`.
+Turns the landing page into a website with navigation: pages Lage (text, distance table,
+Google Maps button, map if `map` is installed) and Kontakt (intro + contact form).
+Distances and Maps link in `config/location.php`.
 Files:
 - config/location.php
 - resources/views/pages/location.blade.php

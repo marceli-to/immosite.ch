@@ -1,6 +1,6 @@
-{{-- Text + Bildspalte. Mobile: Text zuerst, Bild darunter (DOM-Reihenfolge,
-     docs/responsive-rules.md §5). Ab md zwei Spalten, Verhaeltnis per $ratio.
-     Abstaende: Abschnitt 40 → 60 → 80 (§3). --}}
+{{-- Text + image column. Mobile: text first, image below (DOM order,
+     docs/responsive-rules.md §5). From md two columns, ratio via $ratio.
+     Spacing: section 40 → 60 → 80 (§3). --}}
 @props([
   'bg' => 'bg-surface',
   'ratio' => '7/5',
@@ -22,7 +22,7 @@
       'grid grid-cols-1 gap-y-32 md:grid-cols-12 md:gap-x-20 lg:gap-x-40',
       'md:items-center' => $align === 'center',
     ])>
-      {{-- min-w-0: sonst dehnt breiter Inhalt (Tabellen) die Spalte statt selbst zu scrollen. --}}
+      {{-- min-w-0: otherwise wide content (tables) stretches the column instead of scrolling itself. --}}
       <div class="prose-site min-w-0 {{ $columns[0] }}">
         {{ $slot }}
       </div>

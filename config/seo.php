@@ -2,14 +2,14 @@
 
 /*
 |--------------------------------------------------------------------------
-| Indexierung
+| Indexing
 |--------------------------------------------------------------------------
 |
-| Steuert, ob die Umgebung von Suchmaschinen indexiert werden darf.
-| Auf Staging steht ROBOTS_NOINDEX=true in der .env, auf Live bleibt der
-| Wert leer. Wirkt an zwei Stellen: die /robots.txt-Route liefert dann
-| "Disallow: /", und jede Response bekommt den Header
-| "X-Robots-Tag: noindex, nofollow" (der zaehlt fuer bereits bekannte URLs).
+| Controls whether search engines may index this environment.
+| On staging, .env has ROBOTS_NOINDEX=true; on live the value stays
+| empty. Applies in two places: the /robots.txt route then returns
+| "Disallow: /", and every response gets the header
+| "X-Robots-Tag: noindex, nofollow" (which counts for already known URLs).
 |
 */
 

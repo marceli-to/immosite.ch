@@ -1,14 +1,14 @@
 <body
   class="flex min-h-screen flex-col"
   x-data="{ menu: false }"
-  {{-- Seite hinter dem offenen Mobile-Menue nicht mitscrollen lassen. Inline-Style,
-       weil <html> per Klasse overflow-y-scroll hat und die Klasse sonst gewinnen kann. --}}
+  {{-- Keep the page behind the open mobile menu from scrolling. Inline style,
+       because <html> has overflow-y-scroll via a class and the class could win otherwise. --}}
   x-effect="document.documentElement.style.overflow = menu ? 'hidden' : ''">
   {{ $slot }}
 
-  {{-- Alpine kommt aus Livewire. Livewire spielt sein Script aber nur auf Seiten
-       aus, die eine Livewire-Komponente rendern. Ohne den expliziten Aufruf
-       fehlt Alpine auf allen anderen Seiten und das Mobile-Menue bleibt tot. --}}
+  {{-- Alpine comes from Livewire. But Livewire only injects its script on pages
+       that render a Livewire component. Without the explicit call, Alpine is
+       missing on all other pages and the mobile menu doesn't work. --}}
   @livewireScripts
 
   @stack('scripts')

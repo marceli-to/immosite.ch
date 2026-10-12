@@ -10,7 +10,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        // Seiten-Tests sollen nicht von einem vorhandenen npm-Build abhaengen.
+        // Page tests should not depend on an existing npm build.
         $this->withoutVite();
     }
 }

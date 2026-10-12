@@ -6,23 +6,23 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
 /**
- * Entfernt ein Modul anhand von modules.md: Dateien loeschen, Hook-Zeilen
- * (markiert mit module:<name>) entfernen, Abschnitt aus modules.md streichen.
- * Module, die das entfernte Modul brauchen (needs:), gehen mit.
+ * Removes a module based on modules.md: deletes its files, removes hook lines
+ * (marked with module:<name>) and drops its section from modules.md.
+ * Modules that need the removed module (needs:) are removed too.
  *
- * Hooks sind immer genau eine Zeile. Eine Zeile mit mehreren Modulen
- * (module:a,b) bleibt, solange eines davon noch installiert ist.
+ * Hooks are always exactly one line. A line owned by several modules
+ * (module:a,b) stays as long as one of them is still installed.
  */
 class RemoveModule extends Command
 {
     protected $signature = 'module:remove
-        {names* : Ein oder mehrere Module}
-        {--path= : Projektverzeichnis (Standard: dieses Projekt)}
-        {--dry-run : Nur anzeigen, nichts aendern}';
+        {names* : One or more modules}
+        {--path= : Project directory (default: this project)}
+        {--dry-run : Only show what would happen, change nothing}';
 
-    protected $description = 'Entfernt Module (Dateien, Hooks, Manifest-Eintrag) anhand von modules.md';
+    protected $description = 'Removes modules (files, hooks, manifest entry) based on modules.md';
 
-    /** Ordner, in denen Hook-Zeilen gesucht werden. */
+    /** Directories searched for hook lines. */
     private const HOOK_DIRS = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'tests'];
 
     private const HOOK_EXTENSIONS = ['php', 'js', 'css'];
@@ -33,7 +33,7 @@ class RemoveModule extends Command
         $manifestPath = "{$root}/modules.md";
 
         if (! File::exists($manifestPath)) {
-            $this->error("modules.md nicht gefunden in {$root}");
+            $this->error("modules.md not found in {$root}");
 
             return self::FAILURE;
         }
@@ -43,7 +43,7 @@ class RemoveModule extends Command
 
         foreach ($this->argument('names') as $name) {
             if (! isset($modules[$name])) {
-                $this->error("Modul '{$name}' steht nicht in modules.md (installiert: ".implode(', ', array_keys($modules)).')');
+                $this->error("Module '{$name}' is not listed in modules.md (installed: ".implode(', ', array_keys($modules)).')');
 
                 return self::FAILURE;
             }
@@ -52,13 +52,13 @@ class RemoveModule extends Command
         $remove = $this->withDependents($this->argument('names'), $modules);
         $dry = $this->option('dry-run');
 
-        $this->info(($dry ? '[dry-run] ' : '').'Entferne: '.implode(', ', $remove));
+        $this->info(($dry ? '[dry-run] ' : '').'Removing: '.implode(', ', $remove));
 
         foreach ($remove as $name) {
             foreach ($modules[$name]['files'] as $file) {
                 $path = "{$root}/{$file}";
                 if (! File::exists($path)) {
-                    $this->warn("  fehlt bereits: {$file}");
+                    $this->warn("  already missing: {$file}");
 
                     continue;
                 }
@@ -78,7 +78,7 @@ class RemoveModule extends Command
 
         foreach ($remove as $name) {
             if ($env = $modules[$name]['env']) {
-                $this->line("  Config/env von {$name} pruefen (.env, .env.example): ".implode(', ', $env));
+                $this->line("  Check config/env of {$name} (.env, .env.example): ".implode(', ', $env));
             }
         }
 
@@ -140,7 +140,7 @@ class RemoveModule extends Command
         return $modules;
     }
 
-    /** Gewuenschte Module plus alle, die (auch indirekt) davon abhaengen. */
+    /** Requested modules plus all modules that depend on them (also indirectly). */
     private function withDependents(array $names, array $modules): array
     {
         $remove = $names;
@@ -193,9 +193,9 @@ class RemoveModule extends Command
                     $changed = true;
                     $relative = str_replace("{$root}/", '', $file->getPathname());
 
-                    // Bleibt nur, wenn ein Mitbesitzer installiert ist. Namen von nicht
-                    // installierten Modulen zaehlen nicht (z.B. contact-form, das erst
-                    // spaeter hinzukommt und die Zeile dann selbst mitbringt).
+                    // Stays only if a co-owner is installed. Names of modules that are not
+                    // installed don't count (e.g. contact-form, which is added later
+                    // and then brings the line along itself).
                     if (! array_intersect($left, $installed)) {
                         $this->line("  - Hook {$relative}: ".trim($line));
                         unset($lines[$i]);
@@ -212,8 +212,8 @@ class RemoveModule extends Command
     }
 
     /**
-     * Pakete eines Moduls ("npm: name" / "composer: vendor/name") aus package.json bzw.
-     * composer.json streichen. Die Lockfiles zieht erst npm install / composer update nach.
+     * Removes a module's packages ("npm: name" / "composer: vendor/name") from package.json or
+     * composer.json. The lockfiles are only updated by a later npm install / composer update.
      */
     private function removePackages(string $root, array $remove, array $modules, bool $dry): void
     {
@@ -235,7 +235,7 @@ class RemoveModule extends Command
                     unset($json[$section][$package]);
                 }
 
-                $this->line("  - Paket {$manager}: {$package}");
+                $this->line("  - Package {$manager}: {$package}");
                 $touched[$manager] = true;
 
                 if (! $dry) {
@@ -247,10 +247,10 @@ class RemoveModule extends Command
         }
 
         if (isset($touched['npm'])) {
-            $this->line('  Danach: npm install');
+            $this->line('  Then run: npm install');
         }
         if (isset($touched['composer'])) {
-            $this->line('  Danach: composer update');
+            $this->line('  Then run: composer update');
         }
     }
 

@@ -2,11 +2,11 @@
 
 /*
 |--------------------------------------------------------------------------
-| Lage (module:pages-full)
+| Location (module:pages-full)
 |--------------------------------------------------------------------------
 |
-| Distanztabelle und Google-Maps-Link der Seite /lage. Zeiten in Minuten,
-| null = Feld bleibt leer. Spalten in der Reihenfolge von 'modes'.
+| Distance table and Google Maps link of the /lage page. Times in minutes,
+| null = cell stays empty. Columns in the order of 'modes'.
 |
 */
 

@@ -49,7 +49,7 @@
 
 @stack('head')
 
-{{-- Google Analytics (nur wenn GOOGLE_ANALYTICS_ID gesetzt ist) --}}
+{{-- Google Analytics (only if GOOGLE_ANALYTICS_ID is set) --}}
 @if ($gaId = config('services.google_analytics.id'))
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
 <script>

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Setzt auf nicht-oeffentlichen Umgebungen (ROBOTS_NOINDEX=true) den Header
- * X-Robots-Tag. Anders als robots.txt verhindert der nicht nur das Crawlen,
- * sondern auch das Indexieren bereits bekannter URLs.
+ * Sets the X-Robots-Tag header on non-public environments (ROBOTS_NOINDEX=true).
+ * Unlike robots.txt, it prevents not only crawling but also indexing of
+ * URLs that are already known.
  */
 class RobotsTag
 {

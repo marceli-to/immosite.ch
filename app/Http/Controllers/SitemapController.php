@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 
 /**
- * /sitemap.xml aus config('site.pages'), damit Navigation und Sitemap nicht
- * auseinanderlaufen. Per XMLWriter statt Blade-View: XML in einer .blade.php
- * meldet der Editor als fehlerhaftes HTML.
+ * /sitemap.xml from config('site.pages'), so navigation and sitemap don't
+ * drift apart. Uses XMLWriter instead of a Blade view: the editor flags XML in
+ * a .blade.php as broken HTML.
  */
 class SitemapController extends Controller
 {
