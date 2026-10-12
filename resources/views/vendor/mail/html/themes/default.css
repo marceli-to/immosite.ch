@@ -1,6 +1,6 @@
 /* Mail colours = design tokens from resources/css/app.css (mail clients don't
    support CSS variables). Update them here when reskinning: ink #2b2b2b, primary #3d5a6c,
-   surface-alt #f2f2f0, line #d6d6d2. */
+   surface-alt #f2f2f0, line #d6d6d2 (button background and border = primary). */
 
 /* Base */
 
@@ -244,10 +244,10 @@ img {
 .button-blue,
 .button-primary {
     background-color: #3d5a6c;
-    border-bottom: 8px solid #18181b;
-    border-left: 18px solid #18181b;
-    border-right: 18px solid #18181b;
-    border-top: 8px solid #18181b;
+    border-bottom: 8px solid #3d5a6c;
+    border-left: 18px solid #3d5a6c;
+    border-right: 18px solid #3d5a6c;
+    border-top: 8px solid #3d5a6c;
 }
 
 .button-green,

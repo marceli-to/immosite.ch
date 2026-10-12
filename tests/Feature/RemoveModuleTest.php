@@ -28,6 +28,7 @@ class RemoveModuleTest extends TestCase
         Files:
         - app/Alpha.php
         - resources/views/alpha
+        - resources/views/alpha/view.blade.php
         Hooks:
         - routes/web.php → Route
         Config/env:
@@ -46,6 +47,9 @@ class RemoveModuleTest extends TestCase
         ## gamma (optional)
         Files:
         - app/Gamma.php
+        - tests/Support/GammaHelper.php
+        Config/env:
+        - ALPHA_URL
         Packages:
         - npm: gamma-js
         - composer: acme/gamma
@@ -57,6 +61,7 @@ class RemoveModuleTest extends TestCase
         File::put($this->path('app/Alpha.php', true), '<?php');
         File::put($this->path('app/Beta.php', true), '<?php');
         File::put($this->path('app/Gamma.php', true), '<?php');
+        File::put($this->path('tests/Support/GammaHelper.php', true), '<?php');
         File::put($this->path('resources/views/alpha/view.blade.php', true), 'x');
         File::put($this->path('config/things.php', true), implode("\n", [
             '<?php',
@@ -100,7 +105,7 @@ class RemoveModuleTest extends TestCase
 
         $this->assertSame(['alpha', 'beta', 'gamma'], array_keys($modules));
         $this->assertSame(['alpha'], $modules['beta']['needs']);
-        $this->assertSame(['app/Alpha.php', 'resources/views/alpha'], $modules['alpha']['files']);
+        $this->assertSame(['app/Alpha.php', 'resources/views/alpha', 'resources/views/alpha/view.blade.php'], $modules['alpha']['files']);
         $this->assertSame(['ALPHA_KEY', 'ALPHA_URL'], $modules['alpha']['env']);
         $this->assertSame([], $modules['beta']['env']);
     }
@@ -154,6 +159,23 @@ class RemoveModuleTest extends TestCase
 
         $this->assertSame(['keep' => '^2'], json_decode(File::get($this->path('package.json')), true)['dependencies']);
         $this->assertSame(['php' => '^8.4'], json_decode(File::get($this->path('composer.json')), true)['require']);
+    }
+
+    public function test_env_keys_still_used_by_installed_modules_are_not_listed(): void
+    {
+        $this->artisan('module:remove', ['names' => ['alpha'], '--path' => $this->root])
+            ->expectsOutputToContain('Remove from .env and .env.example (alpha): ALPHA_KEY')
+            ->doesntExpectOutputToContain('ALPHA_URL')
+            ->doesntExpectOutputToContain('already missing')
+            ->assertSuccessful();
+    }
+
+    public function test_directories_left_empty_are_removed(): void
+    {
+        $this->artisan('module:remove', ['names' => ['gamma'], '--path' => $this->root])->assertSuccessful();
+
+        $this->assertDirectoryDoesNotExist($this->path('tests/Support'));
+        $this->assertDirectoryExists($this->path('app'), 'non-empty directories stay');
     }
 
     public function test_dry_run_changes_nothing(): void

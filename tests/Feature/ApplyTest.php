@@ -15,6 +15,8 @@ class ApplyTest extends TestCase
     {
         parent::setUp();
 
+        config(['apply.mode' => 'auto', 'apply.label' => 'Bewerben', 'apply.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => 'optional']]);
+
         config([
             'apartments.driver' => 'fake',
             'apartments.drivers.fake' => FakeApartmentSource::class,

@@ -13,6 +13,14 @@ use Tests\TestCase;
 
 class ContactFormTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Fixed config: the project's own form settings must not break these tests.
+        config(['contact.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => 'optional']]);
+    }
+
     private function filled(): Testable
     {
         return Livewire::test(ContactForm::class)

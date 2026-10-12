@@ -25,6 +25,9 @@ class RemoveModule extends Command
     /** Directories searched for hook lines. */
     private const HOOK_DIRS = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'tests'];
 
+    /** @var array<int, string> files and directories of the modules being removed */
+    private array $removedPaths = [];
+
     /** @var array<string, array<int, string>> PHP files of module directories, collected before deletion */
     private array $directoryFiles = [];
 
@@ -57,11 +60,17 @@ class RemoveModule extends Command
 
         $this->info(($dry ? '[dry-run] ' : '').'Removing: '.implode(', ', $remove));
 
+        // All paths being removed: a file inside a removed directory is "covered"
+        // and neither reported missing nor scanned for hooks.
+        $this->removedPaths = collect($remove)->flatMap(fn ($name) => $modules[$name]['files'])->all();
+
         foreach ($remove as $name) {
             foreach ($modules[$name]['files'] as $file) {
                 $path = "{$root}/{$file}";
                 if (! File::exists($path)) {
-                    $this->warn("  already missing: {$file}");
+                    if (! $this->coveredByRemovedDirectory($file)) {
+                        $this->warn("  already missing: {$file}");
+                    }
 
                     continue;
                 }
@@ -72,6 +81,7 @@ class RemoveModule extends Command
                 }
                 if (! $dry) {
                     File::isDirectory($path) ? File::deleteDirectory($path) : File::delete($path);
+                    $this->removeEmptyParents(dirname($path), $root);
                 }
             }
         }
@@ -84,9 +94,15 @@ class RemoveModule extends Command
             File::put($manifestPath, self::withoutSections($manifest, $remove));
         }
 
+        // Only keys no installed module still uses (TURNSTILE_* stays while a form remains).
+        $key = fn (string $entry) => trim(explode('=', $entry)[0]);
+        $stillUsed = collect(array_diff(array_keys($modules), $remove))->flatMap(fn ($name) => array_map($key, $modules[$name]['env']))->all();
+
         foreach ($remove as $name) {
-            if ($env = $modules[$name]['env']) {
-                $this->line("  Check config/env of {$name} (.env, .env.example): ".implode(', ', $env));
+            $unused = array_values(array_unique(array_diff(array_map($key, $modules[$name]['env']), $stillUsed)));
+
+            if ($unused) {
+                $this->line("  Remove from .env and .env.example ({$name}): ".implode(', ', $unused));
             }
         }
 
@@ -174,7 +190,8 @@ class RemoveModule extends Command
             }
 
             foreach (File::allFiles("{$root}/{$dir}") as $file) {
-                if (! in_array($file->getExtension(), self::HOOK_EXTENSIONS, true)) {
+                if (! in_array($file->getExtension(), self::HOOK_EXTENSIONS, true)
+                    || $this->coveredByRemovedDirectory(str_replace("{$root}/", '', $file->getPathname()), true)) {
                     continue;
                 }
 
@@ -259,6 +276,27 @@ class RemoveModule extends Command
         }
         if (isset($touched['composer'])) {
             $this->line('  Then run: composer update');
+        }
+    }
+
+    /** Is the path one of the removed paths, or inside a removed directory? */
+    private function coveredByRemovedDirectory(string $relative, bool $includeSelf = false): bool
+    {
+        foreach ($this->removedPaths as $removed) {
+            if (($includeSelf && $relative === $removed) || str_starts_with($relative, rtrim($removed, '/').'/')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Delete directories the removal left empty (e.g. tests/Support), up to the project root. */
+    private function removeEmptyParents(string $dir, string $root): void
+    {
+        while ($dir !== $root && str_starts_with($dir, $root.'/') && File::isDirectory($dir) && count(File::files($dir, true)) === 0 && File::directories($dir) === []) {
+            File::deleteDirectory($dir);
+            $dir = dirname($dir);
         }
     }
 

@@ -15,6 +15,9 @@ class MelonLeadHookTest extends TestCase
     {
         parent::setUp();
 
+        // Fixed config: the project's own form settings must not break these tests.
+        config(['contact.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => 'optional']]);
+
         Mail::fake();
         config([
             'melon-lead.enabled' => true,

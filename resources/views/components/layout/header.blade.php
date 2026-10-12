@@ -22,7 +22,7 @@
   <x-layout.inner class="flex h-(--header-height) items-center justify-between gap-x-40">
 
     <a href="{{ route('page.home') }}" aria-label="{{ config('site.name') }} – Startseite" class="relative z-70 shrink-0">
-      <x-icons.logo class="block h-auto w-140 lg:w-180" />
+      <x-icons.logo class="block h-32 w-auto lg:h-40" />
     </a>
 
     {{-- A single page needs no navigation (landing page). --}}

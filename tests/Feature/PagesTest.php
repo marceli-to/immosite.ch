@@ -83,8 +83,9 @@ class PagesTest extends TestCase
 
     public function test_burger_breakpoint_follows_number_of_nav_entries(): void
     {
-        $nav = fn (int $count) => collect(config('site.pages'))
-            ->map(fn ($page, $i) => [...$page, 'nav' => $i < $count])
+        // Synthetic pages: the test must not depend on which modules the project has.
+        $nav = fn (int $count) => collect(range(1, $count))
+            ->map(fn ($i) => ['route' => 'page.imprint', 'title' => "Seite {$i}", 'nav' => true, 'footer' => false, 'sitemap' => null])
             ->all();
 
         config(['site.nav_breakpoint' => null, 'site.pages' => $nav(3)]);

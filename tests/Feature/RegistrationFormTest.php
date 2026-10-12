@@ -16,6 +16,18 @@ class RegistrationFormTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Fixed config: the project's own registration settings must not break these tests.
+        config([
+            'registration.interests' => ['2.5' => '2.5-Zimmerwohnung', '3.5' => '3.5-Zimmerwohnung', '4.5' => '4.5-Zimmerwohnung', 'gewerbe' => 'Gewerbefläche'],
+            'registration.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => false],
+            'registration.redirect_route' => null,
+        ]);
+    }
+
     private function filled(): Testable
     {
         return Livewire::test(RegistrationForm::class)
