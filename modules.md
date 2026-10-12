@@ -22,7 +22,7 @@ Rules:
 
 Layout (`components/layout/*`), menu, headings, buttons, links, icons, pages Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
-favicon/OG placeholders, `config/site.php`, `module:remove`, `x-sections.text`, `x-sections.split` (text + image),
+favicon/OG placeholders, `config/site.php`, `module:remove`, `npm run screenshots`, `x-sections.text`, `x-sections.split` (text + image),
 `x-accordion.group` / `x-accordion.item` (Alpine collapse), `x-media.picture` (image with AVIF/WebP/mobile variants,
 dimensions read from the file), placeholder images `public/img/placeholder-{1,2,3}.{jpg,webp}`.
 

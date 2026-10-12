@@ -12,6 +12,7 @@ landing page; everything else is a module (`modules.md`).
 php artisan test     # feature tests
 npm run build        # assets
 npm run dev          # Vite with hot reload
+npm run screenshots -- <url> …   # 390/768/1024/1280/1440 + overflow check → storage/screenshots
 ```
 
 After every change, `php artisan test` and `npm run build` must pass.
