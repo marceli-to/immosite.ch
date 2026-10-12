@@ -226,8 +226,8 @@ Tip: the fastest way to fill these in is a **pair** of desktop design + my finis
 2. Create `immosite.ch` in the webroot + git repo (me).
 3. New Claude session in that folder, with this file as the briefing:
    1. Copy the source repos (hueningerstrasse, shift, imwaldacher, scala, adlerstrasse) in as read-only references (outside the repo or git-ignored). The 4 brief PDFs are in `docs/briefs/` (git-ignored, the repo is public). The skill reads them from there as examples; don't copy them into `skill/`.
-   2. Build the core starter (landing preset) and get it running. Write `CLAUDE.md` + `modules.md` alongside.
-   3. Fill in the responsive rules (§6) **before the modules**: they affect every component, so build them in from the start instead of retrofitting. Derive them from 1–2 earlier projects (desktop design + live site, e.g. `A27_Adlerstrasse_Website_Beschreibung.pdf` ↔ adlerstrasse-basel.ch, `G09_Scala_Website_Beschreibung.pdf` ↔ scala-zuerich.ch), then I correct them. Apply them to the core components.
-   4. Add the modules one at a time, each with its manifest entry, tests and a remove check.
+   2. ✅ Build the core starter (landing preset) and get it running. Write `CLAUDE.md` + `modules.md` alongside.
+   3. ✅ (draft, defaults confirmed 2026-10-12) Fill in the responsive rules (§6) **before the modules**: they affect every component, so build them in from the start instead of retrofitting. Derive them from 1–2 earlier projects (desktop design + live site, e.g. `A27_Adlerstrasse_Website_Beschreibung.pdf` ↔ adlerstrasse-basel.ch, `G09_Scala_Website_Beschreibung.pdf` ↔ scala-zuerich.ch), then I correct them. Apply them to the core components.
+   4. ✅ Add the modules one at a time, each with its manifest entry, tests and a remove check.
    5. Write the skill (`skill/immosite/SKILL.md` + `design-to-code.md`) + symlink it.
    6. Trial run: scaffold a test landing page and a test full site with the skill, then compare the results.

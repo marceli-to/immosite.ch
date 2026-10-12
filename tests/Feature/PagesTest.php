@@ -93,6 +93,9 @@ class PagesTest extends TestCase
         config(['site.pages' => $nav(5)]);
         $this->get(route('page.home'))->assertSee('hidden lg:block', false)->assertDontSee('hidden md:block', false);
 
+        config(['site.pages' => $nav(7)]);
+        $this->get(route('page.home'))->assertSee('hidden xl:block', false);
+
         config(['site.nav_breakpoint' => 'md']);
         $this->get(route('page.home'))->assertSee('hidden md:block', false);
     }

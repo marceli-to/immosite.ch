@@ -366,3 +366,27 @@ Hooks:
 - config/commercial.php → sources: 'database'
 Config/env:
 - COMMERCIAL_SOURCE=database
+
+---
+
+## isometry (optional, needs: apartments)
+Interactive building drawing next to the apartment table: status colours from the table,
+hover/focus on a row lifts the floors above and marks the apartment, hover/tap on the
+drawing marks the row (tap scrolls to it), filtered-out apartments are dimmed. Mobile:
+sticky above the table, max 45vh; from lg: right column. Built from the designer's
+Illustrator SVG with `php artisan isometry:build` (see resources/isometry/README.md).
+Files:
+- app/Console/Commands/BuildIsometry.php
+- config/isometry.php
+- resources/isometry
+- resources/views/components/isometry.blade.php
+- resources/views/isometry
+- resources/css/isometry.css
+- resources/js/modules/isometry.js
+- tests/Feature/IsometryTest.php
+Hooks:
+- resources/views/pages/apartments.blade.php → @include('isometry.aside')
+- resources/js/app.js → import './modules/isometry.js'
+- resources/css/app.css → @import './isometry.css', --color-iso-* tokens
+Config/env:
+- –

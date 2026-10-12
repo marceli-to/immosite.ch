@@ -1,0 +1,64 @@
+/*
+ | Isometry (module:isometry). The SVG comes from `php artisan isometry:build`:
+ | floors <g data-iso-floor>, apartments [data-iso], faces .iso-face / .iso-top.
+ | isometry.js copies each apartment's status from its table row (data-status),
+ | lifts the floors above the selected one (.is-up) and marks the selection.
+*/
+
+.iso-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible; /* lifted floors may rise above the viewBox */
+}
+
+.iso-floor {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.iso-floor.is-up {
+  /* Inside SVG, px in a CSS transform are user units. */
+  transform: translateY(calc(-1px * var(--iso-lift)));
+}
+
+.iso-svg .iso-face,
+.iso-svg .iso-top {
+  transition: fill 0.25s, opacity 0.25s;
+}
+
+/* Status colours: the side face in the token colour, the top face lighter. */
+.iso-svg [data-status='free'] .iso-face,
+.iso-svg .iso-face[data-status='free'] { fill: var(--color-iso-free); }
+.iso-svg [data-status='free'] .iso-top,
+.iso-svg .iso-top[data-status='free'] { fill: color-mix(in srgb, var(--color-iso-free) 60%, white); }
+.iso-svg [data-status='reserved'] .iso-face,
+.iso-svg .iso-face[data-status='reserved'] { fill: var(--color-iso-reserved); }
+.iso-svg [data-status='reserved'] .iso-top,
+.iso-svg .iso-top[data-status='reserved'] { fill: color-mix(in srgb, var(--color-iso-reserved) 60%, white); }
+.iso-svg [data-status='rented'] .iso-face,
+.iso-svg .iso-face[data-status='rented'] { fill: var(--color-iso-rented); }
+.iso-svg [data-status='rented'] .iso-top,
+.iso-svg .iso-top[data-status='rented'] { fill: color-mix(in srgb, var(--color-iso-rented) 60%, white); }
+
+/* Selected apartment, or the whole floor when no apartment shape matches. */
+.iso-svg .is-selected .iso-face,
+.iso-svg .iso-face.is-selected,
+.iso-floor.is-active .iso-face { fill: var(--color-iso-selected); }
+.iso-svg .is-selected .iso-top,
+.iso-svg .iso-top.is-selected,
+.iso-floor.is-active .iso-top { fill: color-mix(in srgb, var(--color-iso-selected) 60%, white); }
+
+/* Apartments hidden by the table filters. */
+.iso-svg .is-dimmed { opacity: 0.25; }
+
+.iso-svg [data-iso] { cursor: pointer; }
+
+[data-apartment].is-selected {
+  background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-floor,
+  .iso-svg .iso-face,
+  .iso-svg .iso-top { transition: none; }
+}

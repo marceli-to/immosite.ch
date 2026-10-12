@@ -12,3 +12,4 @@ document.addEventListener('livewire:init', () => {
 import './modules/map.js'; // module:map
 import './modules/gallery.js'; // module:gallery
 import './modules/apartment-filter.js'; // module:apartments
+import './modules/isometry.js'; // module:isometry

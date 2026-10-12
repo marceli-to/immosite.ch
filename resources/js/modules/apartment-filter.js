@@ -25,6 +25,9 @@ if (root) {
     if (empty) {
       empty.hidden = rows.some((row) => !row.hidden);
     }
+
+    // Lets other modules (isometry) follow the filter.
+    document.dispatchEvent(new CustomEvent('apartments:filtered'));
   };
 
   root.addEventListener('change', apply);

@@ -73,7 +73,8 @@ Example: section `py-40 md:py-60 lg:py-80`, paragraph `mb-16 md:mb-20`.
 - **Burger below `md`** (decided). Check that the desktop nav fits at 768; if not, that project switches below `lg`.
 - Mobile menu: **full-screen overlay**, background `surface-alt`, opacity fade (200–300 ms), Escape closes, **page scroll locked** while open (Adler/Scala didn't), real `<button>` with `aria-expanded`.
 - Header: `sticky`, solid background. Transparent over the hero only when the design shows it (Hüningerstrasse home: background fades in after 30vh).
-- Anchors clear the sticky header: `scroll-mt-<header height>`.
+- Header height is one token, `--header-height` (84 px, 96 px from `lg`), used by sticky elements and anchor offsets (`scroll-pt-(--header-height)`).
+- Burger breakpoint by number of entries: ≤ 4 → `md`, ≤ 6 → `lg`, more → `xl` (override: `site.nav_breakpoint`). With all starter modules (7 entries) the desktop nav only fits from `xl`.
 
 ## 7. Apartment table
 

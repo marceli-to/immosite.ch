@@ -1,4 +1,4 @@
 <!DOCTYPE html>
-<html lang="de-CH" class="overflow-y-scroll scroll-smooth scroll-pt-80 lg:scroll-pt-100">
+<html lang="de-CH" class="overflow-y-scroll scroll-smooth scroll-pt-(--header-height)">
   {{ $slot }}
 </html>

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './gallery.css'; /* module:gallery */
+@import './isometry.css'; /* module:isometry */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -25,6 +26,14 @@
 
 :root {
   --scale: 1;
+  /* Header height; also the offset for sticky elements and anchors below it. */
+  --header-height: calc(84px * var(--scale));
+}
+
+@media (width >= 64rem) {
+  :root {
+    --header-height: calc(96px * var(--scale));
+  }
 }
 
 @media (width >= 80rem) {
@@ -52,6 +61,10 @@
   --color-status-free: #2e9d4f;     /* apartment status dots */ /* module:apartments */
   --color-status-reserved: #e3a008; /* module:apartments */
   --color-status-rented: #c23a3a;   /* module:apartments */
+  --color-iso-free: #8fc79f;        /* isometry: apartment by status */ /* module:isometry */
+  --color-iso-reserved: #f0c868;    /* module:isometry */
+  --color-iso-rented: #d98c8c;      /* module:isometry */
+  --color-iso-selected: #3d5a6c;    /* module:isometry */
 
   /* Fonts: source (Typekit link) lives in config/site.php */
   --font-sans: ui-sans-serif, system-ui, sans-serif;

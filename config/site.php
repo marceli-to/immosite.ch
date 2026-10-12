@@ -56,8 +56,9 @@ return [
         'privacy_url' => 'https://www.webkeeper.ch/de/unternehmen/datenschutz',
     ],
 
-    // Burger menu below 'md' or 'lg'. null = automatic: more than 4 nav entries → 'lg'.
-    // Check at 768 px that the desktop nav fits (docs/responsive-rules.md §6).
+    // Burger menu below 'md', 'lg' or 'xl'. null = automatic by number of entries:
+    // up to 4 → md, up to 6 → lg, more → xl. Check that the desktop nav fits at the
+    // breakpoint (docs/responsive-rules.md §6).
     'nav_breakpoint' => null,
 
     /*
