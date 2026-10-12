@@ -78,6 +78,7 @@ return [
     'pages' => [
         ['route' => 'page.home', 'title' => 'Projekt', 'nav' => true, 'footer' => false, 'sitemap' => ['weekly', '1.0']],
         ['route' => 'page.apartments', 'title' => 'Wohnungen', 'nav' => true, 'footer' => false, 'sitemap' => ['daily', '0.9']], // module:apartments
+        ['route' => 'page.commercial', 'title' => 'Gewerbe', 'nav' => true, 'footer' => false, 'sitemap' => ['weekly', '0.8']], // module:commercial
         ['route' => 'page.building-spec', 'title' => 'Ausbau', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.6']], // module:building-spec
         ['route' => 'page.location', 'title' => 'Lage', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.8']], // module:pages-full
         ['route' => 'page.faq', 'title' => 'FAQ', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.6']], // module:faq

@@ -58,6 +58,14 @@ class RemoveModuleTest extends TestCase
         File::put($this->path('app/Beta.php', true), '<?php');
         File::put($this->path('app/Gamma.php', true), '<?php');
         File::put($this->path('resources/views/alpha/view.blade.php', true), 'x');
+        File::put($this->path('config/things.php', true), implode("\n", [
+            '<?php',
+            'use App\\Alpha;',
+            'use App\\Gamma;',
+            "return ['alpha' => Alpha::class, // module:alpha",
+            "    'gamma' => Gamma::class];",
+            '',
+        ]));
         File::put($this->path('routes/web.php', true), implode("\n", [
             '<?php',
             "Route::view('/a', 'a'); // module:alpha",
@@ -119,6 +127,15 @@ class RemoveModuleTest extends TestCase
         $this->assertStringNotContainsString('## beta', $manifest);
         $this->assertStringContainsString('## gamma', $manifest);
         $this->assertStringContainsString('## Core', $manifest);
+    }
+
+    public function test_imports_of_deleted_classes_are_removed(): void
+    {
+        $this->artisan('module:remove', ['names' => ['alpha'], '--path' => $this->root])->assertSuccessful();
+
+        $config = File::get($this->path('config/things.php'));
+        $this->assertStringNotContainsString('use App\\Alpha;', $config);
+        $this->assertStringContainsString('use App\\Gamma;', $config);
     }
 
     public function test_shared_hook_goes_when_all_owners_are_removed(): void

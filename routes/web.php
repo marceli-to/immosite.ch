@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController; // module:apartments
+use App\Http\Controllers\CommercialController; // module:commercial
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,7 @@ Route::view('/lage', 'pages.location')->name('page.location'); // module:pages-f
 Route::view('/kontakt', 'pages.contact')->name('page.contact'); // module:pages-full
 Route::get('/wohnen', ApartmentController::class)->name('page.apartments'); // module:apartments
 Route::view('/bewerben', 'pages.apply')->name('page.apply'); // module:apply
+Route::get('/gewerbe', CommercialController::class)->name('page.commercial'); // module:commercial
 Route::view('/faq', 'pages.faq')->name('page.faq'); // module:faq
 Route::view('/ausbau', 'pages.building-spec')->name('page.building-spec'); // module:building-spec
 
@@ -28,3 +30,5 @@ Route::get('/robots.txt', function () {
 })->name('robots');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+
+require __DIR__.'/admin.php'; // module:commercial-admin

@@ -25,6 +25,9 @@ class RemoveModule extends Command
     /** Directories searched for hook lines. */
     private const HOOK_DIRS = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'tests'];
 
+    /** @var array<string, array<int, string>> PHP files of module directories, collected before deletion */
+    private array $directoryFiles = [];
+
     private const HOOK_EXTENSIONS = ['php', 'js', 'css'];
 
     public function handle(): int
@@ -63,6 +66,10 @@ class RemoveModule extends Command
                     continue;
                 }
                 $this->line("  - {$file}");
+                // Remember the PHP files of a directory before it is deleted (for removeImports).
+                if (File::isDirectory($path)) {
+                    $this->directoryFiles[$file] = array_map(fn ($f) => str_replace("{$root}/", '', $f->getPathname()), File::allFiles($path));
+                }
                 if (! $dry) {
                     File::isDirectory($path) ? File::deleteDirectory($path) : File::delete($path);
                 }
@@ -70,6 +77,7 @@ class RemoveModule extends Command
         }
 
         $this->removeHooks($root, $remove, array_diff(array_keys($modules), $remove), $dry);
+        $this->removeImports($root, $this->deletedClasses($remove, $modules), $dry);
         $this->removePackages($root, $remove, $modules, $dry);
 
         if (! $dry) {
@@ -251,6 +259,70 @@ class RemoveModule extends Command
         }
         if (isset($touched['composer'])) {
             $this->line('  Then run: composer update');
+        }
+    }
+
+    /**
+     * Classes (App\\…) defined in the module's files, including files inside listed directories.
+     *
+     * @return array<int, string>
+     */
+    private function deletedClasses(array $remove, array $modules): array
+    {
+        $classes = [];
+
+        foreach ($remove as $name) {
+            foreach ($modules[$name]['files'] as $file) {
+                if (! str_starts_with($file, 'app/')) {
+                    continue;
+                }
+
+                $paths = str_ends_with($file, '.php') ? [$file] : ($this->directoryFiles[$file] ?? []);
+
+                foreach ($paths as $path) {
+                    $classes[] = 'App\\'.str_replace('/', '\\', substr($path, 4, -4));
+                }
+            }
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Pint turns fully qualified class names into `use` imports, which carry no
+     * module marker. Remove imports of classes whose files were deleted.
+     */
+    private function removeImports(string $root, array $classes, bool $dry): void
+    {
+        if ($classes === []) {
+            return;
+        }
+
+        foreach (self::HOOK_DIRS as $dir) {
+            if (! File::isDirectory("{$root}/{$dir}")) {
+                continue;
+            }
+
+            foreach (File::allFiles("{$root}/{$dir}") as $file) {
+                if ($file->getExtension() !== 'php') {
+                    continue;
+                }
+
+                $content = $file->getContents();
+                $updated = preg_replace_callback('/^use ([^;\s]+);[^\n]*\n/m', function ($m) use ($classes, $file, $root) {
+                    if (! in_array($m[1], $classes, true)) {
+                        return $m[0];
+                    }
+
+                    $this->line('  - Import '.str_replace("{$root}/", '', $file->getPathname()).': use '.$m[1].';');
+
+                    return '';
+                }, $content);
+
+                if ($updated !== $content && ! $dry) {
+                    File::put($file->getPathname(), $updated);
+                }
+            }
         }
     }
 

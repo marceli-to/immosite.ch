@@ -1,13 +1,14 @@
-{{-- Apartment table, columns from config('apartments.columns').
+{{-- Apartment table, columns from config('apartments.columns') or the columns prop
+     (commercial units use their own).
      Mobile: all columns kept, the wrapper scrolls sideways and headers use the
      short label (docs/responsive-rules.md §7). --}}
-@props(['apartments', 'repository'])
+@props(['apartments', 'repository', 'columns' => null])
 
 @use('App\Apartments\Format')
 
 @php
   // [label, short label, header visually hidden?]
-  $columns = array_map(fn ($c) => $c + [2 => false], config('apartments.columns'));
+  $columns = array_map(fn ($c) => $c + [2 => false], $columns ?? config('apartments.columns'));
   $hidePrices = config('apartments.hide_prices_when_rented');
   $numeric = ['rooms', 'area', 'outdoor_area', 'rent_net', 'charges', 'rent_gross', 'price'];
 @endphp

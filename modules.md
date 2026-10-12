@@ -324,3 +324,45 @@ Hooks:
 - app/Livewire/ContactForm.php → app(SendLeadToMelon::class)->send($data)
 Config/env:
 - MELON_HOOK_ENABLED, MELON_HOOK_URL, MELON_HOOK_USERNAME, MELON_HOOK_PASSWORD, MELON_HOOK_TIMEOUT
+
+---
+
+## commercial (optional, needs: apartments)
+Page /gewerbe with the commercial units in the apartment table (own columns). Source in
+`config/commercial.php`: static list, the apartments driver (type `commercial`), or the
+database (`commercial-admin`).
+Files:
+- app/Apartments/Sources/StaticCommercialSource.php
+- app/Apartments/Sources/ApartmentsCommercialSource.php
+- app/Http/Controllers/CommercialController.php
+- config/commercial.php
+- resources/views/pages/commercial.blade.php
+- tests/Feature/CommercialTest.php
+Hooks:
+- routes/web.php → use CommercialController; Route::get('/gewerbe', …)
+- config/site.php → pages: `page.commercial` (navigation)
+Config/env:
+- COMMERCIAL_SOURCE
+
+---
+
+## commercial-admin (optional, needs: commercial)
+/admin for the marketer: login (rate-limited), edit status, net rent and charges of the
+commercial units. Objects are seeded from `config/commercial.php` with `commercial:seed`;
+logins are created with `user:create` (no default password in the repo).
+Set `COMMERCIAL_SOURCE=database`.
+Files:
+- app/Apartments/Sources/DatabaseCommercialSource.php
+- app/Console/Commands/CreateUser.php
+- app/Console/Commands/SeedCommercialObjects.php
+- app/Http/Controllers/Admin
+- app/Models/CommercialObject.php
+- database/migrations/2026_10_12_000002_create_commercial_objects_table.php
+- resources/views/admin
+- routes/admin.php
+- tests/Feature/CommercialAdminTest.php
+Hooks:
+- routes/web.php → require __DIR__.'/admin.php'
+- config/commercial.php → sources: 'database'
+Config/env:
+- COMMERCIAL_SOURCE=database
