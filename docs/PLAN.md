@@ -260,6 +260,6 @@ columns, scroll-reveal), pattern library `/muster`.
 - Hero mobile ratio (4:3) and slider autoplay (6 s) are defaults, not confirmed (`docs/responsive-rules.md` ❓).
 - First real project with the skill; expect corrections, feed them back.
 
-**Next task:** scan `/Users/marceli.to/Jamon.digital/Webroot` for more projects (most stoz
-projects have an `INSTALL.txt` with the SSH login of their server) and collect further
-patterns for the starter. Results: `docs/webroot-scan.md` (no credentials in the repo).
+**Next task:** webroot scan for more projects and patterns. The inventory is done
+(`docs/webroot-scan.md`: 63 stoz / real-estate projects, grouped); the deep dive per group is
+described at the end of that file and hasn't started. No credentials from `INSTALL.txt` in the repo.
