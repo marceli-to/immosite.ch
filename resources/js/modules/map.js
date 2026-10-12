@@ -2,9 +2,9 @@
 // eine Karte hat; die Einstellungen kommen aus config/map.php via data-map.
 
 const LOCALE = {
-  'CooperativeGesturesHandler.WindowsHelpText': 'Zum Zoomen Strg + Scrollen verwenden',
-  'CooperativeGesturesHandler.MacHelpText': 'Zum Zoomen ⌘ + Scrollen verwenden',
-  'CooperativeGesturesHandler.MobileHelpText': 'Karte mit zwei Fingern bewegen',
+  'ScrollZoomBlocker.CtrlMessage': 'Zum Zoomen Strg + Scrollen verwenden',
+  'ScrollZoomBlocker.CmdMessage': 'Zum Zoomen ⌘ + Scrollen verwenden',
+  'TouchPanBlocker.Message': 'Karte mit zwei Fingern bewegen',
   'NavigationControl.ZoomIn': 'Vergrössern',
   'NavigationControl.ZoomOut': 'Verkleinern',
   'NavigationControl.ResetBearing': 'Nach Norden ausrichten',

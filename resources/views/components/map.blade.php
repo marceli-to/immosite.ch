@@ -14,10 +14,12 @@
   ];
 @endphp
 
-<div {{ $attributes->merge(['class' => "relative w-full bg-surface-alt {$aspect}"]) }}>
+<div {{ $attributes->merge(['class' => "w-full bg-surface-alt {$aspect}"]) }}>
   <div
     data-map='@json($config)'
     role="region"
     aria-label="Karte"
-    class="absolute inset-0 opacity-0 transition-opacity duration-700"></div>
+    {{-- h-full statt absolute inset-0: Mapbox setzt auf den Container
+         position: relative, die Flaeche fiele sonst auf 0 px zusammen. --}}
+    class="h-full w-full opacity-0 transition-opacity duration-700"></div>
 </div>
