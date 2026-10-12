@@ -8,6 +8,7 @@ Route::view('/', 'pages.home')->name('page.home');
 Route::view('/lage', 'pages.location')->name('page.location'); // module:pages-full
 Route::view('/kontakt', 'pages.contact')->name('page.contact'); // module:pages-full
 Route::get('/wohnen', ApartmentController::class)->name('page.apartments'); // module:apartments
+Route::view('/bewerben', 'pages.apply')->name('page.apply'); // module:apply
 Route::view('/faq', 'pages.faq')->name('page.faq'); // module:faq
 Route::view('/ausbau', 'pages.building-spec')->name('page.building-spec'); // module:building-spec
 

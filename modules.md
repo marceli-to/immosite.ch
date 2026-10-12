@@ -290,3 +290,23 @@ Hooks:
 - resources/views/pages/apartments.blade.php → <x-downloads.buttons group="apartments" />
 Config/env:
 - –
+
+---
+
+## apply (optional, needs: apartments, contact-form)
+"Bewerben" button per free/reserved apartment: the source's application link (Flatfox/Melon)
+or our form on /bewerben?wohnung=REF (contact form with the apartment on top of the message).
+Mode and fields in `config/apply.php`.
+Files:
+- app/Livewire/ApplicationForm.php
+- config/apply.php
+- resources/views/livewire/application-form.blade.php
+- resources/views/components/apartments/apply.blade.php
+- resources/views/pages/apply.blade.php
+- tests/Feature/ApplyTest.php
+Hooks:
+- routes/web.php → Route::view('/bewerben', …)
+- config/apartments.php → columns: 'apply'
+- resources/views/components/apartments/table.blade.php → @case('apply')
+Config/env:
+- –

@@ -6,7 +6,8 @@
 @use('App\Apartments\Format')
 
 @php
-  $columns = config('apartments.columns');
+  // [label, short label, header visually hidden?]
+  $columns = array_map(fn ($c) => $c + [2 => false], config('apartments.columns'));
   $hidePrices = config('apartments.hide_prices_when_rented');
   $numeric = ['rooms', 'area', 'outdoor_area', 'rent_net', 'charges', 'rent_gross', 'price'];
 @endphp
@@ -18,13 +19,15 @@
   <table class="min-w-full border-collapse text-left text-xs lg:text-sm">
     <thead>
       <tr class="border-b border-ink align-bottom">
-        @foreach ($columns as $key => [$label, $short])
+        @foreach ($columns as $key => [$label, $short, $hidden])
           <th scope="col" @class([
             'py-10 pr-12 font-bold whitespace-nowrap lg:pr-16',
             'text-right' => in_array($key, $numeric),
             'text-center' => $key === 'plan',
           ])>
-            @if ($label === $short)
+            @if ($hidden)
+              <span class="sr-only">{{ $label }}</span>
+            @elseif ($label === $short)
               {{ $label }}
             @else
               <span class="md:hidden">{{ $short }}</span><span class="hidden md:inline">{{ $label }}</span>
@@ -75,6 +78,7 @@
                   @endif
                   @break
                 @case('status') <x-apartments.status :status="$apartment->status" /> @break
+                @case('apply') <x-apartments.apply :apartment="$apartment" /> @break {{-- module:apply --}}
               @endswitch
             </td>
           @endforeach

@@ -53,9 +53,10 @@ return [
         // 'A' => 'Haus A – Musterstrasse 1',
     ],
 
-    // Table columns in order: key => [label, short label below md].
+    // Table columns in order: key => [label, short label below md, header
+    // visually hidden (optional, still read to screen readers)].
     // Available keys: ref, house, floor, rooms, area, outdoor_area, rent_net,
-    // charges, rent_gross, price, available_from, plan, status.
+    // charges, rent_gross, price, available_from, plan, status, apply (module apply).
     'columns' => [
         'ref' => ['Nr.', 'Nr.'],
         'floor' => ['Etage', 'Etage'],
@@ -67,6 +68,7 @@ return [
         'rent_gross' => ['Bruttomiete', 'Brutto'],
         'plan' => ['Grundriss', 'Plan'],
         'status' => ['Status', 'Status'],
+        'apply' => ['Bewerbung', 'Bewerbung', true], // module:apply
     ],
 
     // Filters above the table, in order. Available: status, rooms, floor, house.
