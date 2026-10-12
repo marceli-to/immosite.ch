@@ -16,6 +16,13 @@ npm run dev          # Vite mit Hot Reload
 
 Nach jeder Änderung müssen `php artisan test` und `npm run build` grün sein.
 
+Module entfernen / Entfernen prüfen:
+
+```bash
+php artisan module:remove <name> [--dry-run]   # Dateien, Hooks, Manifest-Eintrag
+bin/check-module-removal <name> [<name> …]     # in Temp-Kopie entfernen, dann Tests + Build
+```
+
 ## Konventionen
 
 - **Routen:** deutsche Slugs (`/wohnen`, `/lage`, `/kontakt`, `/impressum`, `/datenschutz`, `/danke`), Namen `page.*`.
