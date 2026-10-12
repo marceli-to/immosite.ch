@@ -80,4 +80,20 @@ class PagesTest extends TestCase
             $this->assertSame([], $duplicates, "Duplicate IDs on {$page['route']}");
         }
     }
+
+    public function test_burger_breakpoint_follows_number_of_nav_entries(): void
+    {
+        $nav = fn (int $count) => collect(config('site.pages'))
+            ->map(fn ($page, $i) => [...$page, 'nav' => $i < $count])
+            ->all();
+
+        config(['site.nav_breakpoint' => null, 'site.pages' => $nav(3)]);
+        $this->get(route('page.home'))->assertSee('hidden md:block', false);
+
+        config(['site.pages' => $nav(5)]);
+        $this->get(route('page.home'))->assertSee('hidden lg:block', false)->assertDontSee('hidden md:block', false);
+
+        config(['site.nav_breakpoint' => 'md']);
+        $this->get(route('page.home'))->assertSee('hidden md:block', false);
+    }
 }

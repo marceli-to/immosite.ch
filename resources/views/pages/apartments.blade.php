@@ -29,6 +29,8 @@
       @if ($footnote = config('apartments.footnote'))
         <p class="mt-24 text-xs text-muted lg:text-sm">{{ $footnote }}</p>
       @endif
+
+      <x-downloads.buttons group="apartments" class="mt-32 lg:mt-48" /> {{-- module:downloads --}}
     </x-layout.inner>
   </section>
 

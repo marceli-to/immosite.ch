@@ -259,3 +259,34 @@ Hooks:
 - config/site.php → pages: `page.faq` (navigation)
 Config/env:
 - –
+
+---
+
+## building-spec (optional)
+Page /ausbau with the Kurzbaubeschrieb: sections and lines from `config/building-spec.php`,
+shown as a list or an accordion.
+Files:
+- config/building-spec.php
+- resources/views/pages/building-spec.blade.php
+- tests/Feature/BuildingSpecTest.php
+Hooks:
+- routes/web.php → Route::view('/ausbau', …)
+- config/site.php → pages: `page.building-spec` (navigation)
+Config/env:
+- –
+
+---
+
+## downloads (optional)
+PDF buttons per group (`config/downloads.php`), files in public/downloads. Missing files show a
+disabled "PDF folgt" button. Used on /ausbau and /wohnen.
+Files:
+- config/downloads.php
+- resources/views/components/downloads
+- public/downloads/.gitkeep
+- tests/Feature/DownloadsTest.php
+Hooks:
+- resources/views/pages/building-spec.blade.php → <x-downloads.buttons group="building-spec" />
+- resources/views/pages/apartments.blade.php → <x-downloads.buttons group="apartments" />
+Config/env:
+- –

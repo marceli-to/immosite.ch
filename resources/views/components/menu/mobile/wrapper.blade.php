@@ -5,7 +5,7 @@
   x-show="menu"
   x-transition.opacity.duration.200ms
   @keydown.escape.window="menu = false"
-  class="fixed inset-0 z-60 flex h-dvh w-full items-center justify-center bg-surface-alt md:hidden">
+  {{ $attributes->merge(['class' => 'fixed inset-0 z-60 flex h-dvh w-full items-center justify-center bg-surface-alt']) }}>
   <nav aria-label="Hauptnavigation">
     <ul class="flex flex-col items-center gap-y-32">
       @foreach ($items as $page)

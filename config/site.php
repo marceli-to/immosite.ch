@@ -56,6 +56,10 @@ return [
         'privacy_url' => 'https://www.webkeeper.ch/de/unternehmen/datenschutz',
     ],
 
+    // Burger menu below 'md' or 'lg'. null = automatic: more than 4 nav entries → 'lg'.
+    // Check at 768 px that the desktop nav fits (docs/responsive-rules.md §6).
+    'nav_breakpoint' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Pages
@@ -74,6 +78,7 @@ return [
     'pages' => [
         ['route' => 'page.home', 'title' => 'Projekt', 'nav' => true, 'footer' => false, 'sitemap' => ['weekly', '1.0']],
         ['route' => 'page.apartments', 'title' => 'Wohnungen', 'nav' => true, 'footer' => false, 'sitemap' => ['daily', '0.9']], // module:apartments
+        ['route' => 'page.building-spec', 'title' => 'Ausbau', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.6']], // module:building-spec
         ['route' => 'page.location', 'title' => 'Lage', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.8']], // module:pages-full
         ['route' => 'page.faq', 'title' => 'FAQ', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.6']], // module:faq
         ['route' => 'page.contact', 'title' => 'Kontakt', 'nav' => true, 'footer' => false, 'sitemap' => ['monthly', '0.8']], // module:pages-full
