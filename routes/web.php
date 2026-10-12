@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.home')->name('page.home');
@@ -19,14 +20,4 @@ Route::get('/robots.txt', function () {
     return response($body, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
 })->name('robots');
 
-// Seiten kommen aus config('site.pages'), damit Navigation und Sitemap
-// nicht auseinanderlaufen.
-Route::get('/sitemap.xml', function () {
-    $pages = collect(config('site.pages'))->filter(fn ($page) => $page['sitemap']);
-
-    // Die XML-Deklaration steht hier statt im View: In Blade wuerde "<?" als
-    // PHP-Tag gelesen, und Umgehungen wie '<'.'?xml' verwirren den Editor.
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".view('sitemap', ['pages' => $pages])->render();
-
-    return response($xml, 200, ['Content-Type' => 'application/xml']);
-})->name('sitemap');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
