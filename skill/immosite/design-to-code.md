@@ -63,8 +63,11 @@ and list everything still needed in `docs/open-items.md`.
 | Brief section | Starter part |
 |---|---|
 | Header, nav, active state | `components/layout/header`, `menu/*` (burger breakpoint: `site.nav_breakpoint`) |
-| Hero image / slider | `x-gallery.slider` (`gallery`), single image `x-media.picture` |
-| Intro: title + text + image column + CTA | `x-sections.split`, `x-headings.*`, `x-buttons.*` |
+| Hero: image with title over it, key figures ("45 Loftwohnungen") | `x-sections.hero` + `x-sections.stats` (slider via `<x-slot:media>`) |
+| Hero image / slider without title | `x-gallery.slider` (`gallery`), single image `x-media.picture` |
+| Intro: title + text + image column + CTA | `x-sections.split` (`bleed` when the image runs to the window edge, `reverse`), `x-headings.*`, `x-buttons.*` |
+| Text in 2–4 columns, dark or coloured band | `x-sections.columns` (`bg="bg-shade text-on-shade"`) |
+| Elements fading in on scroll | `scroll-reveal` (sections already carry `data-reveal`) |
 | Text page | `x-sections.text` |
 | Lage: text, distance table, Google Maps button, map | `pages/location` (`pages-full`), `x-sections.distances`, `x-map` |
 | Ausbau: spec list/accordion + PDF buttons | `building-spec`, `downloads` |
@@ -74,9 +77,15 @@ and list everything still needed in `docs/open-items.md`.
 | FAQ | `faq` |
 | Footer: marketer, legal links, "design by stoz" | `components/layout/footer`, `config/site.php` |
 
-Build desktop to match the design at 1024, then tablet and mobile by the rules. New
-components only where no starter part fits; a part every site will need goes back into the
-starter.
+Look at `https://<domain>.test/muster` first: the pattern library shows every part this project
+has, with demo content. Build desktop to match the design at 1024, then tablet and mobile by
+the rules. New components only where no starter part fits.
+
+A pattern that turns up again (second project with it, or clearly reusable) goes into the
+starter: one responsive component (no separate mobile/desktop markup), options as props,
+tokens instead of colours, `data-reveal` on its content, a pattern file
+`resources/views/patterns/NN-name.blade.php` (core 01–49, modules 50+, listed in the module's
+`Files:`), a test, and a line in this table.
 
 - Labels and headings are config, not view edits: `apartments.filter_labels`, `apartments.columns`,
   `contact.heading`, `registration.heading`, `apply.label` / `apply.statuses`, `downloads.button`.

@@ -22,7 +22,7 @@ Rules:
 
 Layout (`components/layout/*`), menu, headings, buttons, links, icons, pages Home /
 Impressum / Datenschutz, SEO (`config/seo.php`, `RobotsTag`, `/robots.txt`, `/sitemap.xml`),
-favicon/OG placeholders, `config/site.php`, `module:remove`, `npm run screenshots`, `x-sections.text`, `x-sections.split` (text + image),
+favicon/OG placeholders, `config/site.php`, `module:remove`, `npm run screenshots`, pattern library `/muster` (local only, one file per pattern in `resources/views/patterns`, modules bring their own), `x-sections.text`, `x-sections.split` (text + image, `bleed` to the window edge), `x-sections.hero` (image/slider with title, optional `x-sections.stats` key figures), `x-sections.columns`,
 `x-accordion.group` / `x-accordion.item` (Alpine collapse), `x-media.picture` (image with AVIF/WebP/mobile variants,
 dimensions read from the file), placeholder images `public/img/placeholder-{1,2,3}.{jpg,webp}`.
 
@@ -114,6 +114,7 @@ Full-width Mapbox map, markers in the `primary` colour, two-finger panning on to
 devices. Mapbox is only loaded on pages with a map. Location and markers in
 `config/map.php`.
 Files:
+- resources/views/patterns/51-map.blade.php
 - config/map.php
 - resources/views/components/map.blade.php
 - resources/js/modules/map.js
@@ -135,6 +136,7 @@ Image slider (Swiper) for hero and carousels: swipe, arrows, dots; autoplay stop
 interaction and with "reduce motion". Swiper is only loaded when needed. Aspect ratio
 4:3 / 16:9 / 2:1 (docs/responsive-rules.md §8). Images via `x-media.picture` (core).
 Files:
+- resources/views/patterns/50-gallery.blade.php
 - resources/views/components/gallery/slider.blade.php
 - resources/js/modules/gallery.js
 - resources/css/gallery.css
@@ -155,6 +157,7 @@ Turns the landing page into a website with navigation: pages Lage (text, distanc
 Google Maps button, map if `map` is installed) and Kontakt (intro + contact form).
 Distances and Maps link in `config/location.php`.
 Files:
+- resources/views/patterns/52-distances.blade.php
 - config/location.php
 - resources/views/pages/location.blade.php
 - resources/views/pages/contact.blade.php
@@ -175,6 +178,7 @@ All sources return the same `App\Apartments\Apartment`; the driver comes from
 `APARTMENTS_DRIVER`. Mobile: table scrolls sideways, short headers. Install at least one
 driver module.
 Files:
+- resources/views/patterns/54-apartments.blade.php
 - app/Apartments/Apartment.php
 - app/Apartments/ApartmentRepository.php
 - app/Apartments/ApiSource.php
@@ -281,6 +285,7 @@ Config/env:
 PDF buttons per group (`config/downloads.php`), files in public/downloads. Missing files show a
 disabled "PDF folgt" button. Used on /ausbau and /wohnen.
 Files:
+- resources/views/patterns/53-downloads.blade.php
 - config/downloads.php
 - resources/views/components/downloads
 - public/downloads/.gitkeep
@@ -388,5 +393,22 @@ Hooks:
 - resources/views/pages/apartments.blade.php → @include('isometry.aside')
 - resources/js/app.js → import './modules/isometry.js'
 - resources/css/app.css → @import './isometry.css', --color-iso-* tokens
+Config/env:
+- –
+
+---
+
+## scroll-reveal (optional)
+Fade-in on scroll without a library (IntersectionObserver): `data-reveal` elements and the
+children of `data-reveal-children` (staggered). Starter sections already carry the attributes.
+Off with "reduce motion"; without JS, content stays visible (fallback after 2.5 s).
+Files:
+- resources/js/modules/scroll-reveal.js
+- resources/css/scroll-reveal.css
+- resources/views/scroll-reveal
+Hooks:
+- resources/views/components/layout/head.blade.php → @include('scroll-reveal.head')
+- resources/js/app.js → import './modules/scroll-reveal.js'
+- resources/css/app.css → @import './scroll-reveal.css'
 Config/env:
 - –

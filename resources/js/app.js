@@ -13,3 +13,4 @@ import './modules/map.js'; // module:map
 import './modules/gallery.js'; // module:gallery
 import './modules/apartment-filter.js'; // module:apartments
 import './modules/isometry.js'; // module:isometry
+import './modules/scroll-reveal.js'; // module:scroll-reveal

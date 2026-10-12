@@ -35,6 +35,8 @@ bin/check-module-removal <name> [<name> …]     # remove in a temp copy, then r
 - **Font sizes:** classic scale `text-xxs`, `text-xs`, `text-sm`, `text-lg`, `text-xl`, `text-2xl` … `text-8xl`, **without `base`**. The Tailwind defaults are removed (`--text-*: initial`), the px values live in `@theme`. Mobile first: `text-3xl md:text-5xl lg:text-6xl`. Line heights via `leading-*` in the component, not in the scale.
 - **Spacing:** `--spacing` = 1px (from `xl` × `--scale`), so `px-18` = 18px. Take values straight from the design. No `--spacing-*` lists.
 - **Responsive:** rules in `docs/responsive-rules.md`. Design = 1024px = `lg`, values there 1:1; `md` in-between values; mobile derived (titles ×0.6, section spacing ×0.5). From `xl`, `--scale` scales everything by 1.15, classes stay the same.
+- **Side padding** is the token `--gutter` (20 → 30 → 48 px, × `--scale`): `px-(--gutter)`, never hard-coded.
+- **Pattern library:** `/muster` (local only) renders every file in `resources/views/patterns` (core 01–49, modules 50+). A new reusable section gets a pattern file.
 - **Header height** is the token `--header-height` (84 px, 96 px from `lg`, × `--scale`). Sticky elements and anchor offsets use it (`top-(--header-height)`), never a hard-coded number.
 - **Burger menu:** automatic by number of nav entries (≤ 4 → below `md`, ≤ 6 → below `lg`, more → below `xl`), or `site.nav_breakpoint`.
 - **Container:** `<x-layout.inner>` (`max-w-site`, padding 20 → 30 → 48px). Body text in `.prose-site` / `max-w-text`.

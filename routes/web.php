@@ -16,6 +16,11 @@ Route::view('/ausbau', 'pages.building-spec')->name('page.building-spec'); // mo
 
 Route::view('/disclaimer', 'pages.disclaimer')->name('page.disclaimer'); // module:disclaimer
 Route::view('/danke', 'pages.thanks')->name('page.thanks'); // module:contact-form
+// Pattern library of this project, local only (resources/views/patterns).
+if (app()->environment('local')) {
+    Route::view('/muster', 'patterns.index')->name('patterns');
+}
+
 Route::view('/impressum', 'pages.imprint')->name('page.imprint');
 Route::view('/datenschutz', 'pages.privacy')->name('page.privacy');
 

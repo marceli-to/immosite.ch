@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './gallery.css'; /* module:gallery */
 @import './isometry.css'; /* module:isometry */
+@import './scroll-reveal.css'; /* module:scroll-reveal */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -28,11 +29,20 @@
   --scale: 1;
   /* Header height; also the offset for sticky elements and anchors below it. */
   --header-height: calc(84px * var(--scale));
+  /* Side padding of the container (docs/responsive-rules.md §4): 20 → 30 → design margin. */
+  --gutter: calc(20px * var(--scale));
+}
+
+@media (width >= 48rem) {
+  :root {
+    --gutter: calc(30px * var(--scale));
+  }
 }
 
 @media (width >= 64rem) {
   :root {
     --header-height: calc(96px * var(--scale));
+    --gutter: calc(48px * var(--scale));
   }
 }
 
@@ -57,6 +67,8 @@
   --color-muted: #6b6b6b;         /* Secondary text, footnotes */
   --color-line: #d6d6d2;          /* Lines, table borders */
   --color-field: #d6d6d2;         /* Form field borders (separate from line on purpose) */
+  --color-shade: #2b2b2b;         /* Dark bands, hero gradient (stats on mobile) */
+  --color-on-shade: #ffffff;      /* Text on shade and over hero images */
   --color-header: #f2f2f0;        /* Header bar and mobile menu background */
   --color-on-header: #2b2b2b;     /* Text and icons on the header */
   --color-error: #a3243b;         /* Error messages, borders of invalid fields */

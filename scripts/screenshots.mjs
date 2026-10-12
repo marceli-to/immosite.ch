@@ -25,7 +25,8 @@ for (const url of urls) {
   const name = new URL(url).pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
 
   for (const width of widths) {
-    const page = await browser.newPage({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true });
+    // Reduced motion: scroll-reveal shows everything at once, so full-page shots are complete.
+    const page = await browser.newPage({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' });
     const errors = [];
     const failed = new Map(); // "HTTP 403 api.mapbox.com" → count
     page.on('pageerror', (e) => errors.push(`JS error: ${e.message.split('\n')[0]}`));
@@ -42,6 +43,22 @@ for (const url of urls) {
       }
     });
     await page.goto(url, { waitUntil: 'networkidle' });
+
+    // Scroll through once so lazy images load, then wait for them.
+    await page.evaluate(async () => {
+      // Chrome's full-page capture skips lazy images in absolutely positioned boxes.
+      document.querySelectorAll('img[loading="lazy"]').forEach((img) => (img.loading = 'eager'));
+      for (let y = 0; y < document.body.scrollHeight; y += innerHeight / 2) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 50));
+      }
+      window.scrollTo(0, 0);
+      // decode() resolves once loaded (also if already loaded); cap the wait at 5 s.
+      await Promise.race([
+        Promise.allSettled([...document.images].map((img) => img.decode())),
+        new Promise((r) => setTimeout(r, 5000)),
+      ]);
+    });
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     const file = `storage/screenshots/${name}-${width}.png`;

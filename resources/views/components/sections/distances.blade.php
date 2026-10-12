@@ -5,7 +5,7 @@
   $rows = config('location.distances');
 @endphp
 
-<div class="-mx-20 overflow-x-auto px-20 md:mx-0 md:px-0">
+<div class="-mx-(--gutter) overflow-x-auto px-(--gutter) md:mx-0 md:px-0">
   <table class="w-full min-w-[480px] text-left text-xs lg:text-sm">
     <caption class="sr-only">Distanzen in Minuten</caption>
     <thead>

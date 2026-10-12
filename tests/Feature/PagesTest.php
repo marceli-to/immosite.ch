@@ -89,15 +89,15 @@ class PagesTest extends TestCase
             ->all();
 
         config(['site.nav_breakpoint' => null, 'site.pages' => $nav(3)]);
-        $this->get(route('page.home'))->assertSee('hidden md:block', false);
+        $this->get(route('page.home'))->assertSee('<nav class="hidden md:block"', false);
 
         config(['site.pages' => $nav(5)]);
-        $this->get(route('page.home'))->assertSee('hidden lg:block', false)->assertDontSee('hidden md:block', false);
+        $this->get(route('page.home'))->assertSee('<nav class="hidden lg:block"', false)->assertDontSee('<nav class="hidden md:block"', false);
 
         config(['site.pages' => $nav(7)]);
-        $this->get(route('page.home'))->assertSee('hidden xl:block', false);
+        $this->get(route('page.home'))->assertSee('<nav class="hidden xl:block"', false);
 
         config(['site.nav_breakpoint' => 'md']);
-        $this->get(route('page.home'))->assertSee('hidden md:block', false);
+        $this->get(route('page.home'))->assertSee('<nav class="hidden md:block"', false);
     }
 }

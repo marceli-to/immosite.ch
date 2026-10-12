@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="{{ $fonts }}">
 @endif
 
+@include('scroll-reveal.head') {{-- module:scroll-reveal --}}
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 @stack('head')

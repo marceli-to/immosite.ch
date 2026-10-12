@@ -4,7 +4,7 @@
 
 <section class="{{ $bg }}">
   <x-layout.inner {{ $attributes->merge(['class' => 'py-40 md:py-60 lg:py-80']) }}>
-    <div class="prose-site max-w-text">
+    <div class="prose-site max-w-text" data-reveal>
       {{ $slot }}
     </div>
   </x-layout.inner>

@@ -23,7 +23,7 @@
   }
 @endphp
 
-<picture class="block">
+<picture class="block h-full">
   @foreach ($variants as $variant)
     <source srcset="{{ $variant['srcset'] }}" type="{{ $variant['type'] }}"@if ($variant['media']) media="{{ $variant['media'] }}"@endif>
   @endforeach
