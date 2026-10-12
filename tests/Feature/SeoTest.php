@@ -42,6 +42,8 @@ class SeoTest extends TestCase
             ->assertOk()
             ->assertHeader('Content-Type', 'application/xml');
 
+        $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', $response->getContent());
+
         $xml = simplexml_load_string($response->getContent());
         $this->assertNotFalse($xml, 'Sitemap ist kein gueltiges XML');
 

@@ -1,6 +1,4 @@
-{{-- Die XML-Deklaration wird zusammengesetzt, damit "<?" nie woertlich in der
-     Datei steht: Blade liest es bei short_open_tag=On als PHP-Tag. --}}
-{!! '<'.'?xml version="1.0" encoding="UTF-8"?'.'>' !!}
+{{-- XML-Deklaration kommt aus der Route (routes/web.php), siehe dort. --}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 @foreach ($pages as $page)
   <url>

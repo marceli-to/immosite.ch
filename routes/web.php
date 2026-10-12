@@ -24,7 +24,9 @@ Route::get('/robots.txt', function () {
 Route::get('/sitemap.xml', function () {
     $pages = collect(config('site.pages'))->filter(fn ($page) => $page['sitemap']);
 
-    return response()
-        ->view('sitemap', ['pages' => $pages])
-        ->header('Content-Type', 'application/xml');
+    // Die XML-Deklaration steht hier statt im View: In Blade wuerde "<?" als
+    // PHP-Tag gelesen, und Umgehungen wie '<'.'?xml' verwirren den Editor.
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".view('sitemap', ['pages' => $pages])->render();
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
 })->name('sitemap');
