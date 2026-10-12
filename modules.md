@@ -15,6 +15,7 @@ Regeln:
 - `Hooks:` beschreibt die Zeilen für Menschen; `module:remove` findet sie über die Markierung.
 - Entfernen eines Moduls entfernt auch die Module, die es brauchen (`needs:`). Hinzufügen prüft `needs:` zuerst.
 - Nach dem Entfernen müssen `php artisan test` und `npm run build` grün sein.
+- `Packages:` (`npm: name`, `composer: vendor/name`) streicht `module:remove` aus package.json / composer.json.
 - Format der Überschrift: `## <name> (optional)` oder `## <name> (optional, needs: a, b)`.
 
 ## Core (immer vorhanden)
@@ -103,3 +104,24 @@ Hooks:
 - resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (geteilt mit registration)
 Config/env:
 - CONTACT_RECIPIENTS, TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
+
+---
+
+## map (optional)
+Mapbox-Karte über die volle Breite, Marker in der Farbe `primary`, zwei Finger zum Bewegen
+auf Touch-Geräten. Mapbox wird nur auf Seiten mit Karte geladen. Lage und Marker in
+`config/map.php`.
+Files:
+- config/map.php
+- resources/views/components/map.blade.php
+- resources/js/modules/map.js
+- resources/views/pages/privacy/mapbox.blade.php
+- tests/Feature/MapTest.php
+Hooks:
+- resources/js/app.js → import './modules/map.js'
+- resources/views/pages/home.blade.php → <x-map />
+- resources/views/pages/privacy.blade.php → @include('pages.privacy.mapbox')
+Packages:
+- npm: mapbox-gl
+Config/env:
+- MAPBOX_TOKEN, MAPBOX_STYLE

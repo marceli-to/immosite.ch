@@ -70,6 +70,7 @@ class RemoveModule extends Command
         }
 
         $this->removeHooks($root, $remove, array_diff(array_keys($modules), $remove), $dry);
+        $this->removePackages($root, $remove, $modules, $dry);
 
         if (! $dry) {
             File::put($manifestPath, self::withoutSections($manifest, $remove));
@@ -85,7 +86,7 @@ class RemoveModule extends Command
     }
 
     /**
-     * @return array<string, array{needs: array<int,string>, files: array<int,string>, env: array<int,string>}>
+     * @return array<string, array{needs: array<int,string>, files: array<int,string>, env: array<int,string>, packages: array<int,string>}>
      */
     public static function parse(string $manifest): array
     {
@@ -101,6 +102,7 @@ class RemoveModule extends Command
                     'needs' => isset($m[2]) ? array_map('trim', explode(',', $m[2])) : [],
                     'files' => [],
                     'env' => [],
+                    'packages' => [],
                 ];
 
                 continue;
@@ -116,7 +118,7 @@ class RemoveModule extends Command
                 continue;
             }
 
-            if (preg_match('/^(Files|Hooks|Config\/env):/', $line, $m)) {
+            if (preg_match('/^(Files|Hooks|Config\/env|Packages):/', $line, $m)) {
                 $block = $m[1];
 
                 continue;
@@ -125,6 +127,8 @@ class RemoveModule extends Command
             if (preg_match('/^- (.+)$/', $line, $m) && trim($m[1]) !== '–') {
                 if ($block === 'Files') {
                     $modules[$current]['files'][] = trim($m[1]);
+                } elseif ($block === 'Packages') {
+                    $modules[$current]['packages'][] = trim($m[1]);
                 } elseif ($block === 'Config/env') {
                     foreach (preg_split('/,\s*/', $m[1]) as $key) {
                         $modules[$current]['env'][] = trim($key);
@@ -204,6 +208,49 @@ class RemoveModule extends Command
                     File::put($file->getPathname(), implode('', $lines));
                 }
             }
+        }
+    }
+
+    /**
+     * Pakete eines Moduls ("npm: name" / "composer: vendor/name") aus package.json bzw.
+     * composer.json streichen. Die Lockfiles zieht erst npm install / composer update nach.
+     */
+    private function removePackages(string $root, array $remove, array $modules, bool $dry): void
+    {
+        $files = ['npm' => ['package.json', ['dependencies', 'devDependencies']], 'composer' => ['composer.json', ['require', 'require-dev']]];
+        $touched = [];
+
+        foreach ($remove as $name) {
+            foreach ($modules[$name]['packages'] as $entry) {
+                [$manager, $package] = array_map('trim', explode(':', $entry, 2));
+                [$file, $sections] = $files[$manager] ?? [null, []];
+                $path = "{$root}/{$file}";
+
+                if (! $file || ! File::exists($path)) {
+                    continue;
+                }
+
+                $json = json_decode(File::get($path), true);
+                foreach ($sections as $section) {
+                    unset($json[$section][$package]);
+                }
+
+                $this->line("  - Paket {$manager}: {$package}");
+                $touched[$manager] = true;
+
+                if (! $dry) {
+                    $indent = $manager === 'npm' ? 2 : 4;
+                    $encoded = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                    File::put($path, preg_replace_callback('/^ +/m', fn ($m) => str_repeat(' ', strlen($m[0]) / 4 * $indent), $encoded)."\n");
+                }
+            }
+        }
+
+        if (isset($touched['npm'])) {
+            $this->line('  Danach: npm install');
+        }
+        if (isset($touched['composer'])) {
+            $this->line('  Danach: composer update');
         }
     }
 

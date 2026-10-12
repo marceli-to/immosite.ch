@@ -25,5 +25,6 @@
 
   @include('sections.registration') {{-- module:registration --}}
   @include('sections.contact') {{-- module:contact-form --}}
+  <x-map /> {{-- module:map --}}
 
 @endsection

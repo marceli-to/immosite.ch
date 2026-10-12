@@ -46,7 +46,13 @@ class RemoveModuleTest extends TestCase
         ## gamma (optional)
         Files:
         - app/Gamma.php
+        Packages:
+        - npm: gamma-js
+        - composer: acme/gamma
         MD);
+
+        File::put($this->path('package.json', true), json_encode(['dependencies' => ['gamma-js' => '^1', 'keep' => '^2']], JSON_PRETTY_PRINT));
+        File::put($this->path('composer.json', true), json_encode(['require' => ['acme/gamma' => '^1', 'php' => '^8.4']], JSON_PRETTY_PRINT));
 
         File::put($this->path('app/Alpha.php', true), '<?php');
         File::put($this->path('app/Beta.php', true), '<?php');
@@ -123,6 +129,14 @@ class RemoveModuleTest extends TestCase
         $routes = File::get($this->path('routes/web.php'));
         $this->assertStringNotContainsString('module:', $routes);
         $this->assertStringContainsString("Route::view('/core', 'core');", $routes);
+    }
+
+    public function test_it_removes_packages(): void
+    {
+        $this->artisan('module:remove', ['names' => ['gamma'], '--path' => $this->root])->assertSuccessful();
+
+        $this->assertSame(['keep' => '^2'], json_decode(File::get($this->path('package.json')), true)['dependencies']);
+        $this->assertSame(['php' => '^8.4'], json_decode(File::get($this->path('composer.json')), true)['require']);
     }
 
     public function test_dry_run_changes_nothing(): void

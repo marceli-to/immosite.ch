@@ -12,6 +12,7 @@
     @include('pages.privacy.cookies')
     @include('pages.privacy.hosting')
     @include('pages.privacy.forms') {{-- module:registration,contact-form --}}
+    @include('pages.privacy.mapbox') {{-- module:map --}}
     @includeWhen(config('services.google_analytics.id'), 'pages.privacy.analytics')
     @includeWhen(config('site.fonts.stylesheet'), 'pages.privacy.adobe-fonts')
     @include('pages.privacy.rights')

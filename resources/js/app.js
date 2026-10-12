@@ -7,3 +7,5 @@
 // document.addEventListener('livewire:init', () => {
 //   window.Alpine.plugin(collapse);
 // });
+
+import './modules/map.js'; // module:map
