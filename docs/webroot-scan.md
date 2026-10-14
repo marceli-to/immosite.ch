@@ -1,4 +1,4 @@
-# Webroot scan (started 2026-10-12, paused)
+# Webroot scan (started 2026-10-12, deep dive 2026-10-14)
 
 Inventory of `/Users/marceli.to/Jamon.digital/Webroot` to find more projects and patterns for the starter.
 Generated from `composer.json`, `package.json`, a keyword grep of `resources/` and `git log`.
@@ -145,16 +145,64 @@ Flags: `flatfox`, `melon`, `iso` (isometry), `apt` (apartment/rental words), `ma
 | weberbrunner.eu.import |  | Laravel 10, Statamic 5, Livewire, TW3 |  |
 | zuerigaertner.ch | 2025-11-14 | Laravel 9, Statamic 3, Vue, TW3 | map |
 
-## Next session: deep dive (only projects selected by the rule above)
+## Deep dive (2026-10-14)
 
-Read-only, never open `INSTALL.txt` / `.env`. Compare every project with `modules.md` and the
-"Brief section → Starter part" table in `skill/immosite/design-to-code.md`; report only what the starter lacks:
-new patterns (with file paths, reusable or not), variations of existing parts worth an option,
-CMS needs (what clients edit in Statamic), bugs or better solutions. Suggested split (parallel agents):
+Scope: real-estate projects on port 2121 that are not in `refs/` yet: pappelstrasse.ch,
+landing.pappelstrasse.ch, magnolia.ch, siewerdtstrasse.ch, werkwinkel.ch, creativefactory-renens.ch,
+landing.werkwinkel.ch, luppmenpark.ch, landing.aupark-reinach.ch, nineone.ch.landing, nidum-sempach.ch.
+lindenbaum.ch was checked too and is **not** real estate (social institution); ruem.ch / landing.ruem.ch
+neither. Read-only, no `INSTALL.txt` / `.env` opened. Paths are relative to the Webroot.
 
-1. pappelstrasse.ch, landing.pappelstrasse.ch, magnolia.ch, siewerdtstrasse.ch (newest generation)
-2. werkwinkel.ch, landing.werkwinkel.ch, creativefactory-renens.ch (French?), luppmenpark.ch, kornhaus-roetelstrasse.ch (Statamic)
-3. nidum-sempach.ch, landing.aupark-reinach.ch, mps.ch, lindenbaum.ch, nineone.ch, oerlikon.ch, muenchhaldenstrasse.ch (Vue generation: what did the old apartment lists have?)
-4. group B (aporta: portfolio + interested-party management; riccardacavelti: sales sites)
+General finding: the old sites hard-code what the starter keeps in config, fetch APIs during the
+request without timeout, and have no lead retention. The starter is ahead on robustness; the gaps
+are features.
 
-Then: rank the candidates, decide with Marcel which go into the starter, build them like the Shift patterns (component + pattern file + test).
+### Starter bug
+
+- **Flatfox collective listing not filtered.** pappelstrasse drops listings with `ref_house === '99'`
+  (Sammelinserat, `pappelstrasse.ch/app/Actions/GetData.php:42`). `FlatfoxSource::normalise()` doesn't,
+  so a "99-9996" placeholder row would show in the table. Fix: `flatfox.exclude_houses => ['99']`.
+
+### Candidates (ranked by how often they appeared × cost)
+
+| # | Candidate | Seen in | Where it goes |
+|---|---|---|---|
+| 1 | **Lightbox** for gallery grid / images (keyboard, groups) | pappelstrasse, magnolia, siewerdtstrasse, werkwinkel, creativefactory, luppmenpark (+ adlerstrasse) | `gallery` option: `x-gallery.grid` + lightbox |
+| 2 | **Owner notification per lead** (mail to agency on each registration, optional JSON/CSV) | landing.werkwinkel, nineone.ch.landing, aupark (unused) | `registration` config `notify` |
+| 3 | **Consent timestamp + retention** (`privacy_accepted_at`, `registrations:prune --months`) | none (gap everywhere; nDSG) | `registration` / `contact-form` |
+| 4 | **Several units per inquiry** (picker fed from the apartment source, removable badges, `?wohnung=` preselects) | magnolia, siewerdtstrasse, creativefactory | `apply` |
+| 5 | **Mobile apartment rows as accordion** (status dot, rooms, rent, apply; expands to details + plan), synced with isometry | pappelstrasse, nidum (detail panel) | `apartments` table, mobile view |
+| 6 | **Parking / extras table** (type, floor, price/status; static rows) | pappelstrasse, magnolia, siewerdtstrasse | `apartments` config `extras` |
+| 7 | **Database driver + small admin for units** (status, price, apply link) — generalise `commercial-admin` | magnolia, siewerdtstrasse, werkwinkel (only thing clients edit in Statamic) | new `apartments-database` |
+| 8 | **Floor-plan PDF by naming pattern** (`/downloads/plans/{ref}.pdf` if present) | pappelstrasse, nidum, siewerdtstrasse | `apartments` config `plan_path` |
+| 9 | **Per-ref overrides / excludes** (fix rooms/floor, hide a ref, "2.5+1") | creativefactory, siewerdtstrasse (merged units) | `apartments` config `overrides` |
+| 10 | **Hide prices for reserved too** (`hide_prices_for: [rented, reserved]`) | nidum, magnolia | `apartments` config |
+| 11 | **Flatfox lead hook** (JSON mail to the Flatfox inbox) | landing.pappelstrasse | new `flatfox-lead-hook` (mirror of `melon-lead-hook`) |
+| 12 | **Isometry: several buildings** (overview + one drawing per house) | nidum | `isometry` |
+| 13 | **Isometry: floor-plan mode** (per-floor plan image instead of stacked lift) | creativefactory | `isometry` option |
+| 14 | **Sticker CTA** (round rotated "Störer": "3D-Rundgang", "Alle Wohnungen verkauft", date) | magnolia, siewerdtstrasse, werkwinkel | component `x-sticker` |
+| 15 | **Virtual tour** (Matterport embed or teaser image → external tour) | pappelstrasse, werkwinkel | section + pattern |
+| 16 | **Numbered footnotes** on table headers + per-row note (SIA 416, "inkl. Gartenanteil") | magnolia, siewerdtstrasse | `apartments` `footnotes` array |
+| 17 | **French locale** (`<html lang>` from config, `lang/fr`, status labels, Flatfox `/fr/`, number format) | creativefactory | core: locale switch, no multisite |
+| 18 | **Timeline** (milestones: date + text) | luppmenpark | section + pattern |
+| 19 | **Contact person / partner logos** block (marketer, owner, developer) from `site.marketer` / `site.partners` | all four landings, aupark | component |
+| 20 | **Form types** (one select switches field sets, `request_type` column) | luppmenpark | `registration` / `contact-form` config `types` |
+| 21 | **News / construction progress** (date, text, slider, video) — needs editing | magnolia, siewerdtstrasse | later, only with an edit layer |
+| 22 | Smaller: hero with scroll-down button + portrait/landscape images, icon feature row, video component, `company` field, minimum fill time on forms | various | options on existing parts |
+
+Not worth taking: Vue/JWT admins (abandoned in nidum and aupark), Rellax parallax, Corcel,
+Statamic content backups (only relevant with a file CMS).
+
+### Old-site bugs (already avoided by the starter, keep it that way)
+
+Fetch in request without timeout and overwrite on failure (pappelstrasse, nidum, creativefactory);
+raw feed on the public disk (creativefactory); swapped status filter labels (nidum) and a `rented`
+filter that never matches `taken` (pappelstrasse); removed Flatfox listings counted as free
+(creativefactory); `env()` in controllers; leads stored but nobody notified (luppmenpark); message
+field dropped from `only()` (landing.werkwinkel); catch-all route = soft 404 (aupark); GA without
+consent; no honeypot (nineone).
+
+### Next
+
+Fix the Flatfox bug, then Marcel picks candidates; each one is built like the Shift patterns
+(component + pattern file + test, manifest entry if it's a module).
