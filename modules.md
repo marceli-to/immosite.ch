@@ -218,7 +218,8 @@ Config/env:
 
 ## apartments-flatfox (optional, needs: apartments)
 Flatfox public listing API: follows `next` pages, newer duplicate (higher pk) wins, pre/act/dis
-= published (reserved flag), arc/rem = rented, Flatfox apply link per listing. Fetched every
+= published (reserved flag), arc/rem = rented, Flatfox apply link per listing, collective
+listings (house 99, `flatfox.exclude_houses` / `exclude_refs`) dropped. Fetched every
 15 minutes by `apartments:fetch` into storage/app/apartments.json; a failed or empty fetch
 keeps the last data.
 Files:

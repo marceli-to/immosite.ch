@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Http;
  *
  * Status: pre/act/dis are published (reserved flag decides free vs reserved),
  * arc/rem are archived/removed = rented. A listing can appear twice (re-published);
- * the one with the higher pk wins.
+ * the one with the higher pk wins. Collective listings (config exclude_*) are dropped.
  */
 class FlatfoxSource extends ApiSource
 {
@@ -44,7 +44,9 @@ class FlatfoxSource extends ApiSource
         $latest = collect($listings)
             ->sortByDesc('pk')
             ->unique(fn ($l) => filled($l['reference'] ?? null) ? $l['reference'] : $l['pk'])
-            ->sortBy('pk');
+            ->sortBy('pk')
+            ->reject(fn ($l) => in_array((string) ($l['ref_house'] ?? ''), config('flatfox.exclude_houses', []), true)
+                || in_array((string) ($l['reference'] ?? ''), config('flatfox.exclude_refs', []), true));
 
         return $latest->map(fn (array $l) => Apartment::fromArray([
             'ref' => $this->ref($l),

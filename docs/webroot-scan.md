@@ -204,5 +204,5 @@ consent; no honeypot (nineone).
 
 ### Next
 
-Fix the Flatfox bug, then Marcel picks candidates; each one is built like the Shift patterns
+Flatfox bug fixed (`flatfox.exclude_houses` / `exclude_refs`). Then Marcel picks candidates; each one is built like the Shift patterns
 (component + pattern file + test, manifest entry if it's a module).

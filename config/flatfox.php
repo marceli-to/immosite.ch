@@ -31,4 +31,9 @@ return [
     // Reference shown in the table. {ref_house} / {ref_object} / {reference}.
     'ref_format' => '{ref_house}-{ref_object}',
 
+    // Collective listings (Sammelinserate) advertise the whole project, not a unit; the agency
+    // files them under house 99 (pappelstrasse, radial). Excluded by ref_house or Flatfox reference.
+    'exclude_houses' => ['99'],
+    'exclude_refs' => [],
+
 ];

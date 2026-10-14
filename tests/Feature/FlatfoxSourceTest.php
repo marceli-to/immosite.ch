@@ -35,7 +35,8 @@ class FlatfoxSourceTest extends TestCase
     {
         $apartments = collect((new FlatfoxSource)->fetch())->keyBy('ref');
 
-        // 5 listings, 01-001 twice (pk 9 removed, pk 10 active: the newer one wins).
+        // 6 listings, 01-001 twice (pk 9 removed, pk 10 active: the newer one wins),
+        // one collective listing in house 99 (dropped).
         $this->assertCount(4, $apartments);
 
         $first = $apartments['01-001'];
@@ -50,7 +51,16 @@ class FlatfoxSourceTest extends TestCase
         $this->assertSame('1', $apartments['01-002']->floor);
         $this->assertSame(Status::Rented, $apartments['02-001']->status, 'archived = rented');
         $this->assertSame('UG', $apartments['02-001']->floor);
-        $this->assertSame('parking', $apartments['99-PP1']->type);
+        $this->assertSame('parking', $apartments['90-PP1']->type);
+    }
+
+    public function test_collective_listings_can_be_excluded_by_reference(): void
+    {
+        config(['flatfox.exclude_houses' => [], 'flatfox.exclude_refs' => ['10100.99.9001', 'PP-01']]);
+
+        $refs = collect((new FlatfoxSource)->fetch())->pluck('ref')->all();
+
+        $this->assertSame(['01-001', '01-002', '02-001'], $refs);
     }
 
     public function test_fetch_command_caches_and_page_lists_only_apartments(): void
