@@ -33,6 +33,16 @@ class GalleryTest extends TestCase
         $this->assertStringContainsString('aria-label="2 von 2"', $html);
     }
 
+    public function test_grid_links_every_image_to_the_lightbox_group(): void
+    {
+        $html = Blade::render('<x-gallery.grid group="wohnung" :images="[\'img/placeholder-1\', [\'src\' => \'img/placeholder-2\', \'alt\' => \'Küche\']]" />');
+
+        $this->assertSame(2, substr_count($html, 'data-lightbox="wohnung"'));
+        $this->assertStringContainsString('href="'.asset('img/placeholder-1.jpg').'"', $html);
+        $this->assertStringContainsString('aria-label="Küche – Bild 2 von 2 vergrössern"', $html);
+        $this->assertStringContainsString('placeholder-2.webp', $html);
+    }
+
     public function test_autoplay_can_be_turned_off(): void
     {
         $html = Blade::render('<x-gallery.slider :autoplay="false" :images="[\'img/placeholder-1\', \'img/placeholder-2\']" />');

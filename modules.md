@@ -136,12 +136,16 @@ Config/env:
 
 ## gallery (optional)
 Image slider (Swiper) for hero and carousels: swipe, arrows, dots; autoplay stops on
-interaction and with "reduce motion". Swiper is only loaded when needed. Aspect ratio
+interaction and with "reduce motion". Image grid (`x-gallery.grid`) with a full-screen
+lightbox (native `<dialog>`, keyboard, groups per page). Swiper is only loaded when needed. Aspect ratio
 4:3 / 16:9 / 2:1 (docs/responsive-rules.md §8). Images via `x-media.picture` (core).
 Files:
 - resources/views/patterns/50-gallery.blade.php
+- resources/views/patterns/55-gallery-grid.blade.php
 - resources/views/components/gallery/slider.blade.php
+- resources/views/components/gallery/grid.blade.php
 - resources/js/modules/gallery.js
+- resources/js/modules/lightbox.js
 - resources/css/gallery.css
 - tests/Feature/GalleryTest.php
 Hooks:

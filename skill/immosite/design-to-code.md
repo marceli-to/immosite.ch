@@ -65,6 +65,7 @@ and list everything still needed in `docs/open-items.md`.
 | Header, nav, active state | `components/layout/header`, `menu/*` (burger breakpoint: `site.nav_breakpoint`) |
 | Hero: image with title over it, key figures ("45 Loftwohnungen") | `x-sections.hero` + `x-sections.stats` (slider via `<x-slot:media>`) |
 | Hero image / slider without title | `x-gallery.slider` (`gallery`), single image `x-media.picture` |
+| Galerie: image grid, click enlarges | `x-gallery.grid` (`gallery`, lightbox; `group` per grid) |
 | Intro: title + text + image column + CTA | `x-sections.split` (`bleed` when the image runs to the window edge, `reverse`), `x-headings.*`, `x-buttons.*` |
 | Text in 2–4 columns, dark or coloured band | `x-sections.columns` (`bg="bg-shade text-on-shade"`) |
 | Elements fading in on scroll | `scroll-reveal` (sections already carry `data-reveal`) |

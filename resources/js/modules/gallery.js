@@ -1,6 +1,8 @@
 // Image slider (module:gallery). Swiper is only loaded if the page has a
 // slider with more than one image; settings come via data-gallery.
 
+import './lightbox.js';
+
 async function initSliders(sliders) {
   const [{ default: Swiper }, { Navigation, Pagination, Autoplay, EffectFade, A11y, Keyboard }] = await Promise.all([
     import('swiper'),
