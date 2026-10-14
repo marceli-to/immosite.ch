@@ -15,7 +15,7 @@ class ApplyTest extends TestCase
     {
         parent::setUp();
 
-        config(['apply.mode' => 'auto', 'apply.label' => 'Bewerben', 'apply.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => 'optional']]);
+        config(['apply.mode' => 'auto', 'apply.label' => 'Bewerben', 'apply.multiple' => false, 'apply.statuses' => ['free', 'reserved'], 'apply.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => 'optional']]);
 
         config([
             'apartments.driver' => 'fake',
@@ -87,5 +87,43 @@ class ApplyTest extends TestCase
         $this->get(route('page.apartments'))
             ->assertSee(route('page.apply', ['wohnung' => 'A.01']), false)
             ->assertDontSee(route('page.apply', ['wohnung' => 'A.02']), false);
+    }
+
+    public function test_multiple_mode_preselects_and_adds_apartments(): void
+    {
+        Mail::fake();
+        config(['apply.multiple' => true]);
+
+        Livewire::withQueryParams(['wohnung' => 'A.02'])
+            ->test(ApplicationForm::class)
+            ->assertSet('selected', ['A.02'])
+            ->assertSee('Bewerbung für Wohnung A.02')
+            ->assertDontSee('<option value="A.03"', false)
+            ->set('add', 'A.01')
+            ->assertSet('selected', ['A.02', 'A.01'])
+            ->assertSet('add', '')
+            ->set('add', 'A.03')
+            ->assertSet('selected', ['A.02', 'A.01'])
+            ->set('first_name', 'Anna')->set('last_name', 'Muster')
+            ->set('street', 'Weg 1')->set('zip_city', '8000 Zürich')
+            ->set('email', 'anna@example.com')->set('phone', '044')
+            ->set('privacy', true)
+            ->call('submit')
+            ->assertHasNoErrors()
+            ->assertRedirect(route('page.thanks'));
+
+        Mail::assertSent(ContactInquiry::class, fn ($mail) => $mail->data['message'] === 'Bewerbung für Wohnungen A.02, A.01');
+    }
+
+    public function test_multiple_mode_requires_an_apartment(): void
+    {
+        config(['apply.multiple' => true]);
+
+        Livewire::withQueryParams(['wohnung' => 'A.02'])
+            ->test(ApplicationForm::class)
+            ->call('remove', 'A.02')
+            ->assertSet('selected', [])
+            ->call('submit')
+            ->assertHasErrors(['selected' => 'min']);
     }
 }

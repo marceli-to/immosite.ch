@@ -309,7 +309,8 @@ Config/env:
 
 ## apply (optional, needs: apartments, contact-form)
 "Bewerben" button per free/reserved apartment: the source's application link (Flatfox/Melon)
-or our form on /bewerben?wohnung=REF (contact form with the apartment on top of the message).
+or our form on /bewerben?wohnung=REF (contact form with the apartment on top of the message;
+with `apply.multiple` the visitor can add more apartments from the list).
 Mode and fields in `config/apply.php`.
 Files:
 - app/Livewire/ApplicationForm.php

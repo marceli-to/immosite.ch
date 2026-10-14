@@ -22,6 +22,10 @@ return [
     // (the status column next to it still says reserviert / vermietet).
     'statuses' => ['free', 'reserved'],
 
+    // Our form: the visitor can add more apartments from the list (badges, ?wohnung=
+    // preselects one) and must pick at least one. false = only the one from the link.
+    'multiple' => true,
+
     // Fields of our application form, like config/contact.php.
     'fields' => [
         'street' => 'required',
