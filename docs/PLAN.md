@@ -255,6 +255,7 @@ columns, scroll-reveal), pattern library `/muster`.
 - Machine formats (XML, CSV, JSON) in PHP, not Blade.
 - A recurring pattern goes into the starter as a component + pattern file + test.
 - Intake: Claude asks the questions (AskUserQuestion), Marcel doesn't fill in a template.
+- Apartments on mobile: list with details per row (`apartments.mobile = 'list'`) by default; application for several apartments (`apply.multiple`) on by default, at least one required (confirmed 2026-10-14).
 
 **Open:**
 - Hero mobile ratio (4:3) and slider autoplay (6 s) are defaults, not confirmed (`docs/responsive-rules.md` ❓).
