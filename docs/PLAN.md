@@ -260,6 +260,12 @@ columns, scroll-reveal), pattern library `/muster`.
 - Hero mobile ratio (4:3) and slider autoplay (6 s) are defaults, not confirmed (`docs/responsive-rules.md` ❓).
 - First real project with the skill; expect corrections, feed them back.
 
-**Next task:** webroot scan for more projects and patterns. The inventory is done
+**2026-10-14:** webroot deep dive done (`docs/webroot-scan.md` → "Deep dive", 22 ranked
+candidates). Built: Flatfox collective-listing filter, owner mail per registration, gallery
+grid + lightbox, parking/extras table, application for several apartments, mobile apartment
+list with details synced to the isometry. Not now: unit admin, multi-building isometry,
+French, isometry floor-plan mode.
+
+**Previous task (done):** webroot scan for more projects and patterns. The inventory is done
 (`docs/webroot-scan.md`: 63 stoz / real-estate projects, grouped); the deep dive per group is
 described at the end of that file and hasn't started. **Selection rule: only projects whose `INSTALL.txt` has `ssh … -p 2121` (= stoz).** No credentials from `INSTALL.txt` in the repo.
