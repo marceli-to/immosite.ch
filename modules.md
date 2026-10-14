@@ -183,7 +183,8 @@ Apartment listing on /wohnen: filters (status, rooms, floor, house) and table(s)
 filters, grouping by house, floor labels, sort order, footnote and a static parking/extras table
 (`extras`) from `config/apartments.php`.
 All sources return the same `App\Apartments\Apartment`; the driver comes from
-`APARTMENTS_DRIVER`. Mobile: table scrolls sideways, short headers. Install at least one
+`APARTMENTS_DRIVER`. Mobile (`apartments.mobile`): 'list' = a few columns per row, the rest
+opens below it and marks the apartment in the isometry; 'scroll' = table scrolls sideways. Install at least one
 driver module.
 Files:
 - resources/views/patterns/54-apartments.blade.php

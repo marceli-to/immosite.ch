@@ -71,6 +71,11 @@ return [
         'apply' => ['Bewerbung', 'Bewerbung', true], // module:apply
     ],
 
+    // Below md: 'list' = only mobile_columns in the row, the rest opens below it
+    // (toggle per apartment); 'scroll' = all columns, the table scrolls sideways.
+    'mobile' => 'list',
+    'mobile_columns' => ['ref', 'rooms', 'rent_gross', 'price', 'status'],
+
     // Filters above the table, in order. Available: status, rooms, floor, house.
     'filters' => ['status', 'rooms', 'floor'],
 

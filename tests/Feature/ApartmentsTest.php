@@ -52,6 +52,27 @@ class ApartmentsTest extends TestCase
         $this->get(route('page.apartments'))->assertSee('3&#039;360', false);
     }
 
+    public function test_mobile_list_moves_other_columns_into_details(): void
+    {
+        config([
+            'apartments.mobile' => 'list',
+            'apartments.mobile_columns' => ['ref', 'rooms', 'status'],
+            'apartments.columns' => ['ref' => ['Nr.', 'Nr.'], 'rooms' => ['Zimmer', 'Zi.'], 'area' => ['Wohnfläche m²', 'Fläche'], 'rent_gross' => ['Bruttomiete', 'Brutto'], 'status' => ['Status', 'Status']],
+        ]);
+
+        $html = $this->get(route('page.apartments'))->assertOk()->getContent();
+
+        $this->assertStringContainsString('aria-label="Wohnung A.01: Details"', $html);
+        $this->assertStringContainsString('<dt class="text-muted">Wohnfläche m²</dt>', $html);
+        $this->assertStringContainsString('<dt class="text-muted">Bruttomiete</dt>', $html);
+        $this->assertStringNotContainsString('<dt class="text-muted">Zimmer</dt>', $html, 'summary columns stay in the row');
+        // A.11 is rented: its hidden rent is left out of the details instead of an empty line.
+        $this->assertSame(1, substr_count($html, '<dt class="text-muted">Bruttomiete</dt>'));
+
+        config(['apartments.mobile' => 'scroll']);
+        $this->get(route('page.apartments'))->assertDontSee(': Details"', false);
+    }
+
     public function test_extras_table_shows_configured_rows(): void
     {
         $this->get(route('page.apartments'))->assertDontSee('Parkplätze und Nebenräume');

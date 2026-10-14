@@ -1,7 +1,8 @@
 // Isometry (module:isometry): links the building drawing with the apartment table.
 // Row hover/focus → lift the floors above and mark the apartment; hover over a floor
 // lifts the ones above it (only then are its apartments reachable); hover/tap on an
-// apartment marks its row, tap also scrolls the row into view (touch has no hover).
+// apartment marks its row, tap also scrolls the row into view and opens its details
+// (touch has no hover).
 
 const svg = document.querySelector('[data-isometry]');
 
@@ -72,8 +73,14 @@ if (svg) {
     const part = e.target.closest('[data-iso]');
     if (!part) return;
     select(part.dataset.iso);
-    rows.get(part.dataset.iso)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const row = rows.get(part.dataset.iso);
+    // Mobile list: open the apartment's details (table.blade.php listens for it).
+    row?.dispatchEvent(new CustomEvent('apartment-open'));
+    row?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
+
+  // Mobile list: opening an apartment's details marks it in the drawing (touch has no hover).
+  document.addEventListener('apartments:toggle', (e) => (e.detail.open ? select(e.detail.ref) : clear()));
 
   // Dim apartments the table filters have hidden.
   document.addEventListener('apartments:filtered', () => {

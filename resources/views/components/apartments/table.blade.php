@@ -1,16 +1,23 @@
 {{-- Apartment table, columns from config('apartments.columns') or the columns prop
      (commercial units use their own).
-     Mobile: all columns kept, the wrapper scrolls sideways and headers use the
-     short label (docs/responsive-rules.md §7). --}}
+     Mobile (config apartments.mobile):
+     'list'   = only apartments.mobile_columns stay in the row; a toggle opens the other
+                values below it (pappelstrasse, nidum). Tapping it also marks the
+                apartment in the isometry.
+     'scroll' = all columns kept, the wrapper scrolls sideways, short headers
+                (docs/responsive-rules.md §7).
+     Each apartment is its own <tbody>, so row and details filter and highlight together. --}}
 @props(['apartments', 'repository', 'columns' => null])
-
-@use('App\Apartments\Format')
 
 @php
   // [label, short label, header visually hidden?]
   $columns = array_map(fn ($c) => $c + [2 => false], $columns ?? config('apartments.columns'));
   $hidePrices = config('apartments.hide_prices_when_rented');
   $numeric = ['rooms', 'area', 'outdoor_area', 'rent_net', 'charges', 'rent_gross', 'price'];
+  $list = config('apartments.mobile') === 'list';
+  $summary = $list ? array_values(array_intersect(array_keys($columns), config('apartments.mobile_columns', []))) : array_keys($columns);
+  $details = array_diff(array_keys($columns), $summary);
+  $list = $list && $details;
 @endphp
 
 {{-- contain-paint besides scrolling: the table's full width otherwise still
@@ -25,6 +32,7 @@
             'py-10 pr-12 font-bold whitespace-nowrap lg:pr-16',
             'text-right' => in_array($key, $numeric),
             'text-center' => $key === 'plan',
+            'hidden md:table-cell' => $list && ! in_array($key, $summary),
           ])>
             @if ($hidden)
               <span class="sr-only">{{ $label }}</span>
@@ -35,56 +43,66 @@
             @endif
           </th>
         @endforeach
+        @if ($list)
+          <th scope="col" class="md:hidden"><span class="sr-only">Details</span></th>
+        @endif
       </tr>
     </thead>
-    <tbody>
-      @foreach ($apartments as $apartment)
-        @php($showPrice = ! ($hidePrices && $apartment->status === \App\Apartments\Status::Rented))
-        <tr
-          data-apartment="{{ $apartment->ref }}"
-          data-status="{{ $apartment->status->value }}"
-          data-rooms="{{ $apartment->roomsLabel() }}"
-          data-floor="{{ $apartment->floor }}"
-          data-house="{{ $apartment->house }}"
-          class="border-b border-line transition-colors hover:bg-ink/5">
+    @foreach ($apartments as $apartment)
+      @php($showPrice = ! ($hidePrices && $apartment->status === \App\Apartments\Status::Rented))
+      @php($detailsId = 'apartment-details-'.\Illuminate\Support\Str::slug($apartment->ref).'-'.$loop->index)
+      <tbody
+        data-apartment="{{ $apartment->ref }}"
+        data-status="{{ $apartment->status->value }}"
+        data-rooms="{{ $apartment->roomsLabel() }}"
+        data-floor="{{ $apartment->floor }}"
+        data-house="{{ $apartment->house }}"
+        @if ($list)
+          x-data="{ open: false }"
+          x-on:apartment-open="open = true"
+        @endif
+        class="border-b border-line transition-colors hover:bg-ink/5">
+        <tr>
           @foreach ($columns as $key => $column)
             <td @class([
               'py-10 pr-12 whitespace-nowrap lg:pr-16',
               'text-right tabular-nums' => in_array($key, $numeric),
               'text-center' => $key === 'plan',
+              'hidden md:table-cell' => $list && ! in_array($key, $summary),
             ])>
-              @switch($key)
-                @case('ref') {{ $apartment->ref }} @break
-                @case('house') {{ $repository->houseLabel($apartment->house) }} @break
-                @case('floor') {{ $repository->floorLabel($apartment->floor) }} @break
-                @case('rooms') {{ $apartment->roomsLabel() }} @break
-                @case('area') {{ Format::area($apartment->area) }} @break
-                @case('outdoor_area') {{ Format::area($apartment->outdoorArea) }} @break
-                @case('rent_net') {{ $showPrice ? Format::money($apartment->rentNet) : '' }} @break
-                @case('charges') {{ $showPrice ? Format::money($apartment->charges) : '' }} @break
-                @case('rent_gross') {{ $showPrice ? Format::money($apartment->rentGross) : '' }} @break
-                @case('price') {{ $showPrice ? Format::money($apartment->price) : '' }} @break
-                @case('available_from') {{ Format::date($apartment->availableFrom) }} @break
-                @case('plan')
-                  @if ($apartment->planUrl)
-                    <a href="{{ $apartment->planUrl }}" target="_blank" rel="noopener" aria-label="Grundriss {{ $apartment->ref }} öffnen"
-                      class="inline-flex size-32 items-center justify-center text-primary transition-colors hover:text-ink">
-                      <x-icons.download class="size-16" />
-                    </a>
-                  @else
-                    <span title="Grundriss folgt" class="inline-flex size-32 items-center justify-center text-muted/50">
-                      <x-icons.download class="size-16" aria-hidden="true" />
-                      <span class="sr-only">Grundriss folgt</span>
-                    </span>
-                  @endif
-                  @break
-                @case('status') <x-apartments.status :status="$apartment->status" /> @break
-                @case('apply') <x-apartments.apply :apartment="$apartment" /> @break {{-- module:apply --}}
-              @endswitch
+              <x-apartments.cell :key="$key" :apartment="$apartment" :repository="$repository" :show-price="$showPrice" />
             </td>
           @endforeach
+          @if ($list)
+            <td class="w-1 text-right md:hidden">
+              <button type="button" x-on:click="open = ! open; $dispatch('apartments:toggle', { ref: @js($apartment->ref), open })" :aria-expanded="open" aria-controls="{{ $detailsId }}"
+                aria-label="Wohnung {{ $apartment->ref }}: Details"
+                class="-my-6 inline-flex size-44 cursor-pointer items-center justify-center text-primary">
+                <x-icons.chevron-down class="h-auto w-16 transition-transform" ::class="open && 'rotate-180'" />
+              </button>
+            </td>
+          @endif
         </tr>
-      @endforeach
-    </tbody>
+        @if ($list)
+          <tr id="{{ $detailsId }}" x-show="open" x-cloak class="md:hidden">
+            <td colspan="{{ count($summary) + 1 }}" class="pb-16">
+              <dl class="grid grid-cols-[auto_1fr] items-center gap-x-16 gap-y-6">
+                @foreach ($details as $key)
+                  @php($value = view('components.apartments.cell', ['key' => $key, 'apartment' => $apartment, 'repository' => $repository, 'showPrice' => $showPrice])->render())
+                  @continue(trim(strip_tags($value, '<a><svg>')) === '')
+                  @if ($columns[$key][2])
+                    {{-- Header hidden (e.g. the apply button): no label, the value speaks for itself. --}}
+                    <dd class="col-span-2 mt-6">{!! $value !!}</dd>
+                  @else
+                    <dt class="text-muted">{{ $columns[$key][0] }}</dt>
+                    <dd class="text-right">{!! $value !!}</dd>
+                  @endif
+                @endforeach
+              </dl>
+            </td>
+          </tr>
+        @endif
+      </tbody>
+    @endforeach
   </table>
 </div>
