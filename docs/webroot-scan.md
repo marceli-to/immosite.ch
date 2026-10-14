@@ -204,5 +204,7 @@ consent; no honeypot (nineone).
 
 ### Next
 
-Flatfox bug fixed (`flatfox.exclude_houses` / `exclude_refs`). Then Marcel picks candidates; each one is built like the Shift patterns
+Flatfox bug fixed (`flatfox.exclude_houses` / `exclude_refs`). Picked by Marcel (2026-10-14): #1 gallery grid + lightbox, #2 owner mail per lead,
+#4 several units per inquiry, #5 mobile apartment rows + detail, #6 parking/extras table.
+Bigger items (unit admin, multi-building isometry, French, floor-plan mode) not now. Each one is built like the Shift patterns
 (component + pattern file + test, manifest entry if it's a module).

@@ -4,13 +4,14 @@ namespace App\Livewire;
 
 use App\Livewire\Concerns\ContactFields;
 use App\Mail\RegistrationConfirmation;
+use App\Mail\RegistrationReceived;
 use App\Models\Registration;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 /**
- * Registration form of the landing page: stores the registration and sends the
- * sender a confirmation. Which fields exist is defined in config/registration.php.
+ * Registration form of the landing page: stores the registration, sends the
+ * sender a confirmation and, if configured, the marketer a notification. Which fields exist is defined in config/registration.php.
  */
 class RegistrationForm extends Component
 {
@@ -59,8 +60,16 @@ class RegistrationForm extends Component
             ...$this->contactData(),
         ]);
 
-        // The registration is stored; if only the confirmation fails, the sender
-        // shouldn't see an error and try again.
+        // The registration is stored; if a mail fails, the sender shouldn't see an
+        // error and try again. Each mail on its own, so one failure doesn't skip the other.
+        if ($notify = array_filter(array_map('trim', explode(',', (string) config('registration.notify'))))) {
+            try {
+                Mail::to($notify)->send(new RegistrationReceived($registration));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
         try {
             Mail::to($registration->email)->send(new RegistrationConfirmation);
         } catch (\Throwable $e) {

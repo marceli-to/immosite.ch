@@ -39,6 +39,10 @@ return [
     'success_heading' => 'Vielen Dank für Ihre Anmeldung',
     'success_text' => 'Wir haben Ihre Angaben erhalten und informieren Sie, sobald die Vermietung startet.',
 
+    // Mail to the marketer for every new registration (multiple addresses comma-separated).
+    // Empty = off; the weekly export (module weekly-export) still sends the summary.
+    'notify' => env('REGISTRATIONS_NOTIFY_EMAIL'),
+
     'confirmation' => [
         'subject' => 'Ihre Anmeldung – '.env('APP_NAME', 'Immosite'),
     ],

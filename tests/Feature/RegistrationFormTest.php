@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\RegistrationForm;
 use App\Mail\RegistrationConfirmation;
+use App\Mail\RegistrationReceived;
 use App\Models\Registration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -25,6 +26,7 @@ class RegistrationFormTest extends TestCase
             'registration.interests' => ['2.5' => '2.5-Zimmerwohnung', '3.5' => '3.5-Zimmerwohnung', '4.5' => '4.5-Zimmerwohnung', 'gewerbe' => 'Gewerbefläche'],
             'registration.fields' => ['street' => 'required', 'zip_city' => 'required', 'phone' => 'required', 'message' => false],
             'registration.redirect_route' => null,
+            'registration.notify' => null,
         ]);
     }
 
@@ -64,6 +66,31 @@ class RegistrationFormTest extends TestCase
         $this->assertSame('Anna Muster', $registration->fullName());
 
         Mail::assertSent(RegistrationConfirmation::class, fn ($mail) => $mail->hasTo('anna@example.com'));
+    }
+
+    public function test_marketer_gets_a_mail_per_registration_when_configured(): void
+    {
+        Mail::fake();
+        config(['registration.notify' => 'vermietung@example.com, chef@example.com']);
+
+        $this->filled()->call('submit')->assertHasNoErrors();
+
+        Mail::assertSent(RegistrationReceived::class, function ($mail) {
+            $mail->assertSeeInHtml('2.5-Zimmerwohnung, Gewerbefläche');
+
+            return $mail->hasTo('vermietung@example.com') && $mail->hasTo('chef@example.com')
+                && $mail->hasReplyTo('anna@example.com');
+        });
+        Mail::assertSent(RegistrationConfirmation::class);
+    }
+
+    public function test_no_marketer_mail_without_recipients(): void
+    {
+        Mail::fake();
+
+        $this->filled()->call('submit')->assertHasNoErrors();
+
+        Mail::assertNotSent(RegistrationReceived::class);
     }
 
     public function test_it_validates_required_fields(): void

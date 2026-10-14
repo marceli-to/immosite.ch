@@ -48,23 +48,26 @@ Config/env:
 
 ## registration (optional)
 Registration form (Livewire) on the home page: interest selection, contact details, privacy
-checkbox, honeypot + optional Turnstile, confirmation mail to the sender. Fields per project in
+checkbox, honeypot + optional Turnstile, confirmation mail to the sender, optional mail to the
+marketer per registration (`REGISTRATIONS_NOTIFY_EMAIL`). Fields per project in
 `config/registration.php` (required / optional / hidden).
 Files:
 - app/Livewire/RegistrationForm.php
 - app/Models/Registration.php
 - app/Mail/RegistrationConfirmation.php
+- app/Mail/RegistrationReceived.php
 - config/registration.php
 - database/migrations/2026_10_12_000001_create_registrations_table.php
 - resources/views/livewire/registration-form.blade.php
 - resources/views/mail/registration-confirmation.blade.php
+- resources/views/mail/registration-received.blade.php
 - resources/views/sections/registration.blade.php
 - tests/Feature/RegistrationFormTest.php
 Hooks:
 - resources/views/pages/home.blade.php → @include('sections.registration')
 - resources/views/pages/privacy.blade.php → @include('pages.privacy.forms') (shared with contact-form)
 Config/env:
-- TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS
+- TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY, MAIL_FROM_ADDRESS, REGISTRATIONS_NOTIFY_EMAIL
 
 ---
 
