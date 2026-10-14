@@ -180,7 +180,8 @@ Config/env:
 
 ## apartments (optional, needs: pages-full)
 Apartment listing on /wohnen: filters (status, rooms, floor, house) and table(s), columns,
-filters, grouping by house, floor labels, sort order and footnote from `config/apartments.php`.
+filters, grouping by house, floor labels, sort order, footnote and a static parking/extras table
+(`extras`) from `config/apartments.php`.
 All sources return the same `App\Apartments\Apartment`; the driver comes from
 `APARTMENTS_DRIVER`. Mobile: table scrolls sideways, short headers. Install at least one
 driver module.

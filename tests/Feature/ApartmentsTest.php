@@ -52,6 +52,19 @@ class ApartmentsTest extends TestCase
         $this->get(route('page.apartments'))->assertSee('3&#039;360', false);
     }
 
+    public function test_extras_table_shows_configured_rows(): void
+    {
+        $this->get(route('page.apartments'))->assertDontSee('Parkplätze und Nebenräume');
+
+        config(['apartments.extras.rows' => [
+            ['type' => 'Einstellhallenplatz', 'floor' => 'UG', 'price' => 1300],
+            ['type' => 'Hobbyraum', 'floor' => 'UG', 'price' => 'auf Anfrage'],
+        ]]);
+
+        $this->get(route('page.apartments'))
+            ->assertSeeInOrder(['Parkplätze und Nebenräume', 'Einstellhallenplatz', '1&#039;300', 'Hobbyraum', 'auf Anfrage'], false);
+    }
+
     public function test_types_filter_out_other_objects(): void
     {
         $refs = app(ApartmentRepository::class)->all()->pluck('ref')->all();

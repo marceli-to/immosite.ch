@@ -94,4 +94,16 @@ return [
 
     'footnote' => 'Alle Kosten in CHF pro Monat.',
 
+    // Parking spaces, hobby rooms … as a small table below the apartments. Columns: any
+    // row key; 'price' (int = CHF, string as written, e.g. 'auf Anfrage') and 'status'
+    // (free / reserved / rented) are formatted. Empty rows = no table.
+    'extras' => [
+        'heading' => 'Parkplätze und Nebenräume',
+        'columns' => ['type' => 'Typ', 'floor' => 'Etage', 'price' => 'Miete/Mt.'],
+        'rows' => [
+            // ['type' => 'Einstellhallenplatz', 'floor' => 'UG', 'price' => 130],
+            // ['type' => 'Motorradplatz', 'floor' => 'UG', 'price' => 40],
+        ],
+    ],
+
 ];

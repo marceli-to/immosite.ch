@@ -29,6 +29,8 @@
         </div>
       </div>
 
+      <x-apartments.extras class="mt-40 lg:mt-64" />
+
       <p data-apartment-empty hidden class="py-24">Keine Wohnungen gefunden. Bitte passen Sie die Filter an.</p>
 
       @if ($footnote = config('apartments.footnote'))
